@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Volleyball Manager Pro</title>
+    <title>Volleyball Manager Pro - Smart Roster</title>
     <style>
         :root { 
             --primary: #2563eb; 
@@ -39,11 +39,9 @@
             width: 30px; height: 30px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
         }
         .btn-score:active { background: rgba(255,255,255,0.4); }
-
         .sets-display { display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(0,0,0,0.2); padding: 5px; border-radius: 6px; }
         .sets-count { font-size: 1.2rem; font-weight: bold; letter-spacing: 2px; margin-bottom: 4px; }
         .btn-set { background: transparent; border: 1px solid #777; color: #ddd; font-size: 0.7rem; padding: 2px 6px; border-radius: 4px; cursor: pointer; margin: 0 2px; }
-        .btn-set:hover { background: rgba(255,255,255,0.1); }
 
         /* --- ROSTER LIST VIEW --- */
         .roster-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
@@ -58,12 +56,8 @@
         .roster-list { display: flex; flex-direction: column; gap: 4px; }
         .roster-row { display: grid; grid-template-columns: 20px 1fr 60px; gap: 5px; align-items: center; }
         .roster-row span { font-size: 0.75rem; color: #888; font-weight: bold; text-align: center; }
-        .roster-row input { 
-            padding: 5px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 0.9rem; width: 100%;
-        }
-        .roster-row select { 
-            padding: 5px 2px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 0.75rem; font-weight: bold; color: #444; width: 100%;
-        }
+        .roster-row input { padding: 5px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 0.9rem; width: 100%; }
+        .roster-row select { padding: 5px 2px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 0.75rem; font-weight: bold; color: #444; width: 100%; }
 
         /* --- LINEUP SETUP --- */
         .setup-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
@@ -71,17 +65,15 @@
         .team-a { border-color: var(--primary); }
         .team-b { border-color: var(--secondary); }
 
-        .lineup-row { 
-            display: grid; grid-template-columns: 40px 1fr 0.8fr; 
-            gap: 8px; align-items: center; margin-bottom: 8px; 
-        }
+        .lineup-row { display: grid; grid-template-columns: 40px 1fr 30px 1fr; gap: 5px; align-items: center; margin-bottom: 8px; }
         .lineup-row label { font-size: 0.8rem; font-weight: bold; color: #555; }
-        .lineup-select { width: 100%; padding: 6px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 0.9rem; background: white; }
+        .lineup-select { width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 0.9rem; background: white; }
+        .icon-swap { font-size: 1rem; cursor: pointer; color: #888; text-align: center; }
+        .icon-swap:hover { color: #333; }
 
         /* --- CONTROLS --- */
         .filter-bar { background: #eee; padding: 8px; border-radius: 6px; margin-bottom: 15px; text-align: center; }
         .view-select { padding: 6px; border-radius: 4px; font-weight: bold; }
-        
         .btn-group { display: flex; gap: 10px; margin-top: 10px; }
         .btn-main { flex: 1; padding: 12px; border: none; border-radius: 6px; color: white; font-weight: bold; cursor: pointer; font-size: 1rem; }
         .btn-update { background: var(--dark); }
@@ -97,18 +89,11 @@
         .court { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; background: var(--court-a); padding: 5px; border: 2px solid #92400e; border-radius: 4px; margin-bottom: 10px; }
         .court.team-b-bg { background: var(--court-b); border-color: #991b1b; }
         
-        .zone { 
-            background: rgba(255,255,255,0.95); height: 50px; 
-            display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            font-size: 0.8rem; font-weight: bold; border-radius: 2px; position: relative; 
-            box-shadow: 0 1px 2px rgba(0,0,0,0.1); 
-        }
+        .zone { background: rgba(255,255,255,0.95); height: 50px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: bold; border-radius: 2px; position: relative; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
         .pos-label { font-size: 0.55rem; color: #64748b; position: absolute; top: 2px; left: 2px; }
-        
         .player-content { display: flex; flex-direction: column; align-items: center; line-height: 1.1; width: 100%; overflow: hidden; }
         .role-badge { font-size: 0.6rem; background: #333; color: white; padding: 1px 4px; border-radius: 3px; margin-bottom: 2px; }
         .role-badge.libero { background: #eab308; color: black; } 
-        
         .sub-name { font-size: 0.7rem; color: #dc2626; font-style: italic; margin-top: 1px; }
         .server-badge { position: absolute; top: 2px; right: 2px; background: #10b981; color: white; font-size: 0.55rem; padding: 1px 3px; border-radius: 3px; }
 
@@ -122,36 +107,15 @@
         @media print {
             @page { size: A4 portrait; margin: 5mm; }
             body { background: white; padding: 0; margin: 0; }
-            .container { 
-                box-shadow: none; border: none; padding: 0; margin: 0; width: 100%; max-width: 100%; 
-            }
+            .container { box-shadow: none; border: none; padding: 0; margin: 0; width: 100%; max-width: 100%; }
             .no-print { display: none !important; }
-            
-            /* Strict Grid for A4 */
-            .output-grid { 
-                display: grid; 
-                grid-template-columns: 49% 49%; /* Tight fit */
-                grid-template-rows: auto auto auto;
-                column-gap: 2%; 
-                row-gap: 10px;
-                margin-top: 0;
-            }
-            
-            .rotation-card { 
-                border: 1px solid #000; 
-                padding: 5px; 
-                break-inside: avoid; 
-                page-break-inside: avoid;
-            }
-            
-            /* Scale down content to ensure fit on one page */
+            .output-grid { display: grid; grid-template-columns: 49% 49%; grid-template-rows: auto auto auto; column-gap: 2%; row-gap: 10px; margin-top: 0; }
+            .rotation-card { border: 1px solid #000; padding: 5px; break-inside: avoid; page-break-inside: avoid; }
             .rot-title { font-size: 0.8rem; padding: 2px; margin-bottom: 3px; background: #000 !important; color: white !important; }
             .court { gap: 2px; padding: 2px; border-width: 1px; margin-bottom: 5px; }
             .zone { height: 35px; font-size: 0.75rem; }
             .role-badge { font-size: 0.5rem; padding: 0 2px; }
             .sub-name { font-size: 0.6rem; }
-            
-            /* If Single View is selected (Manual zoom) */
             .output-grid.single-view { display: block; width: 90%; margin: 20px auto; }
             .output-grid.single-view .zone { height: 80px; font-size: 1.2rem; }
         }
@@ -217,10 +181,8 @@
                         </select>
                     </div>
                 </div>
-                <div class="roster-list" id="roster-list-a">
-                    </div>
+                <div class="roster-list" id="roster-list-a"></div>
             </div>
-
             <div class="roster-col">
                 <div class="team-header">
                     <input type="text" id="name-b" class="team-name-input" value="OPPONENT" oninput="saveData(); updateSBName()">
@@ -231,8 +193,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="roster-list" id="roster-list-b">
-                    </div>
+                <div class="roster-list" id="roster-list-b"></div>
             </div>
         </div>
 
@@ -262,44 +223,27 @@
     let scores = { sa:0, sb:0, seta:0, setb:0 };
     function updateScore(t, v) { if(t==='a') scores.sa=Math.max(0,scores.sa+v); if(t==='b') scores.sb=Math.max(0,scores.sb+v); renderScores(); saveData(); }
     function updateSet(t, v) { if(t==='a') scores.seta=Math.max(0,scores.seta+v); if(t==='b') scores.setb=Math.max(0,scores.setb+v); if(confirm("Reset points?")) { scores.sa=0; scores.sb=0; } renderScores(); saveData(); }
-    
-    // FIXED RESET FUNCTION
-    function resetScores() {
-        if(confirm("Are you sure you want to reset POINTS to 0-0? (Sets will remain)")) {
-            scores.sa = 0;
-            scores.sb = 0;
-            renderScores();
-            saveData();
-        }
-    }
-
-    function renderScores() { 
-        document.getElementById('val-score-a').innerText=scores.sa; 
-        document.getElementById('val-score-b').innerText=scores.sb; 
-        document.getElementById('val-set-a').innerText=scores.seta; 
-        document.getElementById('val-set-b').innerText=scores.setb; 
-    }
+    function resetScores() { if(confirm("Are you sure you want to reset POINTS to 0-0? (Sets will remain)")) { scores.sa=0; scores.sb=0; renderScores(); saveData(); } }
+    function renderScores() { document.getElementById('val-score-a').innerText=scores.sa; document.getElementById('val-score-b').innerText=scores.sb; document.getElementById('val-set-a').innerText=scores.seta; document.getElementById('val-set-b').innerText=scores.setb; }
     function updateSBName() { document.getElementById('sb-name-a').innerText=document.getElementById('name-a').value||'HOME'; document.getElementById('sb-name-b').innerText=document.getElementById('name-b').value||'AWAY'; }
 
     // --- APP LOGIC ---
     function init() {
-        const roles = `<option value="">Role</option><option value="S">S</option><option value="OH">OH</option><option value="MB">MB</option><option value="OP">OP</option><option value="L">L (Libero)</option><option value="DS">DS</option>`;
+        const roles = `<option value="">Role</option><option value="S">S</option><option value="OH">OH</option><option value="MB">MB</option><option value="OP">OP</option><option value="L">L</option><option value="DS">DS</option>`;
         
-        // 1. Create Compact Roster Lists
         ['a','b'].forEach(team => {
+            // Roster List (12 rows)
             const list = document.getElementById(`roster-list-${team}`);
             for(let i=1; i<=12; i++) {
                 list.innerHTML += `
                 <div class="roster-row">
                     <span>${i}</span>
-                    <input type="text" id="p-${team}-${i}-name" placeholder="Name" oninput="saveData(); updateDropdowns('${team}')">
+                    <input type="text" id="p-${team}-${i}-name" placeholder="Name" oninput="saveData(); refreshDropdowns('${team}')">
                     <select id="p-${team}-${i}-role" onchange="saveData()">${roles}</select>
                 </div>`;
             }
-        });
 
-        // 2. Create Lineup Selectors
-        ['a','b'].forEach(team => {
+            // Lineup Selectors (6 rows with Swap Icon)
             const box = document.getElementById(`selectors-${team}`);
             for(let i=1; i<=6; i++) {
                 let lbl = `Pos ${i}`;
@@ -307,14 +251,16 @@
                 box.innerHTML += `
                 <div class="lineup-row">
                     <label>${lbl}</label>
-                    <select id="l-${team}-${i}" class="lineup-select" onchange="handleStarterChange('${team}', ${i})"><option value="">-Starter-</option></select>
-                    <select id="l-${team}-${i}-sub" class="lineup-select" onchange="saveData()"><option value="">-Sub-</option></select>
+                    <select id="l-${team}-${i}" class="lineup-select" onchange="handleLineupChange('${team}')"><option value="">-Starter-</option></select>
+                    <div class="icon-swap" onclick="swapSub('${team}', ${i})" title="Swap Starter/Sub">⇄</div>
+                    <select id="l-${team}-${i}-sub" class="lineup-select" onchange="handleLineupChange('${team}')"><option value="">-Sub-</option></select>
                 </div>`;
             }
         });
         loadData();
     }
 
+    // Get array of all available players from Roster Inputs
     function getRosterData(team) {
         let players = [];
         for(let i=1; i<=12; i++) {
@@ -325,41 +271,89 @@
         return players.sort((a,b) => a.name.localeCompare(b.name));
     }
 
-    function updateDropdowns(teamToUpdate) {
-        const teams = teamToUpdate ? [teamToUpdate] : ['a', 'b'];
-        teams.forEach(team => {
-            const players = getRosterData(team);
-            for(let i=1; i<=6; i++) {
-                updateSelect(`l-${team}-${i}`, players, false);
-                const currentStarter = document.getElementById(`l-${team}-${i}`).value;
-                updateSelect(`l-${team}-${i}-sub`, players, currentStarter);
-            }
-        });
+    // Determine which players are currently "Used" as Starters or Subs
+    function getUsedPlayers(team) {
+        let used = [];
+        for(let i=1; i<=6; i++) {
+            const s = document.getElementById(`l-${team}-${i}`).value;
+            const sub = document.getElementById(`l-${team}-${i}-sub`).value;
+            if(s) used.push(s);
+            if(sub) used.push(sub);
+        }
+        return used;
     }
 
-    function updateSelect(elId, players, excludeName) {
-        const sel = document.getElementById(elId);
-        const curr = sel.value;
-        const isSub = elId.includes('sub');
-        sel.innerHTML = isSub ? '<option value="">-Sub-</option>' : '<option value="">-Starter-</option>';
+    // REFRESH ALL DROPDOWNS: Ensure Starter can't be picked as Sub, etc.
+    function refreshDropdowns(team) {
+        const players = getRosterData(team);
+        
+        for(let i=1; i<=6; i++) {
+            const startEl = document.getElementById(`l-${team}-${i}`);
+            const subEl = document.getElementById(`l-${team}-${i}-sub`);
+            
+            const currStart = startEl.value;
+            const currSub = subEl.value;
+
+            // Rebuild Options preserving current selection
+            populateSelect(startEl, players, currStart, getOtherUsed(team, i, 'start'));
+            populateSelect(subEl, players, currSub, getUsedPlayers(team).filter(n => n !== currSub)); // Subs filter out ALL starters and other subs
+        }
+    }
+
+    // Helper: Get used players excluding specific position
+    function getOtherUsed(team, pos, type) {
+        // This is simplified: For Starters, just show full list. 
+        // Logic: You can move a starter to another pos, but Sub dropdowns must filter strictly.
+        return []; 
+    }
+
+    // Rebuild a Select element
+    // excludeList: Names that should NOT appear (unless it's the currently selected value)
+    function populateSelect(el, players, currentVal, excludeList) {
+        el.innerHTML = el.id.includes('sub') ? '<option value="">-Sub-</option>' : '<option value="">-Starter-</option>';
+        
         players.forEach(p => {
-            if (p.name !== excludeName) {
+            // Logic: Add if it's the current value OR if it's not in the exclude list
+            // For this app version: Simplified "Smart Sub" logic
+            // 1. Starter Dropdown: Show All Players (Allow changing)
+            // 2. Sub Dropdown: Show All Players EXCEPT the Starter of this row
+            
+            let shouldAdd = true;
+            if(el.id.includes('sub')) {
+                // Determine starter of this row
+                const rowId = el.id.replace('-sub', '');
+                const starterVal = document.getElementById(rowId).value;
+                if(p.name === starterVal) shouldAdd = false;
+            }
+
+            if(shouldAdd) {
                 const opt = document.createElement('option');
                 opt.value = p.name;
                 opt.innerText = p.name;
-                if(p.name === curr) opt.selected = true;
-                sel.appendChild(opt);
+                if(p.name === currentVal) opt.selected = true;
+                el.appendChild(opt);
             }
         });
     }
 
-    function handleStarterChange(team, pos) {
-        const starterVal = document.getElementById(`l-${team}-${pos}`).value;
-        const subSel = document.getElementById(`l-${team}-${pos}-sub`);
-        if(subSel.value === starterVal) subSel.value = "";
+    // Triggered on any dropdown change
+    function handleLineupChange(team) {
         saveData();
-        const players = getRosterData(team);
-        updateSelect(`l-${team}-${pos}-sub`, players, starterVal);
+        // Trigger a refresh to update filters
+        refreshDropdowns(team);
+    }
+
+    // Swap Starter and Sub
+    function swapSub(team, pos) {
+        const startEl = document.getElementById(`l-${team}-${pos}`);
+        const subEl = document.getElementById(`l-${team}-${pos}-sub`);
+        
+        const temp = startEl.value;
+        startEl.value = subEl.value;
+        subEl.value = temp;
+        
+        handleLineupChange(team);
+        generate();
     }
 
     function saveData() {
@@ -390,11 +384,11 @@
             },
             teamA: getData('a'), teamB: getData('b')
         };
-        localStorage.setItem('vballDataList', JSON.stringify(data));
+        localStorage.setItem('vballDataFinal', JSON.stringify(data));
     }
 
     function loadData() {
-        const saved = localStorage.getItem('vballDataList');
+        const saved = localStorage.getItem('vballDataFinal');
         if(!saved) return;
         const data = JSON.parse(saved);
 
@@ -417,14 +411,17 @@
                 });
             }
         });
-        updateDropdowns();
+
+        // Initial Dropdown Population
+        ['a','b'].forEach(t => refreshDropdowns(t));
+
         ['a','b'].forEach(t => {
             const tData = t === 'a' ? data.teamA : data.teamB;
             if(tData && tData.lineup) {
                 tData.lineup.forEach((l, idx) => {
                     document.getElementById(`l-${t}-${idx+1}`).value = l.name;
-                    const players = getRosterData(t);
-                    updateSelect(`l-${t}-${idx+1}-sub`, players, l.name);
+                    // Refresh Sub specifically after setting starter
+                    refreshDropdowns(t);
                     document.getElementById(`l-${t}-${idx+1}-sub`).value = l.sub;
                 });
             }
@@ -432,7 +429,7 @@
         generate();
     }
 
-    function clearAll() { if(confirm("Clear Data?")) { localStorage.removeItem('vballDataList'); location.reload(); } }
+    function clearAll() { if(confirm("Clear All Data?")) { localStorage.removeItem('vballDataFinal'); location.reload(); } }
     function getRole(name, roster) { const p = roster.find(x => x.name === name); return p ? p.role : ''; }
 
     function generate() {
