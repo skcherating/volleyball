@@ -11,6 +11,7 @@
             --bg: #f1f5f9; 
             --court-a: #fbbf24; 
             --court-b: #f87171; 
+            --dark: #1e293b;
         }
         * { box-sizing: border-box; }
         body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); padding: 15px; margin: 0; }
@@ -21,8 +22,31 @@
         .school-logo { width: 80px; height: auto; margin-bottom: 5px; }
         h1 { margin: 0; font-size: 1.5rem; color: #1e293b; }
 
-        /* Controls */
         .no-print { display: block; }
+
+        /* --- SIMPLE SCOREBOARD --- */
+        .scoreboard-panel {
+            background: var(--dark); color: white;
+            padding: 15px; border-radius: 8px; margin-bottom: 20px;
+            display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;
+            align-items: center; text-align: center;
+        }
+        .score-team { display: flex; flex-direction: column; align-items: center; }
+        .score-name { font-size: 0.9rem; font-weight: bold; opacity: 0.8; margin-bottom: 5px; text-transform: uppercase; }
+        .score-number { font-size: 3rem; font-weight: bold; line-height: 1; margin: 0 10px; min-width: 60px; }
+        .score-controls { display: flex; align-items: center; justify-content: center; }
+        .btn-score { 
+            background: rgba(255,255,255,0.2); color: white; border: none; 
+            width: 35px; height: 35px; border-radius: 50%; font-size: 1.2rem; cursor: pointer;
+        }
+        .btn-score:active { background: rgba(255,255,255,0.4); }
+
+        .sets-display { display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(0,0,0,0.2); padding: 5px; border-radius: 6px; }
+        .sets-label { font-size: 0.75rem; color: #aaa; font-weight: bold; margin-bottom: 5px; }
+        .sets-count { font-size: 1.2rem; font-weight: bold; letter-spacing: 2px; }
+        .btn-set { background: transparent; border: 1px solid #555; color: #ccc; font-size: 0.7rem; padding: 2px 6px; border-radius: 4px; cursor: pointer; margin-top: 5px; }
+        
+        /* Controls */
         .roster-section { 
             display: grid; grid-template-columns: 1fr 1fr; gap: 15px; 
             margin-bottom: 20px; background: #f8fafc; padding: 15px; 
@@ -31,13 +55,21 @@
         .setup-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
         
         /* Inputs */
+        .input-label-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+        .sort-link { font-size: 0.75rem; color: var(--primary); cursor: pointer; text-decoration: underline; }
         textarea { width: 100%; height: 60px; padding: 8px; border: 1px solid #cbd5e1; border-radius: 4px; resize: none; font-size: 14px; }
         
-        /* Player Select Rows */
-        .player-row { display: grid; grid-template-columns: 0.5fr 1fr 1fr; gap: 5px; align-items: center; margin-bottom: 6px; }
-        .player-row label { font-size: 0.85rem; font-weight: bold; white-space: nowrap; }
-        select { width: 100%; padding: 6px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 0.9rem; background: white; }
+        /* Player Selection Row: Label | Role | Name | Sub */
+        .player-row { 
+            display: grid; 
+            grid-template-columns: 40px 55px 1fr 0.8fr; /* Adjusted for Role */
+            gap: 5px; align-items: center; margin-bottom: 6px; 
+        }
+        .player-row label { font-size: 0.75rem; font-weight: bold; white-space: nowrap; overflow: hidden; }
+        select { width: 100%; padding: 6px 2px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 0.85rem; background: white; }
         
+        .role-select { font-weight: bold; color: #444; text-align: center; }
+
         .team-box { padding: 15px; border-radius: 8px; border: 2px solid #e2e8f0; }
         .team-a { border-color: var(--primary); }
         .team-b { border-color: var(--secondary); }
@@ -50,10 +82,10 @@
 
         /* Filter & Buttons */
         .filter-bar {
-            background: #1e293b; padding: 15px; border-radius: 8px; color: white;
+            background: #eee; padding: 10px; border-radius: 8px; color: #333;
             margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; gap: 10px;
         }
-        .view-select { padding: 8px; border-radius: 4px; border: none; font-weight: bold; flex-grow: 1; max-width: 300px; }
+        .view-select { padding: 8px; border-radius: 4px; border: 1px solid #ccc; font-weight: bold; flex-grow: 1; max-width: 300px; }
         .btn-group { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px; margin-top: 10px; }
         button { padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 1rem; transition: 0.2s; }
         .gen-btn { background: #1e293b; color: white; } 
@@ -70,13 +102,19 @@
         .court.team-b-bg { background: var(--court-b); border-color: #991b1b; }
         
         .zone { 
-            background: rgba(255,255,255,0.95); height: 50px; /* Taller for Subs */
+            background: rgba(255,255,255,0.95); height: 50px; 
             display: flex; flex-direction: column; align-items: center; justify-content: center; 
             font-size: 0.8rem; font-weight: bold; border-radius: 2px; position: relative; 
             box-shadow: 0 1px 2px rgba(0,0,0,0.1); 
             line-height: 1.1;
         }
         .zone .pos-label { font-size: 0.55rem; color: #64748b; margin-bottom: 2px; text-transform: uppercase; }
+        
+        .zone .player-info { display: flex; align-items: center; gap: 3px; }
+        .zone .role-badge { 
+            font-size: 0.6rem; background: #333; color: white; padding: 1px 3px; border-radius: 3px; 
+            display: inline-block; line-height: 1; vertical-align: middle;
+        }
         .zone .player-name { font-size: 0.85rem; color: #000; }
         .zone .sub-name { font-size: 0.7rem; color: #666; font-weight: normal; font-style: italic; }
         
@@ -92,9 +130,17 @@
             .container { padding: 15px; }
             .roster-section, .setup-grid, .btn-group { grid-template-columns: 1fr; gap: 15px; }
             .filter-bar { flex-direction: column; text-align: center; }
-            .player-row { grid-template-columns: 1fr; gap: 2px; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
-            .player-row label { margin-bottom: 2px; color: var(--primary); }
+            
+            /* Stack controls on mobile for better touch targets */
+            .player-row { grid-template-columns: 40px 1fr 2fr; grid-template-rows: auto auto; gap: 5px; margin-bottom: 12px; border-bottom: 1px solid #eee; padding-bottom: 8px; }
+            .player-row label { grid-row: 1; grid-column: 1; align-self: center; }
+            .player-row .role-select { grid-row: 1; grid-column: 2; }
+            .player-row .name-select { grid-row: 1; grid-column: 3; }
+            .player-row .sub-select { grid-row: 2; grid-column: 2 / span 2; }
+            
             .output-grid { grid-template-columns: 1fr; }
+            .scoreboard-panel { grid-template-columns: 1fr; gap: 20px; }
+            .sets-display { flex-direction: row; gap: 15px; justify-content: space-between; width: 100%; }
         }
 
         /* --- PRINT --- */
@@ -102,11 +148,9 @@
             @page { size: A4 portrait; margin: 5mm; }
             body { background: white; padding: 0; margin: 0; }
             .container { width: 100%; max-width: none; box-shadow: none; padding: 0; border: none; }
-            .no-print { display: none !important; }
+            .no-print { display: none !important; } 
             
             .output-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 5px; }
-            
-            /* Single View Print */
             .output-grid.single-view { display: block; width: 80%; margin: 50px auto; }
             .output-grid.single-view .rotation-card { border: 2px solid #000; padding: 20px; }
             .output-grid.single-view .zone { height: 80px; font-size: 1.2rem; }
@@ -129,6 +173,39 @@
     </div>
 
     <div class="no-print">
+        
+        <div class="scoreboard-panel">
+            <div class="score-team">
+                <div class="score-name" id="sb-name-a">HOME</div>
+                <div class="score-controls">
+                    <button class="btn-score" onclick="updateScore('a', -1)">-</button>
+                    <span class="score-number" id="val-score-a">0</span>
+                    <button class="btn-score" onclick="updateScore('a', 1)">+</button>
+                </div>
+            </div>
+
+            <div class="sets-display">
+                <div class="sets-label">SETS WON</div>
+                <div class="sets-count">
+                    <span id="val-set-a">0</span> - <span id="val-set-b">0</span>
+                </div>
+                <div style="display:flex; gap:5px;">
+                    <button class="btn-set" onclick="updateSet('a', 1)">A+ Set</button>
+                    <button class="btn-set" onclick="resetScores()">Reset Pts</button>
+                    <button class="btn-set" onclick="updateSet('b', 1)">B+ Set</button>
+                </div>
+            </div>
+
+            <div class="score-team">
+                <div class="score-name" id="sb-name-b">AWAY</div>
+                <div class="score-controls">
+                    <button class="btn-score" onclick="updateScore('b', -1)">-</button>
+                    <span class="score-number" id="val-score-b">0</span>
+                    <button class="btn-score" onclick="updateScore('b', 1)">+</button>
+                </div>
+            </div>
+        </div>
+
         <div class="filter-bar">
             <span>DISPLAY MODE:</span>
             <select id="view-mode" class="view-select" onchange="generate()">
@@ -143,13 +220,25 @@
         </div>
 
         <div class="roster-section">
-            <div><label>Team A Roster</label><textarea id="roster-a-raw" oninput="saveData(); updateDropdowns()" placeholder="Names separated by comma..."></textarea></div>
-            <div><label>Team B Roster</label><textarea id="roster-b-raw" oninput="saveData(); updateDropdowns()" placeholder="Names separated by comma..."></textarea></div>
+            <div>
+                <div class="input-label-row">
+                    <label>Team A Roster</label>
+                    <span class="sort-link" onclick="sortRoster('a')">Sort A-Z</span>
+                </div>
+                <textarea id="roster-a-raw" oninput="saveData(); updateDropdowns()" placeholder="Names separated by comma..."></textarea>
+            </div>
+            <div>
+                <div class="input-label-row">
+                    <label>Team B Roster</label>
+                    <span class="sort-link" onclick="sortRoster('b')">Sort A-Z</span>
+                </div>
+                <textarea id="roster-b-raw" oninput="saveData(); updateDropdowns()" placeholder="Names separated by comma..."></textarea>
+            </div>
         </div>
 
         <div class="setup-grid">
             <div class="team-box team-a">
-                <input type="text" id="name-a" class="team-name-input" value="SK CHERATING" oninput="saveData()">
+                <input type="text" id="name-a" class="team-name-input" value="SK CHERATING" oninput="saveData(); updateSBName()">
                 <div style="margin-bottom:10px; font-size:0.9rem; font-weight:bold;">
                     Start Rotation: 
                     <select id="start-offset-a" onchange="saveData(); generate()" style="width:auto; display:inline-block;">
@@ -160,7 +249,7 @@
                 <div id="selectors-a"></div>
             </div>
             <div class="team-box team-b">
-                <input type="text" id="name-b" class="team-name-input" value="OPPONENT" oninput="saveData()">
+                <input type="text" id="name-b" class="team-name-input" value="OPPONENT" oninput="saveData(); updateSBName()">
                 <div style="margin-bottom:10px; font-size:0.9rem; font-weight:bold;">
                     Start Rotation: 
                     <select id="start-offset-b" onchange="saveData(); generate()" style="width:auto; display:inline-block;">
@@ -183,18 +272,76 @@
 </div>
 
 <script>
+    let scores = { sa:0, sb:0, seta:0, setb:0 };
+
+    function updateScore(team, val) {
+        if(team === 'a') scores.sa = Math.max(0, scores.sa + val);
+        if(team === 'b') scores.sb = Math.max(0, scores.sb + val);
+        renderScores();
+        saveData();
+    }
+    
+    function updateSet(team, val) {
+        if(team === 'a') scores.seta = Math.max(0, scores.seta + val);
+        if(team === 'b') scores.setb = Math.max(0, scores.setb + val);
+        if(confirm("Reset points for next set?")) { scores.sa = 0; scores.sb = 0; }
+        renderScores();
+        saveData();
+    }
+
+    function resetScores() {
+        if(confirm("Reset points to 0-0?")) {
+            scores.sa = 0; scores.sb = 0;
+            renderScores();
+            saveData();
+        }
+    }
+
+    function renderScores() {
+        document.getElementById('val-score-a').innerText = scores.sa;
+        document.getElementById('val-score-b').innerText = scores.sb;
+        document.getElementById('val-set-a').innerText = scores.seta;
+        document.getElementById('val-set-b').innerText = scores.setb;
+    }
+
+    function updateSBName() {
+        document.getElementById('sb-name-a').innerText = document.getElementById('name-a').value || 'HOME';
+        document.getElementById('sb-name-b').innerText = document.getElementById('name-b').value || 'AWAY';
+    }
+
+    // --- SORT FUNCTION ---
+    function sortRoster(team) {
+        const id = `roster-${team}-raw`;
+        const el = document.getElementById(id);
+        const names = el.value.split(',').map(s => s.trim()).filter(s => s !== "");
+        names.sort((a, b) => a.localeCompare(b));
+        el.value = names.join(', ');
+        saveData();
+        updateDropdowns();
+    }
+
+    // --- ROTATION LOGIC ---
+
     function init() {
         const createSelects = (id, pre) => {
             const cont = document.getElementById(id);
             for(let i=1; i<=6; i++) {
                 let label = `Pos ${i}`;
-                if(i===1) label += " (S)"; // Serve
-                // Create row with Starter AND Sub select
+                if(i===1) label += " (S)"; 
                 cont.innerHTML += `
                     <div class="player-row">
                         <label>${label}</label>
-                        <select id="${pre}${i}" onchange="saveData()"><option value="">-Starter-</option></select>
-                        <select id="${pre}${i}_sub" onchange="saveData()"><option value="">-Sub-</option></select>
+                        <select id="${pre}${i}_role" class="role-select" onchange="saveData()">
+                            <option value="">-</option>
+                            <option value="S">S</option>
+                            <option value="OH">OH</option>
+                            <option value="MB">MB</option>
+                            <option value="OP">OP</option>
+                            <option value="L">L</option>
+                            <option value="DS">DS</option>
+                        </select>
+                        <select id="${pre}${i}" class="name-select" onchange="saveData()"><option value="">-Name-</option></select>
+                        <select id="${pre}${i}_sub" class="sub-select" onchange="saveData()"><option value="">-Sub-</option></select>
                     </div>`;
             }
         };
@@ -211,9 +358,7 @@
         
         ['a', 'b'].forEach(team => {
             for(let i=1; i<=6; i++) {
-                // Update Starter Select
                 updateSingleSelect(`${team}${i}`, rosters[team]);
-                // Update Sub Select
                 updateSingleSelect(`${team}${i}_sub`, rosters[team]);
             }
         });
@@ -222,7 +367,8 @@
     function updateSingleSelect(elementId, playerList) {
         const sel = document.getElementById(elementId);
         const currentVal = sel.value;
-        sel.innerHTML = elementId.includes('sub') ? '<option value="">-Sub-</option>' : '<option value="">-Starter-</option>';
+        const isSub = elementId.includes('sub');
+        sel.innerHTML = isSub ? '<option value="">-Sub-</option>' : '<option value="">-Name-</option>';
         playerList.forEach(player => {
             const opt = document.createElement('option');
             opt.value = player; opt.textContent = player;
@@ -232,10 +378,11 @@
     }
 
     function saveData() {
-        // Collect Starters and Subs
+        // Collect Name, Sub, and ROLE
         const getLineup = (pre) => [1,2,3,4,5,6].map(i => ({
             name: document.getElementById(`${pre}${i}`).value,
-            sub: document.getElementById(`${pre}${i}_sub`).value
+            sub: document.getElementById(`${pre}${i}_sub`).value,
+            role: document.getElementById(`${pre}${i}_role`).value
         }));
 
         const data = {
@@ -246,7 +393,8 @@
             startOffsetA: document.getElementById('start-offset-a').value,
             startOffsetB: document.getElementById('start-offset-b').value,
             lineupA: getLineup('a'),
-            lineupB: getLineup('b')
+            lineupB: getLineup('b'),
+            scores: scores
         };
         localStorage.setItem('vballData', JSON.stringify(data));
     }
@@ -263,17 +411,21 @@
         document.getElementById('start-offset-a').value = data.startOffsetA || '0';
         document.getElementById('start-offset-b').value = data.startOffsetB || '0';
         
+        if(data.scores) { scores = data.scores; renderScores(); }
+
+        updateSBName();
         updateDropdowns();
         
-        // Restore Starters and Subs
         [1,2,3,4,5,6].forEach((pos, idx) => {
             if(data.lineupA && data.lineupA[idx]) {
                 document.getElementById(`a${pos}`).value = data.lineupA[idx].name || '';
                 document.getElementById(`a${pos}_sub`).value = data.lineupA[idx].sub || '';
+                document.getElementById(`a${pos}_role`).value = data.lineupA[idx].role || '';
             }
             if(data.lineupB && data.lineupB[idx]) {
                 document.getElementById(`b${pos}`).value = data.lineupB[idx].name || '';
                 document.getElementById(`b${pos}_sub`).value = data.lineupB[idx].sub || '';
+                document.getElementById(`b${pos}_role`).value = data.lineupB[idx].role || '';
             }
         });
         generate();
@@ -298,10 +450,10 @@
         const offsetA = parseInt(document.getElementById('start-offset-a').value);
         const offsetB = parseInt(document.getElementById('start-offset-b').value);
         
-        // Get Lineups as Objects {name, sub}
         const getFullLineup = (pre) => [1,2,3,4,5,6].map(i => ({
             name: document.getElementById(`${pre}${i}`).value || `P${i}`,
-            sub: document.getElementById(`${pre}${i}_sub`).value
+            sub: document.getElementById(`${pre}${i}_sub`).value,
+            role: document.getElementById(`${pre}${i}_role`).value
         }));
 
         const aStart = getFullLineup('a');
@@ -320,7 +472,6 @@
             const rotA = getRotatedLineup(aStart, r + offsetA);
             const rotB = getRotatedLineup(bStart, r + offsetB);
 
-            // Function to build HTML for a player Zone
             const renderZone = (playerObj, isP1) => `
                 <div class="zone" ${isP1 ? 'style="border:2px solid #000"' : ''}>
                     ${isP1 ? '<div class="server-badge">SERVE</div>' : ''}
@@ -332,7 +483,10 @@
                         ${playerObj===rotA[4] || playerObj===rotB[4] ? 'P5 Back-L' : ''}
                         ${playerObj===rotA[5] || playerObj===rotB[5] ? 'P6 Back-C' : ''}
                     </span>
-                    <span class="player-name">${playerObj.name}</span>
+                    <div class="player-info">
+                        ${playerObj.role ? `<span class="role-badge">${playerObj.role}</span>` : ''}
+                        <span class="player-name">${playerObj.name}</span>
+                    </div>
                     ${playerObj.sub ? `<span class="sub-name">(${playerObj.sub})</span>` : ''}
                 </div>`;
 
