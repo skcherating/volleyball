@@ -3,168 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SK Cherating Volleyball Match</title>
+    <title>Volleyball Rotation Pro</title>
     <style>
         :root { 
             --primary: #2563eb; 
             --secondary: #dc2626; 
-            --bg: #f8fafc; 
+            --bg: #f1f5f9; 
             --court-a: #fbbf24; 
             --court-b: #f87171; 
-            --dark: #0f172a;
+            --dark: #1e293b;
         }
         * { box-sizing: border-box; }
-        body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); padding: 10px; margin: 0; }
-        .container { max-width: 1000px; margin: auto; background: white; padding: 15px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); padding: 15px; margin: 0; }
+        .container { max-width: 1100px; margin: auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
         
-        /* --- SCOREBOARD SECTION --- */
-        .scoreboard {
-            display: grid;
-            grid-template-columns: 1fr 0.2fr 1fr;
-            gap: 10px;
-            background: var(--dark);
-            color: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            align-items: center;
-            text-align: center;
+        /* Header */
+        .header-section { text-align: center; margin-bottom: 20px; }
+        .school-logo { width: 80px; height: auto; margin-bottom: 5px; }
+        h1 { margin: 0; font-size: 1.5rem; color: #1e293b; }
+
+        .no-print { display: block; }
+
+        /* --- SIMPLE SCOREBOARD --- */
+        .scoreboard-panel {
+            background: var(--dark); color: white;
+            padding: 15px; border-radius: 8px; margin-bottom: 20px;
+            display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;
+            align-items: center; text-align: center;
         }
-        .score-box { display: flex; flex-direction: column; align-items: center; }
-        .score-val { font-size: 3.5rem; font-weight: 800; line-height: 1; margin: 5px 0; font-variant-numeric: tabular-nums; }
-        .set-val { font-size: 1rem; color: #94a3b8; font-weight: bold; }
-        
-        .score-controls { display: flex; gap: 5px; margin-top: 5px; }
+        .score-team { display: flex; flex-direction: column; align-items: center; }
+        .score-name { font-size: 0.9rem; font-weight: bold; opacity: 0.8; margin-bottom: 5px; text-transform: uppercase; }
+        .score-number { font-size: 3rem; font-weight: bold; line-height: 1; margin: 0 10px; min-width: 60px; }
+        .score-controls { display: flex; align-items: center; justify-content: center; }
         .btn-score { 
-            background: rgba(255,255,255,0.2); border: none; color: white; 
-            width: 40px; height: 40px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; 
+            background: rgba(255,255,255,0.2); color: white; border: none; 
+            width: 35px; height: 35px; border-radius: 50%; font-size: 1.2rem; cursor: pointer;
         }
         .btn-score:active { background: rgba(255,255,255,0.4); }
 
-        .team-title { font-size: 1.1rem; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
-        .team-a-color { color: #60a5fa; }
-        .team-b-color { color: #f87171; }
-
-        /* Rotate Buttons */
-        .action-bar { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 15px; }
-        .rot-btn {
-            padding: 12px; border: none; border-radius: 6px; font-weight: bold; color: white; cursor: pointer;
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-        .rot-btn-a { background: var(--primary); }
-        .rot-btn-b { background: var(--secondary); }
-        .rot-btn:active { transform: translateY(2px); }
-
-        /* --- STANDARD STYLES --- */
-        .no-print { display: block; }
-        .collapsible { cursor: pointer; padding: 10px; width: 100%; text-align: left; border: none; outline: none; background-color: #eee; border-radius: 5px; font-weight: bold; margin-bottom: 5px; }
-        .content { display: none; overflow: hidden; padding: 10px; background: #f1f5f9; margin-bottom: 10px; border-radius: 5px; }
-        .active-content { display: block; }
-
-        .header-section { text-align: center; margin-bottom: 10px; }
-        .school-logo { width: 60px; height: auto; }
+        .sets-display { display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(0,0,0,0.2); padding: 5px; border-radius: 6px; }
+        .sets-label { font-size: 0.75rem; color: #aaa; font-weight: bold; margin-bottom: 5px; }
+        .sets-count { font-size: 1.2rem; font-weight: bold; letter-spacing: 2px; }
+        .btn-set { background: transparent; border: 1px solid #555; color: #ccc; font-size: 0.7rem; padding: 2px 6px; border-radius: 4px; cursor: pointer; margin-top: 5px; }
         
-        .roster-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        textarea { width: 100%; height: 50px; padding: 5px; border-radius: 4px; border: 1px solid #ccc; }
+        /* Controls */
+        .roster-section { 
+            display: grid; grid-template-columns: 1fr 1fr; gap: 15px; 
+            margin-bottom: 20px; background: #f8fafc; padding: 15px; 
+            border-radius: 8px; border: 1px solid #e2e8f0; 
+        }
+        .setup-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
         
-        .player-row { display: grid; grid-template-columns: 0.4fr 1fr 1fr; gap: 4px; margin-bottom: 4px; align-items: center; }
-        .player-row label { font-size: 0.75rem; font-weight: bold; }
-        select { width: 100%; padding: 5px; border-radius: 4px; font-size: 0.85rem; border: 1px solid #ccc; background: white; }
-
-        /* LIVE COURT VIEW */
-        .live-court-container { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .court { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; background: var(--court-a); padding: 5px; border: 2px solid #92400e; border-radius: 4px; }
-        .court.team-b-bg { background: var(--court-b); border-color: #991b1b; }
+        /* Inputs */
+        textarea { width: 100%; height: 60px; padding: 8px; border: 1px solid #cbd5e1; border-radius: 4px; resize: none; font-size: 14px; }
         
-        .zone { 
-            background: rgba(255,255,255,0.95); height: 60px; 
-            display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            border-radius: 3px; position: relative; font-size: 0.8rem; font-weight: bold;
-            text-align: center; line-height: 1.1;
-        }
-        .zone span { font-size: 0.6rem; color: #555; font-weight: normal; }
-        .sub-text { color: #dc2626; font-size: 0.7rem; font-style: italic; }
+        .player-row { display: grid; grid-template-columns: 0.5fr 1fr 1fr; gap: 5px; align-items: center; margin-bottom: 6px; }
+        .player-row label { font-size: 0.85rem; font-weight: bold; white-space: nowrap; }
+        select { width: 100%; padding: 6px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 0.9rem; background: white; }
         
-        .server-indicator {
-            position: absolute; top: 2px; right: 2px; width: 8px; height: 8px; 
-            background: #10b981; border-radius: 50%; box-shadow: 0 0 0 2px white;
+        .team-box { padding: 15px; border-radius: 8px; border: 2px solid #e2e8f0; }
+        .team-a { border-color: var(--primary); }
+        .team-b { border-color: var(--secondary); }
+        
+        .team-name-input { 
+            font-size: 1.1rem; font-weight: 800; margin-bottom: 8px; width: 100%; 
+            border: none; border-bottom: 2px solid #ddd; outline: none; 
+            color: #1e293b; background: transparent; border-radius: 0;
         }
 
-        /* Responsive */
-        @media screen and (max-width: 600px) {
-            .live-court-container { grid-template-columns: 1fr; gap: 20px; }
-            .action-bar { grid-template-columns: 1fr; gap: 10px; }
-            .score-val { font-size: 2.5rem; }
+        /* Filter & Buttons */
+        .filter-bar {
+            background: #eee; padding: 10px; border-radius: 8px; color: #333;
+            margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; gap: 10px;
         }
-
-        @media print {
-            .no-print, .scoreboard, .action-bar { display: none !important; }
-            .container { box-shadow: none; border: none; }
-            .content { display: none !important; } /* Hide roster setup in print */
-            /* Add specific print layout logic here if needed from previous version */
-        }
-    </style>
-</head>
-<body>
-
-<div class="container">
-    <div class="header-section">
-        <img src="logo_sekolah.jpg" alt="Logo" class="school-logo">
-        <h2 style="margin:5px 0; font-size:1.2rem;">Match Day Manager</h2>
-    </div>
-
-    <div class="scoreboard no-print">
-        <div class="score-box">
-            <div class="team-title team-a-color" id="disp-name-a">HOME</div>
-            <div class="score-val" id="score-a">0</div>
-            <div class="set-val">SETS: <span id="set-a">0</span></div>
-            <div class="score-controls">
-                <button class="btn-score" onclick="modScore('a', -1)">-</button>
-                <button class="btn-score" onclick="modScore('a', 1)">+</button>
-                <button class="btn-score" style="border-radius:4px; font-size:0.8rem; width:auto; padding:0 8px;" onclick="modSet('a', 1)">SET+</button>
-            </div>
-        </div>
-        <div style="font-size:1.5rem; font-weight:bold; opacity:0.5;">VS</div>
-        <div class="score-box">
-            <div class="team-title team-b-color" id="disp-name-b">AWAY</div>
-            <div class="score-val" id="score-b">0</div>
-            <div class="set-val">SETS: <span id="set-b">0</span></div>
-            <div class="score-controls">
-                <button class="btn-score" onclick="modScore('b', -1)">-</button>
-                <button class="btn-score" onclick="modScore('b', 1)">+</button>
-                <button class="btn-score" style="border-radius:4px; font-size:0.8rem; width:auto; padding:0 8px;" onclick="modSet('b', 1)">SET+</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="action-bar no-print">
-        <button class="rot-btn rot-btn-a" onclick="rotateTeam('a')">
-            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-            Rotate Team A
-        </button>
-        <button class="rot-btn rot-btn-b" onclick="rotateTeam('b')">
-            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-            Rotate Team B
-        </button>
-    </div>
-
-    <div id="live-court" class="live-court-container">
-        </div>
-
-    <hr style="margin: 20px 0; border:0; border-top:1px solid #eee;">
-
-    <div class="no-print">
-        <button type="button" class="collapsible" onclick="toggleSetup()">+ Show Roster Setup</button>
-        <div class="content" id="setup-content">
-            <div class="roster-grid">
-                <div>
-                    <label>Team A Name</label>
-                    <input type="text" id="name-a" value="SK CHERATING" oninput="saveData(); updateUI()" style="width:100%; padding:5px; margin-bottom:5px;">
-                    <textarea id="roster-a-raw" oninput="saveData(); updateDropdowns()" placeholder="Roster A..."></textarea>
-                    <div id="selectors-a"></div>
-                </div>
-                <div>
-                    <label>Team B Name</label>
-                    <input type="text" id="name-b" value="OPPONENT" oninput="saveData(); updateUI()" style="width:100%; padding:5px; margin-bottom:5px;">
-                    <textarea id="roster-b-raw" oninput="saveData(); updateDropdowns()" placeholder="Roster B..."></textarea
+        .view-select { padding: 8px; border-radius: 4px; border: 1px solid #ccc; font-weight: bold; flex-grow: 1; max-width: 300px; }
+        .btn-group { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px; margin-top: 10px; }
+        button { padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 1rem; transition: 0.2s; }
+        .gen-btn { background: #1e293b; color: white; } 
+        .print-btn { background: #10b981; color: white; }
+        .clear-btn { background: #ef4444; color: white; }
+        
+        /* Output & Court */
+        .output-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 30px; }
+        .rotation-card { border: 2px solid #334155; border-radius: 8px; padding: 1
