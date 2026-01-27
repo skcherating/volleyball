@@ -2,49 +2,135 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Volleyball Rotation Pro - SK Cherating</title>
     <style>
-        :root { --primary: #2563eb; --secondary: #dc2626; --bg: #f1f5f9; --court-a: #fbbf24; --court-b: #f87171; }
-        body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); padding: 20px; }
-        .container { max-width: 1100px; margin: auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+        :root { 
+            --primary: #2563eb; 
+            --secondary: #dc2626; 
+            --bg: #f1f5f9; 
+            --court-a: #fbbf24; 
+            --court-b: #f87171; 
+        }
+        * { box-sizing: border-box; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); padding: 15px; margin: 0; }
+        .container { max-width: 1100px; margin: auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
         
-        /* Logo Styling */
+        /* Header & Logo */
         .header-section { text-align: center; margin-bottom: 20px; }
-        .school-logo { width: 80px; height: auto; margin-bottom: 10px; }
+        .school-logo { width: 80px; height: auto; margin-bottom: 5px; }
+        h1 { margin: 0; font-size: 1.5rem; color: #1e293b; }
 
+        /* Setup Section */
         .no-print { display: block; }
-        .roster-section { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; }
-        textarea { width: 100%; height: 60px; padding: 8px; border: 1px solid #cbd5e1; border-radius: 4px; resize: none; box-sizing: border-box; }
+        .roster-section { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 15px; 
+            margin-bottom: 20px; 
+            background: #f8fafc; 
+            padding: 15px; 
+            border-radius: 8px; 
+            border: 1px solid #e2e8f0; 
+        }
+        .setup-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
         
-        .setup-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+        /* Inputs */
+        textarea { width: 100%; height: 60px; padding: 8px; border: 1px solid #cbd5e1; border-radius: 4px; resize: none; font-size: 14px; }
+        select { width: 100%; padding: 8px; margin: 4px 0; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 14px; background: white; }
         .team-box { padding: 15px; border-radius: 8px; border: 2px solid #e2e8f0; }
         .team-a { border-color: var(--primary); }
         .team-b { border-color: var(--secondary); }
-        .team-name-input { font-size: 1.1rem; font-weight: bold; margin-bottom: 10px; width: 100%; border: none; border-bottom: 2px solid #ddd; outline: none; }
-        
-        select { width: 100%; padding: 6px; margin: 4px 0; border: 1px solid #cbd5e1; border-radius: 4px; }
+
+        /* Editable Team Name */
+        .team-name-input { 
+            font-size: 1.1rem; 
+            font-weight: 800; 
+            margin-bottom: 8px; 
+            width: 100%; 
+            border: none; 
+            border-bottom: 2px solid #ddd; 
+            outline: none; 
+            color: #1e293b;
+            background: transparent;
+            border-radius: 0;
+        }
+        .team-name-input:focus { border-bottom-color: var(--primary); }
+
+        /* Buttons */
         .btn-group { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px; margin-top: 10px; }
-        button { padding: 15px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 1rem; transition: 0.2s; }
+        button { padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 1rem; transition: 0.2s; }
         .gen-btn { background: #1e293b; color: white; }
         .print-btn { background: #10b981; color: white; }
         .clear-btn { background: #ef4444; color: white; }
         
-        /* Court Output */
-        .output-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-top: 30px; }
-        .rotation-card { border: 2px solid #334155; border-radius: 10px; padding: 15px; background: #fff; page-break-inside: avoid; }
-        .rot-title { text-align: center; font-weight: bold; font-size: 1.1rem; margin-bottom: 10px; background: #334155; color: white; padding: 5px; border-radius: 4px; }
-        
-        .court { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; background: var(--court-a); padding: 8px; border: 2px solid #92400e; border-radius: 4px; margin-bottom: 10px; }
-        .court.team-b-bg { background: var(--court-b); border-color: #991b1b; }
-        .zone { background: rgba(255,255,255,0.9); height: 40px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: bold; border-radius: 2px; }
-        .zone span { font-size: 0.6rem; color: #64748b; }
-        .court-label { font-size: 0.85rem; font-weight: bold; margin-bottom: 3px; display: block; text-transform: uppercase; }
+        /* Output Grid */
+        .output-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 30px; }
+        .rotation-card { border: 2px solid #334155; border-radius: 8px; padding: 10px; background: #fff; page-break-inside: avoid; }
+        .rot-title { text-align: center; font-weight: bold; font-size: 1rem; margin-bottom: 8px; background: #334155; color: white; padding: 4px; border-radius: 4px; }
 
+        /* Court Visuals */
+        .court-wrapper { position: relative; }
+        .court { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; background: var(--court-a); padding: 6px; border: 2px solid #92400e; border-radius: 4px; margin-bottom: 8px; position: relative; }
+        .court.team-b-bg { background: var(--court-b); border-color: #991b1b; }
+        
+        .zone { background: rgba(255,255,255,0.95); height: 40px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: bold; border-radius: 2px; position: relative; z-index: 2; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+        .zone span { font-size: 0.6rem; color: #64748b; margin-bottom: 0px; text-transform: uppercase; }
+        .court-label { font-size: 0.75rem; font-weight: bold; margin-bottom: 2px; display: block; text-transform: uppercase; }
+
+        /* SVG Arrow */
+        .arrow-overlay {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70%; height: 70%;
+            pointer-events: none; z-index: 3; opacity: 0.2;
+        }
+
+        /* --- MOBILE OPTIMIZATION --- */
+        @media screen and (max-width: 768px) {
+            body { padding: 10px; }
+            .container { padding: 15px; }
+            .roster-section, .setup-grid, .btn-group { grid-template-columns: 1fr; gap: 15px; }
+            .btn-group { gap: 10px; }
+            .output-grid { grid-template-columns: 1fr; } /* Stack cards on mobile */
+            h1 { font-size: 1.2rem; }
+        }
+
+        /* --- A4 PRINT OPTIMIZATION --- */
         @media print {
+            @page { size: A4 portrait; margin: 5mm; }
+            body { background: white; padding: 0; margin: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .container { width: 100%; max-width: none; box-shadow: none; padding: 0; border: none; }
             .no-print { display: none !important; }
-            .container { box-shadow: none; max-width: 100%; padding: 0; }
-            .output-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+            
+            /* Enforce 2 columns x 3 rows grid for A4 */
+            .output-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: auto auto auto;
+                gap: 10px;
+                margin-top: 5px;
+            }
+
+            .rotation-card { 
+                border: 1px solid #000; 
+                padding: 5px; 
+                break-inside: avoid; 
+            }
+
+            /* Scale down slightly to fit perfectly */
+            .rot-title { font-size: 0.9rem; padding: 2px; margin-bottom: 5px; background: #333 !important; color: white !important; }
+            .court { gap: 2px; padding: 4px; border-width: 1px; }
+            .zone { height: 32px; font-size: 0.75rem; }
+            .zone span { font-size: 0.5rem; }
+            
+            /* Clean up Headers for Print */
+            .header-section { margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 15px; }
+            .school-logo { width: 60px; margin: 0; }
+            h1 { font-size: 1.4rem; }
+            
+            /* Hide inputs borders in print */
+            .team-name-input { border: none; font-size: 0.9rem; margin-bottom: 2px; padding: 0; }
         }
     </style>
 </head>
@@ -70,19 +156,19 @@
 
         <div class="setup-grid">
             <div class="team-box team-a">
-                <input type="text" id="name-a" class="team-name-input" value="TEAM A" oninput="saveData()">
+                <input type="text" id="name-a" class="team-name-input" value="SK CHERATING" oninput="saveData()">
                 <div id="selectors-a"></div>
             </div>
             <div class="team-box team-b">
-                <input type="text" id="name-b" class="team-name-input" value="TEAM B" oninput="saveData()">
+                <input type="text" id="name-b" class="team-name-input" value="OPPONENT" oninput="saveData()">
                 <div id="selectors-b"></div>
             </div>
         </div>
 
         <div class="btn-group">
             <button class="gen-btn" onclick="generate()">Generate Rotations</button>
-            <button class="print-btn" onclick="window.print()">Print</button>
-            <button class="clear-btn" onclick="clearAll()">Clear All Data</button>
+            <button class="print-btn" onclick="window.print()">Print A4</button>
+            <button class="clear-btn" onclick="clearAll()">Clear All</button>
         </div>
     </div>
 
@@ -94,7 +180,7 @@
         const createSelects = (id, pre) => {
             const cont = document.getElementById(id);
             for(let i=1; i<=6; i++) {
-                cont.innerHTML += `<div style="margin-bottom:5px">P${i}: <select id="${pre}${i}" onchange="saveData()"><option value="">-- Select --</option></select></div>`;
+                cont.innerHTML += `<div style="margin-bottom:5px; font-size:0.9rem">Start Pos ${i}: <select id="${pre}${i}" onchange="saveData()"><option value="">-- Select --</option></select></div>`;
             }
         };
         createSelects('selectors-a', 'a');
@@ -110,7 +196,7 @@
         ['a', 'b'].forEach(team => {
             for(let i=1; i<=6; i++) {
                 const sel = document.getElementById(`${team}${i}`);
-                const currentVal = sel.getAttribute('data-stored-val') || sel.value;
+                const currentVal = sel.value;
                 sel.innerHTML = '<option value="">-- Select --</option>';
                 rosters[team].forEach(player => {
                     const opt = document.createElement('option');
@@ -128,8 +214,8 @@
             rosterB: document.getElementById('roster-b-raw').value,
             nameA: document.getElementById('name-a').value,
             nameB: document.getElementById('name-b').value,
-            lineupA: Array.from({length:6}, (_,i) => document.getElementById(`a${i+1}`).value),
-            lineupB: Array.from({length:6}, (_,i) => document.getElementById(`b${i+1}`).value)
+            lineupA: [1,2,3,4,5,6].map(i => document.getElementById(`a${i}`).value),
+            lineupB: [1,2,3,4,5,6].map(i => document.getElementById(`b${i}`).value)
         };
         localStorage.setItem('vballData', JSON.stringify(data));
     }
@@ -140,44 +226,66 @@
         const data = JSON.parse(saved);
         document.getElementById('roster-a-raw').value = data.rosterA || '';
         document.getElementById('roster-b-raw').value = data.rosterB || '';
-        document.getElementById('name-a').value = data.nameA || 'TEAM A';
-        document.getElementById('name-b').value = data.nameB || 'TEAM B';
+        document.getElementById('name-a').value = data.nameA || 'SK CHERATING';
+        document.getElementById('name-b').value = data.nameB || 'OPPONENT';
         updateDropdowns();
-        data.lineupA.forEach((val, i) => document.getElementById(`a${i+1}`).value = val);
-        data.lineupB.forEach((val, i) => document.getElementById(`b${i+1}`).value = val);
+        [1,2,3,4,5,6].forEach((pos) => {
+            if(data.lineupA[pos-1]) document.getElementById(`a${pos}`).value = data.lineupA[pos-1];
+            if(data.lineupB[pos-1]) document.getElementById(`b${pos}`).value = data.lineupB[pos-1];
+        });
         generate();
     }
 
     function clearAll() {
-        if(confirm("Are you sure you want to clear all roster and team data?")) {
-            localStorage.removeItem('vballData');
-            location.reload();
+        if(confirm("Clear all data?")) { localStorage.removeItem('vballData'); location.reload(); }
+    }
+
+    function getRotatedLineup(startLineup, rotNumber) {
+        let current = [...startLineup];
+        for(let i = 0; i < rotNumber; i++) {
+            let p1 = current[0], p2 = current[1], p3 = current[2], p4 = current[3], p5 = current[4], p6 = current[5];
+            current = [p2, p3, p4, p5, p6, p1];
         }
+        return current;
     }
 
     function generate() {
         const nameA = document.getElementById('name-a').value;
         const nameB = document.getElementById('name-b').value;
-        const aStart = Array.from({length:6}, (_,i) => document.getElementById(`a${i+1}`).value || `P${i+1}`);
-        const bStart = Array.from({length:6}, (_,i) => document.getElementById(`b${i+1}`).value || `P${i+1}`);
+        const aStart = [1,2,3,4,5,6].map(i => document.getElementById(`a${i}`).value || `P${i}`);
+        const bStart = [1,2,3,4,5,6].map(i => document.getElementById(`b${i}`).value || `P${i}`);
         const out = document.getElementById('output');
         out.innerHTML = '';
 
+        const arrowSVG = `
+            <svg viewBox="0 0 100 100" fill="none" stroke="black" stroke-width="8" stroke-linecap="round">
+                <path d="M 50 20 A 30 30 0 0 1 80 50 A 30 30 0 0 1 50 80 A 30 30 0 0 1 20 50" opacity="0.4" />
+                <path d="M 20 50 L 10 40 M 20 50 L 30 40" stroke-linejoin="round" opacity="0.4" />
+            </svg>
+        `;
+
         for(let r=0; r<6; r++) {
-            const rotA = [...aStart.slice(-r), ...aStart.slice(0, -r)];
-            const rotB = [...bStart.slice(-r), ...bStart.slice(0, -r)];
+            const rotA = getRotatedLineup(aStart, r);
+            const rotB = getRotatedLineup(bStart, r);
+
             out.innerHTML += `
                 <div class="rotation-card">
                     <div class="rot-title">ROTATION ${r+1}</div>
                     <span class="court-label" style="color:var(--primary)">${nameA}</span>
-                    <div class="court">
-                        <div class="zone"><span>P4</span>${rotA[3]}</div><div class="zone"><span>P3</span>${rotA[2]}</div><div class="zone"><span>P2</span>${rotA[1]}</div>
-                        <div class="zone"><span>P5</span>${rotA[4]}</div><div class="zone"><span>P6</span>${rotA[5]}</div><div class="zone"><span>P1</span>${rotA[0]}</div>
+                    <div class="court-wrapper">
+                        <div class="court">
+                            <div class="arrow-overlay">${arrowSVG}</div>
+                            <div class="zone"><span>P4</span>${rotA[3]}</div><div class="zone"><span>P3</span>${rotA[2]}</div><div class="zone"><span>P2</span>${rotA[1]}</div>
+                            <div class="zone"><span>P5</span>${rotA[4]}</div><div class="zone"><span>P6</span>${rotA[5]}</div><div class="zone"><span>P1</span>${rotA[0]}</div>
+                        </div>
                     </div>
                     <span class="court-label" style="color:var(--secondary)">${nameB}</span>
-                    <div class="court team-b-bg">
-                        <div class="zone"><span>P4</span>${rotB[3]}</div><div class="zone"><span>P3</span>${rotB[2]}</div><div class="zone"><span>P2</span>${rotB[1]}</div>
-                        <div class="zone"><span>P5</span>${rotB[4]}</div><div class="zone"><span>P6</span>${rotB[5]}</div><div class="zone"><span>P1</span>${rotB[0]}</div>
+                    <div class="court-wrapper">
+                        <div class="court team-b-bg">
+                            <div class="arrow-overlay">${arrowSVG}</div>
+                            <div class="zone"><span>P4</span>${rotB[3]}</div><div class="zone"><span>P3</span>${rotB[2]}</div><div class="zone"><span>P2</span>${rotB[1]}</div>
+                            <div class="zone"><span>P5</span>${rotB[4]}</div><div class="zone"><span>P6</span>${rotB[5]}</div><div class="zone"><span>P1</span>${rotB[0]}</div>
+                        </div>
                     </div>
                 </div>`;
         }
