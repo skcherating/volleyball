@@ -24,7 +24,7 @@
 
         .no-print { display: block; }
 
-        /* --- SIMPLE SCOREBOARD --- */
+        /* --- SCOREBOARD --- */
         .scoreboard-panel {
             background: var(--dark); color: white;
             padding: 15px; border-radius: 8px; margin-bottom: 20px;
@@ -54,20 +54,18 @@
         }
         .setup-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
         
-        /* Inputs */
         .input-label-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
         .sort-link { font-size: 0.75rem; color: var(--primary); cursor: pointer; text-decoration: underline; }
         textarea { width: 100%; height: 60px; padding: 8px; border: 1px solid #cbd5e1; border-radius: 4px; resize: none; font-size: 14px; }
         
-        /* Player Selection Row: Label | Role | Name | Sub */
+        /* Player Selection Row */
         .player-row { 
             display: grid; 
-            grid-template-columns: 40px 55px 1fr 0.8fr; /* Adjusted for Role */
+            grid-template-columns: 40px 55px 1fr 0.8fr; 
             gap: 5px; align-items: center; margin-bottom: 6px; 
         }
         .player-row label { font-size: 0.75rem; font-weight: bold; white-space: nowrap; overflow: hidden; }
         select { width: 100%; padding: 6px 2px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 0.85rem; background: white; }
-        
         .role-select { font-weight: bold; color: #444; text-align: center; }
 
         .team-box { padding: 15px; border-radius: 8px; border: 2px solid #e2e8f0; }
@@ -109,52 +107,38 @@
             line-height: 1.1;
         }
         .zone .pos-label { font-size: 0.55rem; color: #64748b; margin-bottom: 2px; text-transform: uppercase; }
-        
         .zone .player-info { display: flex; align-items: center; gap: 3px; }
-        .zone .role-badge { 
-            font-size: 0.6rem; background: #333; color: white; padding: 1px 3px; border-radius: 3px; 
-            display: inline-block; line-height: 1; vertical-align: middle;
-        }
+        .zone .role-badge { font-size: 0.6rem; background: #333; color: white; padding: 1px 3px; border-radius: 3px; display: inline-block; line-height: 1; vertical-align: middle; }
         .zone .player-name { font-size: 0.85rem; color: #000; }
         .zone .sub-name { font-size: 0.7rem; color: #666; font-weight: normal; font-style: italic; }
         
-        .server-badge {
-            position: absolute; top: -5px; right: -5px; background: #10b981; color: white;
-            font-size: 0.6rem; padding: 2px 4px; border-radius: 4px; z-index: 10;
-        }
+        .server-badge { position: absolute; top: -5px; right: -5px; background: #10b981; color: white; font-size: 0.6rem; padding: 2px 4px; border-radius: 4px; z-index: 10; }
         .court-label { font-size: 0.75rem; font-weight: bold; margin-bottom: 2px; display: block; text-transform: uppercase; }
 
-        /* --- MOBILE --- */
         @media screen and (max-width: 768px) {
             body { padding: 10px; }
             .container { padding: 15px; }
             .roster-section, .setup-grid, .btn-group { grid-template-columns: 1fr; gap: 15px; }
             .filter-bar { flex-direction: column; text-align: center; }
-            
-            /* Stack controls on mobile for better touch targets */
             .player-row { grid-template-columns: 40px 1fr 2fr; grid-template-rows: auto auto; gap: 5px; margin-bottom: 12px; border-bottom: 1px solid #eee; padding-bottom: 8px; }
             .player-row label { grid-row: 1; grid-column: 1; align-self: center; }
             .player-row .role-select { grid-row: 1; grid-column: 2; }
             .player-row .name-select { grid-row: 1; grid-column: 3; }
             .player-row .sub-select { grid-row: 2; grid-column: 2 / span 2; }
-            
             .output-grid { grid-template-columns: 1fr; }
             .scoreboard-panel { grid-template-columns: 1fr; gap: 20px; }
             .sets-display { flex-direction: row; gap: 15px; justify-content: space-between; width: 100%; }
         }
 
-        /* --- PRINT --- */
         @media print {
             @page { size: A4 portrait; margin: 5mm; }
             body { background: white; padding: 0; margin: 0; }
             .container { width: 100%; max-width: none; box-shadow: none; padding: 0; border: none; }
             .no-print { display: none !important; } 
-            
             .output-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 5px; }
             .output-grid.single-view { display: block; width: 80%; margin: 50px auto; }
             .output-grid.single-view .rotation-card { border: 2px solid #000; padding: 20px; }
             .output-grid.single-view .zone { height: 80px; font-size: 1.2rem; }
-            
             .rotation-card { border: 1px solid #000; padding: 5px; break-inside: avoid; }
             .rot-title { font-size: 0.9rem; padding: 2px; margin-bottom: 5px; background: #333 !important; color: white !important; }
             .court { gap: 2px; padding: 4px; border-width: 1px; }
@@ -284,6 +268,7 @@
     function updateSet(team, val) {
         if(team === 'a') scores.seta = Math.max(0, scores.seta + val);
         if(team === 'b') scores.setb = Math.max(0, scores.setb + val);
+        // Optional: Reset points
         if(confirm("Reset points for next set?")) { scores.sa = 0; scores.sb = 0; }
         renderScores();
         saveData();
@@ -333,14 +318,11 @@
                         <label>${label}</label>
                         <select id="${pre}${i}_role" class="role-select" onchange="saveData()">
                             <option value="">-</option>
-                            <option value="S">S</option>
-                            <option value="OH">OH</option>
-                            <option value="MB">MB</option>
-                            <option value="OP">OP</option>
-                            <option value="L">L</option>
-                            <option value="DS">DS</option>
+                            <option value="S">S</option><option value="OH">OH</option>
+                            <option value="MB">MB</option><option value="OP">OP</option>
+                            <option value="L">L</option><option value="DS">DS</option>
                         </select>
-                        <select id="${pre}${i}" class="name-select" onchange="saveData()"><option value="">-Name-</option></select>
+                        <select id="${pre}${i}" class="name-select" onchange="handleStarterChange('${pre}', ${i})"><option value="">-Name-</option></select>
                         <select id="${pre}${i}_sub" class="sub-select" onchange="saveData()"><option value="">-Sub-</option></select>
                     </div>`;
             }
@@ -348,6 +330,28 @@
         createSelects('selectors-a', 'a');
         createSelects('selectors-b', 'b');
         loadData();
+    }
+
+    // Triggered when the "Starter" dropdown changes
+    function handleStarterChange(teamPrefix, rowId) {
+        // 1. If user selected a name that is currently selected as the SUB in the same row, clear the sub.
+        const starterVal = document.getElementById(`${teamPrefix}${rowId}`).value;
+        const subSelect = document.getElementById(`${teamPrefix}${rowId}_sub`);
+        
+        if(subSelect.value === starterVal && starterVal !== "") {
+            subSelect.value = "";
+        }
+
+        // 2. Save Data
+        saveData();
+
+        // 3. Re-populate the Sub list for this row (to remove the starter's name)
+        // We actually need to re-run updateDropdowns to refresh everyone, but optimizing:
+        const teamKey = teamPrefix === 'a' ? 'a' : 'b';
+        const rosterVal = document.getElementById(`roster-${teamKey}-raw`).value;
+        const rosterList = rosterVal.split(',').map(s => s.trim()).filter(s => s !== "");
+        
+        updateSubSelect(`${teamPrefix}${rowId}_sub`, rosterList, starterVal);
     }
 
     function updateDropdowns() {
@@ -358,22 +362,42 @@
         
         ['a', 'b'].forEach(team => {
             for(let i=1; i<=6; i++) {
-                updateSingleSelect(`${team}${i}`, rosters[team]);
-                updateSingleSelect(`${team}${i}_sub`, rosters[team]);
+                // Populate Starter (Full Roster)
+                updateStarterSelect(`${team}${i}`, rosters[team]);
+                
+                // Populate Sub (Roster MINUS selected starter)
+                const currentStarter = document.getElementById(`${team}${i}`).value;
+                updateSubSelect(`${team}${i}_sub`, rosters[team], currentStarter);
             }
         });
     }
 
-    function updateSingleSelect(elementId, playerList) {
+    function updateStarterSelect(elementId, playerList) {
         const sel = document.getElementById(elementId);
         const currentVal = sel.value;
-        const isSub = elementId.includes('sub');
-        sel.innerHTML = isSub ? '<option value="">-Sub-</option>' : '<option value="">-Name-</option>';
+        sel.innerHTML = '<option value="">-Name-</option>';
         playerList.forEach(player => {
             const opt = document.createElement('option');
             opt.value = player; opt.textContent = player;
             if(player === currentVal) opt.selected = true;
             sel.appendChild(opt);
+        });
+    }
+
+    // New Function to Filter Subs
+    function updateSubSelect(elementId, playerList, excludeName) {
+        const sel = document.getElementById(elementId);
+        const currentVal = sel.value;
+        sel.innerHTML = '<option value="">-Sub-</option>';
+        
+        playerList.forEach(player => {
+            // FILTER: Only add if name is NOT the current starter
+            if (player !== excludeName) {
+                const opt = document.createElement('option');
+                opt.value = player; opt.textContent = player;
+                if(player === currentVal) opt.selected = true;
+                sel.appendChild(opt);
+            }
         });
     }
 
@@ -404,6 +428,7 @@
         if(!saved) return;
         const data = JSON.parse(saved);
         
+        // Load Variables
         document.getElementById('roster-a-raw').value = data.rosterA || '';
         document.getElementById('roster-b-raw').value = data.rosterB || '';
         document.getElementById('name-a').value = data.nameA || 'SK CHERATING';
@@ -411,23 +436,38 @@
         document.getElementById('start-offset-a').value = data.startOffsetA || '0';
         document.getElementById('start-offset-b').value = data.startOffsetB || '0';
         
-        if(data.scores) { scores = data.scores; renderScores(); }
+        if(data.scores) { scores = data.scores || {sa:0, sb:0, seta:0, setb:0}; renderScores(); }
 
         updateSBName();
-        updateDropdowns();
         
-        [1,2,3,4,5,6].forEach((pos, idx) => {
-            if(data.lineupA && data.lineupA[idx]) {
-                document.getElementById(`a${pos}`).value = data.lineupA[idx].name || '';
-                document.getElementById(`a${pos}_sub`).value = data.lineupA[idx].sub || '';
-                document.getElementById(`a${pos}_role`).value = data.lineupA[idx].role || '';
-            }
-            if(data.lineupB && data.lineupB[idx]) {
-                document.getElementById(`b${pos}`).value = data.lineupB[idx].name || '';
-                document.getElementById(`b${pos}_sub`).value = data.lineupB[idx].sub || '';
-                document.getElementById(`b${pos}_role`).value = data.lineupB[idx].role || '';
+        // Restore Selections
+        // We must populate dropdowns first so we can select values
+        // Note: updateDropdowns depends on values currently in textareas
+        const rosters = {
+            a: (data.rosterA || '').split(',').map(s=>s.trim()).filter(s=>s!==""),
+            b: (data.rosterB || '').split(',').map(s=>s.trim()).filter(s=>s!=="")
+        };
+
+        ['a', 'b'].forEach(teamKey => {
+            const lineup = teamKey === 'a' ? (data.lineupA || []) : (data.lineupB || []);
+            for(let i=1; i<=6; i++) {
+                const pData = lineup[i-1] || {};
+                
+                // Set Role
+                document.getElementById(`${teamKey}${i}_role`).value = pData.role || '';
+                
+                // Populate Starter List
+                updateStarterSelect(`${teamKey}${i}`, rosters[teamKey]);
+                // Set Starter Value
+                document.getElementById(`${teamKey}${i}`).value = pData.name || '';
+                
+                // Populate Sub List (Filtered by current starter)
+                updateSubSelect(`${teamKey}${i}_sub`, rosters[teamKey], pData.name || '');
+                // Set Sub Value
+                document.getElementById(`${teamKey}${i}_sub`).value = pData.sub || '';
             }
         });
+
         generate();
     }
 
