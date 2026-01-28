@@ -17,35 +17,58 @@
         body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); padding: 15px; margin: 0; color: #333; }
         .container { max-width: 1000px; margin: auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
         
-        .header-section { text-align: center; margin-bottom: 15px; }
+        .header-section { text-align: center; margin-bottom: 20px; }
         .school-logo { width: 70px; height: auto; margin-bottom: 5px; }
         h1 { margin: 0; font-size: 1.5rem; color: var(--dark); }
 
         .no-print { display: block; }
 
-        /* --- SCOREBOARD --- */
+        /* --- ADVANCED SCOREBOARD --- */
         .scoreboard-panel {
             background: var(--dark); color: white;
-            padding: 10px; border-radius: 8px; margin-bottom: 20px;
-            display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5px;
+            padding: 15px; border-radius: 8px; margin-bottom: 20px;
+        }
+        
+        /* Main Score Row */
+        .score-main {
+            display: grid; grid-template-columns: 1fr 0.8fr 1fr; gap: 10px;
             align-items: center; text-align: center;
         }
         .score-team { display: flex; flex-direction: column; align-items: center; }
-        .score-name { font-size: 0.8rem; font-weight: bold; opacity: 0.8; margin-bottom: 2px; text-transform: uppercase; }
-        .score-number { font-size: 2.5rem; font-weight: bold; line-height: 1; margin: 0 10px; min-width: 50px; font-variant-numeric: tabular-nums; }
-        .score-controls { display: flex; align-items: center; justify-content: center; gap: 5px; }
+        .score-name { font-size: 0.9rem; font-weight: bold; opacity: 0.9; margin-bottom: 5px; text-transform: uppercase; }
+        .score-number { font-size: 3.5rem; font-weight: 800; line-height: 1; margin: 5px 0; font-variant-numeric: tabular-nums; }
+        
+        .score-controls { display: flex; gap: 8px; margin-top: 5px; }
         .btn-score { 
-            background: rgba(255,255,255,0.2); color: white; border: none; 
-            width: 30px; height: 30px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
+            background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.3);
+            width: 36px; height: 36px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; 
+            display: flex; align-items: center; justify-content: center; transition: 0.2s;
         }
-        .btn-score:active { background: rgba(255,255,255,0.4); }
+        .btn-score:hover { background: rgba(255,255,255,0.3); }
+        .btn-score:active { transform: scale(0.95); }
 
-        .sets-display { display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(0,0,0,0.2); padding: 5px; border-radius: 6px; }
-        .sets-count { font-size: 1.2rem; font-weight: bold; letter-spacing: 2px; margin-bottom: 4px; }
-        .btn-set { background: transparent; border: 1px solid #777; color: #ddd; font-size: 0.7rem; padding: 2px 6px; border-radius: 4px; cursor: pointer; margin: 0 2px; }
-        .btn-set:hover { background: rgba(255,255,255,0.1); }
+        /* Sets & History */
+        .sets-area { display: flex; flex-direction: column; align-items: center; }
+        .sets-label { font-size: 0.7rem; text-transform: uppercase; color: #94a3b8; font-weight: bold; letter-spacing: 1px; }
+        .sets-score { font-size: 1.8rem; font-weight: bold; margin-bottom: 5px; }
+        
+        .win-set-btn {
+            background: #10b981; color: white; border: none; padding: 4px 8px; border-radius: 4px;
+            font-size: 0.7rem; font-weight: bold; cursor: pointer; margin-bottom: 5px; text-transform: uppercase;
+        }
+        .win-set-btn.loss { background: #ef4444; }
 
-        /* --- ROSTER --- */
+        /* Set History Bar */
+        .history-bar {
+            margin-top: 15px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1);
+            display: flex; justify-content: center; gap: 10px; font-size: 0.9rem;
+        }
+        .history-item { background: rgba(0,0,0,0.3); padding: 4px 10px; border-radius: 12px; }
+        .history-reset { margin-top: 10px; text-align: center; }
+        .btn-reset { background: transparent; border: 1px solid #64748b; color: #94a3b8; font-size: 0.7rem; padding: 4px 8px; border-radius: 4px; cursor: pointer; }
+        .btn-reset:hover { border-color: #ef4444; color: #ef4444; }
+
+        /* --- ROSTER LIST --- */
         .roster-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
         .roster-col { background: #f1f5f9; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; }
         .team-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 2px solid #cbd5e1; padding-bottom: 5px; }
@@ -98,6 +121,7 @@
         @media screen and (max-width: 768px) {
             .roster-wrapper, .setup-grid { grid-template-columns: 1fr; }
             .output-grid { grid-template-columns: 1fr; }
+            .score-main { grid-template-columns: 1fr; gap: 20px; }
         }
 
         @media print {
@@ -127,29 +151,41 @@
 
     <div class="no-print">
         <div class="scoreboard-panel">
-            <div class="score-team">
-                <div class="score-name" id="sb-name-a">HOME</div>
-                <div class="score-controls">
-                    <button class="btn-score" onclick="updateScore('a', -1)">-</button>
-                    <span class="score-number" id="val-score-a">0</span>
-                    <button class="btn-score" onclick="updateScore('a', 1)">+</button>
+            <div class="score-main">
+                <div class="score-team">
+                    <div class="score-name" id="sb-name-a">HOME</div>
+                    <div class="score-number" id="val-score-a">0</div>
+                    <div class="score-controls">
+                        <button class="btn-score" onclick="changeScore('a', -1)">-</button>
+                        <button class="btn-score" onclick="changeScore('a', 1)">+</button>
+                    </div>
+                    <button class="win-set-btn" onclick="winSet('a')">Win Set</button>
+                </div>
+
+                <div class="sets-area">
+                    <div class="sets-label">Sets</div>
+                    <div class="sets-score">
+                        <span id="val-sets-a">0</span> - <span id="val-sets-b">0</span>
+                    </div>
+                </div>
+
+                <div class="score-team">
+                    <div class="score-name" id="sb-name-b">AWAY</div>
+                    <div class="score-number" id="val-score-b">0</div>
+                    <div class="score-controls">
+                        <button class="btn-score" onclick="changeScore('b', -1)">-</button>
+                        <button class="btn-score" onclick="changeScore('b', 1)">+</button>
+                    </div>
+                    <button class="win-set-btn loss" onclick="winSet('b')">Win Set</button>
                 </div>
             </div>
-            <div class="sets-display">
-                <div class="sets-count"><span id="val-set-a">0</span> - <span id="val-set-b">0</span></div>
-                <div style="display:flex;">
-                    <button class="btn-set" onclick="updateSet('a', 1)">Set A+</button>
-                    <button class="btn-set" onclick="clearPoints()">Reset Pts</button>
-                    <button class="btn-set" onclick="updateSet('b', 1)">Set B+</button>
-                </div>
+
+            <div class="history-bar" id="history-container">
+                <span style="opacity:0.5; font-size:0.8rem;">No sets played yet.</span>
             </div>
-            <div class="score-team">
-                <div class="score-name" id="sb-name-b">AWAY</div>
-                <div class="score-controls">
-                    <button class="btn-score" onclick="updateScore('b', -1)">-</button>
-                    <span class="score-number" id="val-score-b">0</span>
-                    <button class="btn-score" onclick="updateScore('b', 1)">+</button>
-                </div>
+            
+            <div class="history-reset">
+                <button class="btn-reset" onclick="resetMatch()">RESET MATCH & SCORES</button>
             </div>
         </div>
 
@@ -169,25 +205,15 @@
         <div class="roster-wrapper">
             <div class="roster-col">
                 <div class="team-header">
-                    <input type="text" id="name-a" class="team-name-input" value="SK CHERATING" oninput="saveData(); updateSBName()">
-                    <div style="font-size:0.8rem;">Start Rot: 
-                        <select id="start-offset-a" onchange="saveData(); generate()">
-                            <option value="0">1</option><option value="1">2</option><option value="2">3</option>
-                            <option value="3">4</option><option value="4">5</option><option value="5">6</option>
-                        </select>
-                    </div>
+                    <input type="text" id="name-a" class="team-name-input" value="SK CHERATING" oninput="saveData(); updateNames()">
+                    <div style="font-size:0.8rem;">Start Rot: <select id="start-offset-a" onchange="saveData(); generate()"><option value="0">1</option><option value="1">2</option><option value="2">3</option><option value="3">4</option><option value="4">5</option><option value="5">6</option></select></div>
                 </div>
                 <div class="roster-list" id="roster-list-a"></div>
             </div>
             <div class="roster-col">
                 <div class="team-header">
-                    <input type="text" id="name-b" class="team-name-input" value="OPPONENT" oninput="saveData(); updateSBName()">
-                    <div style="font-size:0.8rem;">Start Rot: 
-                        <select id="start-offset-b" onchange="saveData(); generate()">
-                            <option value="0">1</option><option value="1">2</option><option value="2">3</option>
-                            <option value="3">4</option><option value="4">5</option><option value="5">6</option>
-                        </select>
-                    </div>
+                    <input type="text" id="name-b" class="team-name-input" value="OPPONENT" oninput="saveData(); updateNames()">
+                    <div style="font-size:0.8rem;">Start Rot: <select id="start-offset-b" onchange="saveData(); generate()"><option value="0">1</option><option value="1">2</option><option value="2">3</option><option value="3">4</option><option value="4">5</option><option value="5">6</option></select></div>
                 </div>
                 <div class="roster-list" id="roster-list-b"></div>
             </div>
@@ -207,7 +233,7 @@
         <div class="btn-group">
             <button class="btn-main btn-update" onclick="generate()">Update Display</button>
             <button class="btn-main btn-print" onclick="window.print()">Print</button>
-            <button class="btn-main btn-clear" onclick="clearAll()">Clear All</button>
+            <button class="btn-main btn-clear" onclick="clearAllData()">Clear Roster Data</button>
         </div>
     </div>
 
@@ -215,303 +241,321 @@
 </div>
 
 <script>
-    // --- SCOREBOARD ---
-    let scores = { sa:0, sb:0, seta:0, setb:0 };
-    
-    function updateScore(t, v) { 
-        if(t==='a') scores.sa = Math.max(0, scores.sa+v); 
-        if(t==='b') scores.sb = Math.max(0, scores.sb+v); 
-        renderScores(); 
-        saveData(); 
-    }
-    
-    function updateSet(t, v) { 
-        if(t==='a') scores.seta = Math.max(0, scores.seta+v); 
-        if(t==='b') scores.setb = Math.max(0, scores.setb+v); 
-        if(confirm("Reset points to 0-0 for new set?")) { scores.sa=0; scores.sb=0; } 
-        renderScores(); 
-        saveData(); 
-    }
-    
-    function clearPoints() { 
-        if(confirm("Reset Points to 0-0?")) { 
-            scores.sa = 0; 
-            scores.sb = 0; 
-            renderScores(); 
-            saveData(); 
-        } 
-    }
-    
-    function renderScores() { 
-        document.getElementById('val-score-a').innerText = scores.sa; 
-        document.getElementById('val-score-b').innerText = scores.sb; 
-        document.getElementById('val-set-a').innerText = scores.seta; 
-        document.getElementById('val-set-b').innerText = scores.setb; 
-    }
-    
-    function updateSBName() { 
-        document.getElementById('sb-name-a').innerText = document.getElementById('name-a').value||'HOME'; 
-        document.getElementById('sb-name-b').innerText = document.getElementById('name-b').value||'AWAY'; 
-    }
+    // --- STATE MANAGEMENT ---
+    let appState = {
+        scores: { a: 0, b: 0 },
+        sets: { a: 0, b: 0 },
+        history: [], // Array of strings like "25-20"
+        rosterA: [],
+        rosterB: [],
+        lineupA: [],
+        lineupB: [],
+        meta: { nameA: "SK CHERATING", nameB: "OPPONENT", offA: 0, offB: 0 }
+    };
 
-    // --- LOGIC ---
+    const roles = `<option value="">-</option><option value="S">S</option><option value="OH">OH</option><option value="MB">MB</option><option value="OP">OP</option><option value="L">L</option><option value="DS">DS</option>`;
+
+    // --- INITIALIZATION ---
     function init() {
-        const roles = `<option value="">Role</option><option value="S">S</option><option value="OH">OH</option><option value="MB">MB</option><option value="OP">OP</option><option value="L">L</option><option value="DS">DS</option>`;
-        
         ['a','b'].forEach(team => {
             const list = document.getElementById(`roster-list-${team}`);
             for(let i=1; i<=12; i++) {
                 list.innerHTML += `
                 <div class="roster-row">
                     <span>${i}</span>
-                    <input type="text" id="p-${team}-${i}-name" placeholder="Name" oninput="handleRosterChange('${team}')">
-                    <select id="p-${team}-${i}-role" onchange="saveData()">${roles}</select>
+                    <input type="text" id="p-${team}-${i}-name" placeholder="Player Name" oninput="handleInput()">
+                    <select id="p-${team}-${i}-role" onchange="handleInput()">${roles}</select>
                 </div>`;
             }
-
             const box = document.getElementById(`selectors-${team}`);
             for(let i=1; i<=6; i++) {
-                let lbl = `Pos ${i}`;
-                if(i===1) lbl += " (S)";
+                let lbl = `Pos ${i}`; if(i===1) lbl += " (S)";
                 box.innerHTML += `
                 <div class="lineup-row">
                     <label>${lbl}</label>
-                    <select id="l-${team}-${i}" class="lineup-select" onchange="handleLineupChange('${team}')"><option value="">-Starter-</option></select>
+                    <select id="l-${team}-${i}" class="lineup-select" onchange="handleLineupChange('${team}')"></select>
                     <div class="icon-swap" onclick="swapSub('${team}', ${i})">⇄</div>
-                    <select id="l-${team}-${i}-sub" class="lineup-select" onchange="handleLineupChange('${team}')"><option value="">-Sub-</option></select>
+                    <select id="l-${team}-${i}-sub" class="lineup-select" onchange="handleLineupChange('${team}')"></select>
                 </div>`;
             }
         });
         loadData();
     }
 
-    function handleRosterChange(team) {
+    // --- SCOREBOARD LOGIC ---
+    function changeScore(team, delta) {
+        if(team === 'a') appState.scores.a = Math.max(0, appState.scores.a + delta);
+        if(team === 'b') appState.scores.b = Math.max(0, appState.scores.b + delta);
+        renderScoreboard();
         saveData();
-        refreshAllDropdowns(team);
+    }
+
+    function winSet(winningTeam) {
+        // Record History
+        const scoreStr = `(${appState.scores.a}-${appState.scores.b})`;
+        appState.history.push(scoreStr);
+        
+        // Increment Set
+        if(winningTeam === 'a') appState.sets.a++;
+        if(winningTeam === 'b') appState.sets.b++;
+        
+        // Reset Points
+        appState.scores.a = 0;
+        appState.scores.b = 0;
+        
+        renderScoreboard();
+        saveData();
+    }
+
+    function resetMatch() {
+        if(confirm("Reset entire match score and history?")) {
+            appState.scores = { a: 0, b: 0 };
+            appState.sets = { a: 0, b: 0 };
+            appState.history = [];
+            renderScoreboard();
+            saveData();
+        }
+    }
+
+    function renderScoreboard() {
+        document.getElementById('val-score-a').innerText = appState.scores.a;
+        document.getElementById('val-score-b').innerText = appState.scores.b;
+        document.getElementById('val-sets-a').innerText = appState.sets.a;
+        document.getElementById('val-sets-b').innerText = appState.sets.b;
+        
+        const histContainer = document.getElementById('history-container');
+        if (appState.history.length === 0) {
+            histContainer.innerHTML = '<span style="opacity:0.5; font-size:0.8rem;">No sets played yet.</span>';
+        } else {
+            histContainer.innerHTML = appState.history.map((s, i) => 
+                `<div class="history-item">Set ${i+1}: ${s}</div>`
+            ).join('');
+        }
+    }
+
+    function updateNames() {
+        document.getElementById('sb-name-a').innerText = document.getElementById('name-a').value;
+        document.getElementById('sb-name-b').innerText = document.getElementById('name-b').value;
+    }
+
+    // --- DROPDOWN & SMART SUB LOGIC ---
+    function handleInput() {
+        // Save Roster inputs to state then refresh dropdowns
+        saveData(); 
+        refreshDropdowns('a');
+        refreshDropdowns('b');
     }
 
     function handleLineupChange(team) {
         saveData();
-        refreshAllDropdowns(team);
+        refreshDropdowns(team);
     }
 
     function swapSub(team, pos) {
-        const main = document.getElementById(`l-${team}-${pos}`);
-        const sub = document.getElementById(`l-${team}-${pos}-sub`);
-        const temp = main.value;
-        main.value = sub.value;
-        sub.value = temp;
-        saveData();
-        refreshAllDropdowns(team);
+        const m = document.getElementById(`l-${team}-${pos}`);
+        const s = document.getElementById(`l-${team}-${pos}-sub`);
+        const temp = m.value;
+        m.value = s.value;
+        s.value = temp;
+        handleLineupChange(team);
         generate();
     }
 
-    // === CORE LOGIC: REFRESH DROPDOWNS ===
-    function refreshAllDropdowns(team) {
-        // 1. Get All Players from Roster
-        let allPlayers = [];
+    function refreshDropdowns(team) {
+        // 1. Collect Roster Names
+        let roster = [];
         for(let i=1; i<=12; i++) {
-            const val = document.getElementById(`p-${team}-${i}-name`).value.trim();
-            if(val) allPlayers.push(val);
+            const n = document.getElementById(`p-${team}-${i}-name`).value.trim();
+            if(n) roster.push(n);
         }
-        allPlayers.sort((a,b)=>a.localeCompare(b));
+        roster.sort();
 
-        // 2. Find which players are already used
-        let usedPlayers = new Set();
+        // 2. Identify "Used" players (Active Starters)
+        // We do NOT count subs as "Used" for other subs, but a STARTER cannot be a sub.
+        let starters = new Set();
         for(let i=1; i<=6; i++) {
-            const m = document.getElementById(`l-${team}-${i}`).value;
-            const s = document.getElementById(`l-${team}-${i}-sub`).value;
-            if(m) usedPlayers.add(m);
-            if(s) usedPlayers.add(s);
+            const val = document.getElementById(`l-${team}-${i}`).value;
+            if(val) starters.add(val);
         }
 
-        // 3. Update every Select Element
+        // 3. Populate Dropdowns
         for(let i=1; i<=6; i++) {
-            updateSingleSelect(`l-${team}-${i}`, allPlayers, usedPlayers);
-            updateSingleSelect(`l-${team}-${i}-sub`, allPlayers, usedPlayers);
+            const elMain = document.getElementById(`l-${team}-${i}`);
+            const elSub = document.getElementById(`l-${team}-${i}-sub`);
+            
+            const vMain = elMain.value;
+            const vSub = elSub.value;
+
+            // MAIN: Show All Roster (always allow changing starter)
+            populateSelect(elMain, roster, vMain, null);
+
+            // SUB: Show Roster MINUS Active Starters
+            // BUT: Always include the current sub value so it doesn't disappear
+            populateSelect(elSub, roster, vSub, starters);
         }
     }
 
-    function updateSingleSelect(elId, allPlayers, usedSet) {
-        const el = document.getElementById(elId);
-        const currentVal = el.value; // Keep track of what was selected
-        
-        // Clear options
-        const defaultText = elId.includes('sub') ? '-Sub-' : '-Starter-';
-        el.innerHTML = `<option value="">${defaultText}</option>`;
-
-        allPlayers.forEach(player => {
-            // Logic: A player is available if:
-            // 1. They are NOT used anywhere else (not in usedSet)
-            // 2. OR they are the one currently selected in THIS box (currentVal)
-            
-            if (!usedSet.has(player) || player === currentVal) {
+    function populateSelect(el, allNames, currentVal, excludeSet) {
+        el.innerHTML = `<option value="">${el.id.includes('sub')?'-Sub-':'-Start-'}</option>`;
+        allNames.forEach(name => {
+            // Include if: Not in exclude set OR matches current value
+            if (!excludeSet || !excludeSet.has(name) || name === currentVal) {
                 const opt = document.createElement('option');
-                opt.value = player;
-                opt.innerText = player;
-                if(player === currentVal) opt.selected = true;
+                opt.value = name; opt.text = name;
+                if(name === currentVal) opt.selected = true;
                 el.appendChild(opt);
             }
         });
     }
 
-    // === DATA & GENERATE ===
+    // --- STORAGE & GENERATION ---
     function saveData() {
-        const getData = (team) => {
-            let roster = [];
+        // Scrape DOM to State
+        appState.meta.nameA = document.getElementById('name-a').value;
+        appState.meta.nameB = document.getElementById('name-b').value;
+        appState.meta.offA = document.getElementById('start-offset-a').value;
+        appState.meta.offB = document.getElementById('start-offset-b').value;
+
+        ['a','b'].forEach(t => {
+            let ros = [], lin = [];
             for(let i=1; i<=12; i++) {
-                roster.push({
-                    name: document.getElementById(`p-${team}-${i}-name`).value,
-                    role: document.getElementById(`p-${team}-${i}-role`).value
+                ros.push({
+                    name: document.getElementById(`p-${t}-${i}-name`).value,
+                    role: document.getElementById(`p-${t}-${i}-role`).value
                 });
             }
-            let lineup = [];
             for(let i=1; i<=6; i++) {
-                lineup.push({
-                    name: document.getElementById(`l-${team}-${i}`).value,
-                    sub: document.getElementById(`l-${team}-${i}-sub`).value
+                lin.push({
+                    main: document.getElementById(`l-${t}-${i}`).value,
+                    sub: document.getElementById(`l-${t}-${i}-sub`).value
                 });
             }
-            return { roster, lineup };
-        };
-        const data = {
-            scores: scores,
-            meta: {
-                nameA: document.getElementById('name-a').value,
-                nameB: document.getElementById('name-b').value,
-                offA: document.getElementById('start-offset-a').value,
-                offB: document.getElementById('start-offset-b').value,
-            },
-            teamA: getData('a'), teamB: getData('b')
-        };
-        localStorage.setItem('vballDataFinalV2', JSON.stringify(data));
+            if(t==='a') { appState.rosterA = ros; appState.lineupA = lin; }
+            else { appState.rosterB = ros; appState.lineupB = lin; }
+        });
+
+        localStorage.setItem('vballProState', JSON.stringify(appState));
     }
 
     function loadData() {
-        const saved = localStorage.getItem('vballDataFinalV2');
-        if(!saved) return;
-        const data = JSON.parse(saved);
+        const str = localStorage.getItem('vballProState');
+        if(str) {
+            appState = JSON.parse(str);
+            // Restore Meta
+            document.getElementById('name-a').value = appState.meta.nameA;
+            document.getElementById('name-b').value = appState.meta.nameB;
+            document.getElementById('start-offset-a').value = appState.meta.offA;
+            document.getElementById('start-offset-b').value = appState.meta.offB;
+            updateNames();
+            renderScoreboard();
 
-        if(data.scores) { scores = data.scores; renderScores(); }
-        
-        document.getElementById('name-a').value = data.meta.nameA || '';
-        document.getElementById('name-b').value = data.meta.nameB || '';
-        document.getElementById('start-offset-a').value = data.meta.offA || '0';
-        document.getElementById('start-offset-b').value = data.meta.offB || '0';
-        updateSBName();
-
-        ['a','b'].forEach(t => {
-            const tData = t === 'a' ? data.teamA : data.teamB;
-            if(tData && tData.roster) {
-                tData.roster.forEach((p, idx) => {
+            // Restore Roster Inputs
+            ['a','b'].forEach(t => {
+                const ros = t==='a' ? appState.rosterA : appState.rosterB;
+                ros.forEach((p, idx) => {
                     if(idx < 12) {
                         document.getElementById(`p-${t}-${idx+1}-name`).value = p.name;
                         document.getElementById(`p-${t}-${idx+1}-role`).value = p.role;
                     }
                 });
-            }
-        });
+            });
 
-        // First pass: restore values blindly (so we have a 'currentVal')
-        ['a','b'].forEach(t => {
-            const tData = t === 'a' ? data.teamA : data.teamB;
-            if(tData && tData.lineup) {
-                tData.lineup.forEach((l, idx) => {
-                    // We must force the option to exist to set the value, 
-                    // then refresh will clean it up.
-                    const mainEl = document.getElementById(`l-${t}-${idx+1}`);
-                    const subEl = document.getElementById(`l-${t}-${idx+1}-sub`);
-                    if(l.name) mainEl.innerHTML += `<option value="${l.name}">${l.name}</option>`;
-                    if(l.sub) subEl.innerHTML += `<option value="${l.sub}">${l.sub}</option>`;
-                    
-                    mainEl.value = l.name;
-                    subEl.value = l.sub;
+            // Initial Dropdown Build (to populate options)
+            refreshDropdowns('a');
+            refreshDropdowns('b');
+
+            // Restore Lineup Selections
+            ['a','b'].forEach(t => {
+                const lin = t==='a' ? appState.lineupA : appState.lineupB;
+                lin.forEach((l, idx) => {
+                    const m = document.getElementById(`l-${t}-${idx+1}`);
+                    const s = document.getElementById(`l-${t}-${idx+1}-sub`);
+                    // We set value directly. If option doesn't exist yet (unlikely), it won't set.
+                    // But we just populated from roster, so it should be fine.
+                    m.value = l.main;
+                    s.value = l.sub;
                 });
-            }
-            // Now run the smart logic to clean up duplicates
-            refreshAllDropdowns(t);
-        });
+                refreshDropdowns(t); // Re-run to apply smart filters based on restored values
+            });
+        }
         generate();
     }
 
-    function clearAll() { if(confirm("Clear All Data?")) { localStorage.removeItem('vballDataFinalV2'); location.reload(); } }
-    
-    function getRole(name, team) { 
-        // Need to check specific team roster
-        for(let i=1; i<=12; i++) {
-            if(document.getElementById(`p-${team}-${i}-name`).value === name) {
-                return document.getElementById(`p-${team}-${i}-role`).value;
-            }
+    function clearAllData() {
+        if(confirm("Clear all rosters and lineups?")) {
+            localStorage.removeItem('vballProState');
+            location.reload();
         }
-        return ''; 
+    }
+
+    function getRole(name, team) {
+        const ros = team==='a' ? appState.rosterA : appState.rosterB;
+        const p = ros.find(x => x.name === name);
+        return p ? p.role : '';
     }
 
     function generate() {
-        const nameA = document.getElementById('name-a').value;
-        const nameB = document.getElementById('name-b').value;
-        const offA = parseInt(document.getElementById('start-offset-a').value);
-        const offB = parseInt(document.getElementById('start-offset-b').value);
-        const viewMode = document.getElementById('view-mode').value;
         const out = document.getElementById('output');
         out.innerHTML = '';
-        if(viewMode !== 'all') out.classList.add('single-view'); else out.classList.remove('single-view');
-        let startR = 0, endR = 6;
-        if(viewMode !== 'all') { startR = parseInt(viewMode)-1; endR = startR+1; }
+        const mode = document.getElementById('view-mode').value;
+        
+        if(mode !== 'all') out.classList.add('single-view'); else out.classList.remove('single-view');
+        
+        let start=0, end=6;
+        if(mode !== 'all') { start=parseInt(mode)-1; end=start+1; }
 
-        const buildLineupArr = (team) => {
+        // Build arrays for rotation
+        const getArr = (t) => {
             let arr = [];
             for(let i=1; i<=6; i++) {
-                const n = document.getElementById(`l-${team}-${i}`).value || `P${i}`;
-                const s = document.getElementById(`l-${team}-${i}-sub`).value;
-                const r = getRole(n, team);
-                arr.push({ name: n, sub: s, role: r });
+                const m = document.getElementById(`l-${t}-${i}`).value || `P${i}`;
+                const s = document.getElementById(`l-${t}-${i}-sub`).value;
+                arr.push({ name: m, sub: s, role: getRole(m, t) });
             }
             return arr;
         };
+        const arrA = getArr('a');
+        const arrB = getArr('b');
+        
+        const offA = parseInt(document.getElementById('start-offset-a').value);
+        const offB = parseInt(document.getElementById('start-offset-b').value);
 
-        const arrA = buildLineupArr('a');
-        const arrB = buildLineupArr('b');
-
-        for(let r=startR; r<endR; r++) {
-            const rotA = rotateArr(arrA, r + offA);
-            const rotB = rotateArr(arrB, r + offB);
+        for(let r=start; r<end; r++) {
+            const rotA = rotate(arrA, r + offA);
+            const rotB = rotate(arrB, r + offB);
+            
             out.innerHTML += `
             <div class="rotation-card">
                 <div class="rot-title">ROTATION ${r+1}</div>
-                <div style="font-weight:bold; color:var(--primary); text-align:center; font-size:0.8rem">${nameA}</div>
-                <div class="court-wrapper">
-                    <div class="court">
-                        ${zoneHTML(rotA[3], false)}${zoneHTML(rotA[2], false)}${zoneHTML(rotA[1], false)}
-                        ${zoneHTML(rotA[4], false)}${zoneHTML(rotA[5], false)}${zoneHTML(rotA[0], true)}
-                    </div>
-                </div>
-                <div style="font-weight:bold; color:var(--secondary); text-align:center; font-size:0.8rem">${nameB}</div>
-                <div class="court-wrapper">
-                    <div class="court team-b-bg">
-                        ${zoneHTML(rotB[3], false)}${zoneHTML(rotB[2], false)}${zoneHTML(rotB[1], false)}
-                        ${zoneHTML(rotB[4], false)}${zoneHTML(rotB[5], false)}${zoneHTML(rotB[0], true)}
-                    </div>
-                </div>
+                <div style="text-align:center; font-weight:bold; color:var(--primary)">${appState.meta.nameA}</div>
+                <div class="court-wrapper"><div class="court">
+                    ${z(rotA[3],0)}${z(rotA[2],0)}${z(rotA[1],0)}
+                    ${z(rotA[4],0)}${z(rotA[5],0)}${z(rotA[0],1)}
+                </div></div>
+                <div style="text-align:center; font-weight:bold; color:var(--secondary)">${appState.meta.nameB}</div>
+                <div class="court-wrapper"><div class="court team-b-bg">
+                    ${z(rotB[3],0)}${z(rotB[2],0)}${z(rotB[1],0)}
+                    ${z(rotB[4],0)}${z(rotB[5],0)}${z(rotB[0],1)}
+                </div></div>
             </div>`;
         }
     }
 
-    function rotateArr(arr, steps) {
+    function rotate(arr, steps) {
         let a = [...arr];
-        for(let i=0; i<steps; i++) { a = [a[1], a[2], a[3], a[4], a[5], a[0]]; }
+        for(let k=0; k<steps; k++) a = [a[1], a[2], a[3], a[4], a[5], a[0]];
         return a;
     }
 
-    function zoneHTML(p, isP1) {
-        const isL = p.role && p.role.startsWith('L');
-        return `
-        <div class="zone" ${isP1 ? 'style="border:2px solid #000"' : ''}>
-            ${isP1 ? '<div class="server-badge">SERVE</div>' : ''}
+    function z(p, isP1) {
+        const isL = p.role==='L';
+        return `<div class="zone" ${isP1?'style="border:2px solid #000"':''}>
+            ${isP1?'<div class="server-badge">S</div>':''}
             <span class="pos-label">${isP1?'P1':''}</span>
             <div class="player-content">
-                ${p.role ? `<span class="role-badge ${isL?'libero':''}">${p.role}</span>` : ''}
+                ${p.role?`<span class="role-badge ${isL?'libero':''}">${p.role}</span>`:''}
                 <span>${p.name}</span>
-                ${p.sub ? `<span class="sub-name">(${p.sub})</span>` : ''}
+                ${p.sub?`<span class="sub-name">(${p.sub})</span>`:''}
             </div>
         </div>`;
     }
