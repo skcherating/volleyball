@@ -17,7 +17,7 @@
         body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); padding: 15px; margin: 0; color: #333; }
         .container { max-width: 1000px; margin: auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
         
-        .header-section { text-align: center; margin-bottom: 20px; }
+        .header-section { text-align: center; margin-bottom: 15px; }
         .school-logo { width: 70px; height: auto; margin-bottom: 5px; }
         h1 { margin: 0; font-size: 1.5rem; color: var(--dark); }
 
@@ -45,50 +45,33 @@
         .btn-set { background: transparent; border: 1px solid #777; color: #ddd; font-size: 0.7rem; padding: 2px 6px; border-radius: 4px; cursor: pointer; margin: 0 2px; }
         .btn-set:hover { background: rgba(255,255,255,0.1); }
 
-        /* --- ROSTER LIST --- */
+        /* --- ROSTER --- */
         .roster-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
         .roster-col { background: #f1f5f9; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; }
-        
         .team-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 2px solid #cbd5e1; padding-bottom: 5px; }
-        .team-name-input { 
-            font-size: 1.1rem; font-weight: 800; border: none; outline: none; 
-            background: transparent; width: 60%; color: var(--dark);
-        }
+        .team-name-input { font-size: 1.1rem; font-weight: 800; border: none; outline: none; background: transparent; width: 60%; color: var(--dark); }
 
         .roster-list { display: flex; flex-direction: column; gap: 4px; }
         .roster-row { display: grid; grid-template-columns: 20px 1fr 60px; gap: 5px; align-items: center; }
         .roster-row span { font-size: 0.75rem; color: #888; font-weight: bold; text-align: center; }
-        .roster-row input { 
-            padding: 5px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 0.9rem; width: 100%;
-        }
-        .roster-row select { 
-            padding: 5px 2px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 0.75rem; font-weight: bold; color: #444; width: 100%;
-        }
+        .roster-row input { padding: 5px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 0.9rem; width: 100%; }
+        .roster-row select { padding: 5px 2px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 0.75rem; font-weight: bold; color: #444; width: 100%; }
 
-        /* --- LINEUP SETUP --- */
+        /* --- LINEUP --- */
         .setup-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
         .team-box { padding: 15px; border-radius: 8px; border: 2px solid #e2e8f0; background: white; }
         .team-a { border-color: var(--primary); }
         .team-b { border-color: var(--secondary); }
 
-        /* Updated Row with Swap Icon */
-        .lineup-row { 
-            display: grid; grid-template-columns: 40px 1fr 30px 1fr; 
-            gap: 5px; align-items: center; margin-bottom: 8px; 
-        }
+        .lineup-row { display: grid; grid-template-columns: 40px 1fr 30px 1fr; gap: 5px; align-items: center; margin-bottom: 8px; }
         .lineup-row label { font-size: 0.8rem; font-weight: bold; color: #555; }
         .lineup-select { width: 100%; padding: 6px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 0.9rem; background: white; }
-        
-        .icon-swap { 
-            font-size: 1.2rem; cursor: pointer; color: #94a3b8; 
-            text-align: center; user-select: none; transition: 0.2s;
-        }
+        .icon-swap { font-size: 1.2rem; cursor: pointer; color: #94a3b8; text-align: center; user-select: none; transition: 0.2s; }
         .icon-swap:hover { color: var(--primary); transform: scale(1.1); }
 
         /* --- CONTROLS --- */
         .filter-bar { background: #eee; padding: 8px; border-radius: 6px; margin-bottom: 15px; text-align: center; }
         .view-select { padding: 6px; border-radius: 4px; font-weight: bold; }
-        
         .btn-group { display: flex; gap: 10px; margin-top: 10px; }
         .btn-main { flex: 1; padding: 12px; border: none; border-radius: 6px; color: white; font-weight: bold; cursor: pointer; font-size: 1rem; }
         .btn-update { background: var(--dark); }
@@ -104,28 +87,19 @@
         .court { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; background: var(--court-a); padding: 5px; border: 2px solid #92400e; border-radius: 4px; margin-bottom: 10px; }
         .court.team-b-bg { background: var(--court-b); border-color: #991b1b; }
         
-        .zone { 
-            background: rgba(255,255,255,0.95); height: 50px; 
-            display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            font-size: 0.8rem; font-weight: bold; border-radius: 2px; position: relative; 
-            box-shadow: 0 1px 2px rgba(0,0,0,0.1); 
-        }
+        .zone { background: rgba(255,255,255,0.95); height: 50px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: bold; border-radius: 2px; position: relative; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
         .pos-label { font-size: 0.55rem; color: #64748b; position: absolute; top: 2px; left: 2px; }
-        
         .player-content { display: flex; flex-direction: column; align-items: center; line-height: 1.1; width: 100%; overflow: hidden; }
         .role-badge { font-size: 0.6rem; background: #333; color: white; padding: 1px 4px; border-radius: 3px; margin-bottom: 2px; }
         .role-badge.libero { background: #eab308; color: black; } 
-        
         .sub-name { font-size: 0.7rem; color: #dc2626; font-style: italic; margin-top: 1px; }
         .server-badge { position: absolute; top: 2px; right: 2px; background: #10b981; color: white; font-size: 0.55rem; padding: 1px 3px; border-radius: 3px; }
 
-        /* Mobile */
         @media screen and (max-width: 768px) {
             .roster-wrapper, .setup-grid { grid-template-columns: 1fr; }
             .output-grid { grid-template-columns: 1fr; }
         }
 
-        /* --- TRUE A4 PRINT CSS --- */
         @media print {
             @page { size: A4 portrait; margin: 5mm; }
             body { background: white; padding: 0; margin: 0; }
@@ -165,7 +139,7 @@
                 <div class="sets-count"><span id="val-set-a">0</span> - <span id="val-set-b">0</span></div>
                 <div style="display:flex;">
                     <button class="btn-set" onclick="updateSet('a', 1)">Set A+</button>
-                    <button class="btn-set" onclick="resetScores()">Reset Pts</button>
+                    <button class="btn-set" onclick="clearPoints()">Reset Pts</button>
                     <button class="btn-set" onclick="updateSet('b', 1)">Set B+</button>
                 </div>
             </div>
@@ -259,8 +233,8 @@
         saveData(); 
     }
     
-    function resetScores() { 
-        if(confirm("Are you sure you want to reset POINTS to 0-0?")) { 
+    function clearPoints() { 
+        if(confirm("Reset Points to 0-0?")) { 
             scores.sa = 0; 
             scores.sb = 0; 
             renderScores(); 
@@ -280,23 +254,21 @@
         document.getElementById('sb-name-b').innerText = document.getElementById('name-b').value||'AWAY'; 
     }
 
-    // --- APP LOGIC ---
+    // --- LOGIC ---
     function init() {
         const roles = `<option value="">Role</option><option value="S">S</option><option value="OH">OH</option><option value="MB">MB</option><option value="OP">OP</option><option value="L">L</option><option value="DS">DS</option>`;
         
         ['a','b'].forEach(team => {
-            // Build Roster List
             const list = document.getElementById(`roster-list-${team}`);
             for(let i=1; i<=12; i++) {
                 list.innerHTML += `
                 <div class="roster-row">
                     <span>${i}</span>
-                    <input type="text" id="p-${team}-${i}-name" placeholder="Name" oninput="saveData(); refreshTeamDropdowns('${team}')">
+                    <input type="text" id="p-${team}-${i}-name" placeholder="Name" oninput="handleRosterChange('${team}')">
                     <select id="p-${team}-${i}-role" onchange="saveData()">${roles}</select>
                 </div>`;
             }
 
-            // Build Lineup Selectors
             const box = document.getElementById(`selectors-${team}`);
             for(let i=1; i<=6; i++) {
                 let lbl = `Pos ${i}`;
@@ -305,7 +277,7 @@
                 <div class="lineup-row">
                     <label>${lbl}</label>
                     <select id="l-${team}-${i}" class="lineup-select" onchange="handleLineupChange('${team}')"><option value="">-Starter-</option></select>
-                    <div class="icon-swap" onclick="swapSub('${team}', ${i})" title="Swap Main/Sub">⇄</div>
+                    <div class="icon-swap" onclick="swapSub('${team}', ${i})">⇄</div>
                     <select id="l-${team}-${i}-sub" class="lineup-select" onchange="handleLineupChange('${team}')"><option value="">-Sub-</option></select>
                 </div>`;
             }
@@ -313,89 +285,77 @@
         loadData();
     }
 
-    // Get roster array
-    function getRosterData(team) {
-        let players = [];
+    function handleRosterChange(team) {
+        saveData();
+        refreshAllDropdowns(team);
+    }
+
+    function handleLineupChange(team) {
+        saveData();
+        refreshAllDropdowns(team);
+    }
+
+    function swapSub(team, pos) {
+        const main = document.getElementById(`l-${team}-${pos}`);
+        const sub = document.getElementById(`l-${team}-${pos}-sub`);
+        const temp = main.value;
+        main.value = sub.value;
+        sub.value = temp;
+        saveData();
+        refreshAllDropdowns(team);
+        generate();
+    }
+
+    // === CORE LOGIC: REFRESH DROPDOWNS ===
+    function refreshAllDropdowns(team) {
+        // 1. Get All Players from Roster
+        let allPlayers = [];
         for(let i=1; i<=12; i++) {
-            const name = document.getElementById(`p-${team}-${i}-name`).value.trim();
-            const role = document.getElementById(`p-${team}-${i}-role`).value;
-            if(name) players.push({name, role});
+            const val = document.getElementById(`p-${team}-${i}-name`).value.trim();
+            if(val) allPlayers.push(val);
         }
-        return players.sort((a,b) => a.name.localeCompare(b.name));
-    }
+        allPlayers.sort((a,b)=>a.localeCompare(b));
 
-    // Get List of players currently selected as STARTERS in any of the 6 slots
-    function getAllStarters(team) {
-        let starters = [];
+        // 2. Find which players are already used
+        let usedPlayers = new Set();
         for(let i=1; i<=6; i++) {
-            const val = document.getElementById(`l-${team}-${i}`).value;
-            if(val) starters.push(val);
+            const m = document.getElementById(`l-${team}-${i}`).value;
+            const s = document.getElementById(`l-${team}-${i}-sub`).value;
+            if(m) usedPlayers.add(m);
+            if(s) usedPlayers.add(s);
         }
-        return starters;
-    }
 
-    // Main Refresh Logic
-    function refreshTeamDropdowns(team) {
-        const players = getRosterData(team);
-        const activeStarters = getAllStarters(team);
-
+        // 3. Update every Select Element
         for(let i=1; i<=6; i++) {
-            const startEl = document.getElementById(`l-${team}-${i}`);
-            const subEl = document.getElementById(`l-${team}-${i}-sub`);
-            
-            const currStart = startEl.value;
-            const currSub = subEl.value;
-
-            // 1. Populate Starters (Show all players)
-            // Note: We don't filter starters strictly to allow moving players around easily
-            rebuildOptions(startEl, players, currStart, null); 
-
-            // 2. Populate Subs (Exclude ANY player who is a starter anywhere)
-            // But ALWAYS keep the currently selected sub in the list so it doesn't vanish
-            rebuildOptions(subEl, players, currSub, activeStarters);
+            updateSingleSelect(`l-${team}-${i}`, allPlayers, usedPlayers);
+            updateSingleSelect(`l-${team}-${i}-sub`, allPlayers, usedPlayers);
         }
     }
 
-    function rebuildOptions(el, players, currentVal, excludeArray) {
-        // preserve blank option
-        const label = el.id.includes('sub') ? '-Sub-' : '-Starter-';
-        el.innerHTML = `<option value="">${label}</option>`;
+    function updateSingleSelect(elId, allPlayers, usedSet) {
+        const el = document.getElementById(elId);
+        const currentVal = el.value; // Keep track of what was selected
         
-        players.forEach(p => {
-            // Valid if: Not in exclude list OR matches current value
-            let isValid = true;
-            if (excludeArray && excludeArray.includes(p.name)) {
-                isValid = false;
-            }
-            if (p.name === currentVal) isValid = true; // Always keep current
+        // Clear options
+        const defaultText = elId.includes('sub') ? '-Sub-' : '-Starter-';
+        el.innerHTML = `<option value="">${defaultText}</option>`;
 
-            if (isValid) {
+        allPlayers.forEach(player => {
+            // Logic: A player is available if:
+            // 1. They are NOT used anywhere else (not in usedSet)
+            // 2. OR they are the one currently selected in THIS box (currentVal)
+            
+            if (!usedSet.has(player) || player === currentVal) {
                 const opt = document.createElement('option');
-                opt.value = p.name;
-                opt.innerText = p.name;
-                if(p.name === currentVal) opt.selected = true;
+                opt.value = player;
+                opt.innerText = player;
+                if(player === currentVal) opt.selected = true;
                 el.appendChild(opt);
             }
         });
     }
 
-    function handleLineupChange(team) {
-        saveData();
-        refreshTeamDropdowns(team); // Trigger recalculation of filters
-    }
-
-    function swapSub(team, pos) {
-        const startEl = document.getElementById(`l-${team}-${pos}`);
-        const subEl = document.getElementById(`l-${team}-${pos}-sub`);
-        
-        const temp = startEl.value;
-        startEl.value = subEl.value;
-        subEl.value = temp;
-        
-        handleLineupChange(team);
-        generate();
-    }
-
+    // === DATA & GENERATE ===
     function saveData() {
         const getData = (team) => {
             let roster = [];
@@ -424,11 +384,11 @@
             },
             teamA: getData('a'), teamB: getData('b')
         };
-        localStorage.setItem('vballDataFinal', JSON.stringify(data));
+        localStorage.setItem('vballDataFinalV2', JSON.stringify(data));
     }
 
     function loadData() {
-        const saved = localStorage.getItem('vballDataFinal');
+        const saved = localStorage.getItem('vballDataFinalV2');
         if(!saved) return;
         const data = JSON.parse(saved);
 
@@ -440,7 +400,6 @@
         document.getElementById('start-offset-b').value = data.meta.offB || '0';
         updateSBName();
 
-        // Restore Roster
         ['a','b'].forEach(t => {
             const tData = t === 'a' ? data.teamA : data.teamB;
             if(tData && tData.roster) {
@@ -453,24 +412,39 @@
             }
         });
 
-        // Restore Lineup & Trigger Filters
+        // First pass: restore values blindly (so we have a 'currentVal')
         ['a','b'].forEach(t => {
-            // First pass: just set values roughly
             const tData = t === 'a' ? data.teamA : data.teamB;
             if(tData && tData.lineup) {
                 tData.lineup.forEach((l, idx) => {
-                    document.getElementById(`l-${t}-${idx+1}`).value = l.name;
-                    document.getElementById(`l-${t}-${idx+1}-sub`).value = l.sub;
+                    // We must force the option to exist to set the value, 
+                    // then refresh will clean it up.
+                    const mainEl = document.getElementById(`l-${t}-${idx+1}`);
+                    const subEl = document.getElementById(`l-${t}-${idx+1}-sub`);
+                    if(l.name) mainEl.innerHTML += `<option value="${l.name}">${l.name}</option>`;
+                    if(l.sub) subEl.innerHTML += `<option value="${l.sub}">${l.sub}</option>`;
+                    
+                    mainEl.value = l.name;
+                    subEl.value = l.sub;
                 });
             }
-            // Second pass: correctly populate dropdowns with logic
-            refreshTeamDropdowns(t);
+            // Now run the smart logic to clean up duplicates
+            refreshAllDropdowns(t);
         });
         generate();
     }
 
-    function clearAll() { if(confirm("Clear All Data?")) { localStorage.removeItem('vballDataFinal'); location.reload(); } }
-    function getRole(name, roster) { const p = roster.find(x => x.name === name); return p ? p.role : ''; }
+    function clearAll() { if(confirm("Clear All Data?")) { localStorage.removeItem('vballDataFinalV2'); location.reload(); } }
+    
+    function getRole(name, team) { 
+        // Need to check specific team roster
+        for(let i=1; i<=12; i++) {
+            if(document.getElementById(`p-${team}-${i}-name`).value === name) {
+                return document.getElementById(`p-${team}-${i}-role`).value;
+            }
+        }
+        return ''; 
+    }
 
     function generate() {
         const nameA = document.getElementById('name-a').value;
@@ -485,12 +459,11 @@
         if(viewMode !== 'all') { startR = parseInt(viewMode)-1; endR = startR+1; }
 
         const buildLineupArr = (team) => {
-            const roster = getRosterData(team);
             let arr = [];
             for(let i=1; i<=6; i++) {
                 const n = document.getElementById(`l-${team}-${i}`).value || `P${i}`;
                 const s = document.getElementById(`l-${team}-${i}-sub`).value;
-                const r = getRole(n, roster);
+                const r = getRole(n, team);
                 arr.push({ name: n, sub: s, role: r });
             }
             return arr;
