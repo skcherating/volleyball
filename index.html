@@ -14,14 +14,23 @@
             --dark: #0f172a;
         }
         * { box-sizing: border-box; }
-        body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); padding: 15px; margin: 0; color: #333; }
-        .container { max-width: 1000px; margin: auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); padding: 15px; margin: 0; color: #333; position: relative; min-height: 100vh; }
+        .container { max-width: 1000px; margin: auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); padding-bottom: 40px; }
         
         .header-section { text-align: center; margin-bottom: 20px; }
         .school-logo { width: 70px; height: auto; margin-bottom: 5px; }
         h1 { margin: 0; font-size: 1.5rem; color: var(--dark); }
 
         .no-print { display: block; }
+
+        /* --- WATERMARK --- */
+        .watermark {
+            text-align: center;
+            font-size: 0.7rem;
+            color: #ccc;
+            margin-top: 20px;
+            font-family: monospace;
+        }
 
         /* --- SCOREBOARD --- */
         .scoreboard-panel {
@@ -33,7 +42,7 @@
             align-items: start; text-align: center;
         }
         .team-col { display: flex; flex-direction: column; align-items: center; gap: 5px; }
-        .team-name { font-size: 0.85rem; font-weight: bold; opacity: 0.9; text-transform: uppercase; }
+        .team-name { font-size: 0.9rem; font-weight: bold; opacity: 0.9; text-transform: uppercase; }
         .big-score { font-size: 3.5rem; font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; }
         
         .score-controls { display: flex; gap: 8px; margin-top: 5px; }
@@ -131,18 +140,49 @@
             .btn-reset-all { margin-left: 0; width: 100%; }
         }
 
+        /* --- PRINT STYLES --- */
         @media print {
             @page { size: A4 portrait; margin: 5mm; }
             body { background: white; padding: 0; margin: 0; }
             .container { box-shadow: none; border: none; padding: 0; margin: 0; width: 100%; max-width: 100%; }
-            .no-print { display: none !important; }
-            .output-grid { display: grid; grid-template-columns: 49% 49%; grid-template-rows: auto auto auto; column-gap: 2%; row-gap: 10px; margin-top: 0; }
-            .rotation-card { border: 1px solid #000; padding: 5px; break-inside: avoid; page-break-inside: avoid; }
-            .rot-title { font-size: 0.8rem; padding: 2px; margin-bottom: 3px; background: #000 !important; color: white !important; }
-            .court { gap: 2px; padding: 2px; border-width: 1px; margin-bottom: 5px; }
-            .zone { height: 35px; font-size: 0.75rem; }
+            
+            /* HIDE CONTROLS */
+            .no-print, .btn-win-set, .score-controls, .btn-reset-match, .data-tools { display: none !important; }
+            
+            /* SCOREBOARD PRINT STYLE */
+            .scoreboard-panel { 
+                background: white; border: 1px solid #000; color: black; 
+                padding: 5px; margin-bottom: 10px;
+            }
+            .big-score { font-size: 2rem; }
+            .sets-val { font-size: 1.2rem; }
+            .history-section { border-top: 1px solid #ccc; margin-top: 5px; padding-top: 5px; }
+            .history-chip { background: #eee; color: #000; border: 1px solid #ccc; font-size: 0.7rem; padding: 1px 6px; }
+            
+            /* GRID LAYOUT */
+            .output-grid { 
+                display: grid; 
+                grid-template-columns: 49% 49%; 
+                grid-template-rows: auto auto auto; 
+                column-gap: 2%; row-gap: 8px; margin-top: 0; 
+            }
+            .rotation-card { border: 1px solid #000; padding: 4px; break-inside: avoid; page-break-inside: avoid; }
+            .rot-title { font-size: 0.8rem; padding: 1px; margin-bottom: 2px; background: #000 !important; color: white !important; }
+            .court { gap: 1px; padding: 1px; border-width: 1px; margin-bottom: 4px; }
+            .zone { height: 35px; font-size: 0.7rem; box-shadow: none; border: 1px solid #eee; }
             .role-badge { font-size: 0.5rem; padding: 0 2px; }
             .sub-name { font-size: 0.6rem; }
+            
+            /* WATERMARK POSITIONING FOR PRINT */
+            .watermark {
+                position: fixed;
+                bottom: 5px;
+                right: 5px;
+                font-size: 0.6rem;
+                color: #999;
+            }
+            
+            /* Single View Override */
             .output-grid.single-view { display: block; width: 90%; margin: 20px auto; }
             .output-grid.single-view .zone { height: 80px; font-size: 1.2rem; }
         }
@@ -156,45 +196,45 @@
         <h1 style="margin: 0;">Volleyball Rotation Planner</h1>
     </div>
 
-    <div class="no-print">
-        <div class="scoreboard-panel">
-            <div class="sb-grid">
-                <div class="team-col">
-                    <div class="team-name" id="sb-name-a">HOME</div>
-                    <div class="big-score" id="score-a-disp">0</div>
-                    <div class="score-controls">
-                        <button class="btn-score" onclick="adjScore('a', -1)">-</button>
-                        <button class="btn-score" onclick="adjScore('a', 1)">+</button>
-                    </div>
-                    <button class="btn-win-set" onclick="finishSet('a')">Win Set</button>
+    <div class="scoreboard-panel">
+        <div class="sb-grid">
+            <div class="team-col">
+                <div class="team-name" id="sb-name-a">HOME</div>
+                <div class="big-score" id="score-a-disp">0</div>
+                <div class="score-controls no-print">
+                    <button class="btn-score" onclick="adjScore('a', -1)">-</button>
+                    <button class="btn-score" onclick="adjScore('a', 1)">+</button>
                 </div>
+                <button class="btn-win-set no-print" onclick="finishSet('a')">Win Set</button>
+            </div>
 
-                <div class="sets-col">
-                    <div class="sets-label">SETS WON</div>
-                    <div class="sets-val">
-                        <span id="sets-a-disp">0</span> - <span id="sets-b-disp">0</span>
-                    </div>
-                </div>
-
-                <div class="team-col">
-                    <div class="team-name" id="sb-name-b">AWAY</div>
-                    <div class="big-score" id="score-b-disp">0</div>
-                    <div class="score-controls">
-                        <button class="btn-score" onclick="adjScore('b', -1)">-</button>
-                        <button class="btn-score" onclick="adjScore('b', 1)">+</button>
-                    </div>
-                    <button class="btn-win-set loss" onclick="finishSet('b')">Win Set</button>
+            <div class="sets-col">
+                <div class="sets-label">SETS WON</div>
+                <div class="sets-val">
+                    <span id="sets-a-disp">0</span> - <span id="sets-b-disp">0</span>
                 </div>
             </div>
 
-            <div class="history-section">
-                <div class="history-chips" id="history-list">
-                    <span style="opacity:0.5; font-size:0.8rem">No sets completed</span>
+            <div class="team-col">
+                <div class="team-name" id="sb-name-b">AWAY</div>
+                <div class="big-score" id="score-b-disp">0</div>
+                <div class="score-controls no-print">
+                    <button class="btn-score" onclick="adjScore('b', -1)">-</button>
+                    <button class="btn-score" onclick="adjScore('b', 1)">+</button>
                 </div>
-                <button class="btn-reset-match" onclick="resetMatch()">RESET SCORES & HISTORY</button>
+                <button class="btn-win-set loss no-print" onclick="finishSet('b')">Win Set</button>
             </div>
         </div>
 
+        <div class="history-section">
+            <div class="history-chips" id="history-list">
+                <span style="opacity:0.5; font-size:0.8rem">No sets completed</span>
+            </div>
+            <button class="btn-reset-match no-print" onclick="resetMatch()">RESET MATCH & SCORES</button>
+        </div>
+    </div>
+
+    <div class="no-print">
         <div class="filter-bar">
             Display Mode: 
             <select id="view-mode" class="view-select" onchange="generate()">
@@ -250,6 +290,7 @@
     </div>
 
     <div id="output" class="output-grid"></div>
+    <div class="watermark">codedby03093msf</div>
 </div>
 
 <script>
@@ -270,8 +311,7 @@
     function finishSet(winner) {
         if(!confirm(`Confirm ${winner === 'a' ? 'HOME' : 'AWAY'} won the set? Points will reset.`)) return;
         
-        // Save history with winner indicator
-        const wStr = winner === 'a' ? 'HOME' : 'AWAY';
+        const wStr = winner === 'a' ? document.getElementById('name-a').value : document.getElementById('name-b').value;
         history.push(`Set ${history.length + 1}: ${scoreA}-${scoreB} (${wStr})`);
         
         if(winner === 'a') setsA++;
@@ -285,7 +325,7 @@
     }
 
     function resetMatch() {
-        if(confirm("Reset scores and match history?")) {
+        if(confirm("Reset scores and match history? (Rosters will stay)")) {
             scoreA = 0; scoreB = 0;
             setsA = 0; setsB = 0;
             history = [];
@@ -342,7 +382,7 @@
     // --- DATA MANAGEMENT ---
     function exportData() {
         saveAll();
-        const dataStr = localStorage.getItem('vb_pro_v7');
+        const dataStr = localStorage.getItem('vb_pro_v8');
         const blob = new Blob([dataStr], {type: "application/json"});
         const url = URL.createObjectURL(blob);
         
@@ -366,10 +406,9 @@
         const reader = new FileReader();
         reader.onload = function(e) {
             try {
-                // Verify basic structure
                 const data = JSON.parse(e.target.result);
                 if(!data.nA) throw new Error("Invalid format");
-                localStorage.setItem('vb_pro_v7', JSON.stringify(data));
+                localStorage.setItem('vb_pro_v8', JSON.stringify(data));
                 location.reload();
             } catch(err) {
                 alert("Error: Invalid JSON file.");
@@ -380,7 +419,7 @@
 
     function factoryReset() {
         if(confirm("DANGER: This will delete ALL rosters, scores, and lineups.\n\nAre you sure?")) {
-            localStorage.removeItem('vb_pro_v7');
+            localStorage.removeItem('vb_pro_v8');
             location.reload();
         }
     }
@@ -415,7 +454,10 @@
             const vMain = mainEl.value;
             const vSub = subEl.value;
 
+            // Main Dropdown: Show ALL
             fillSelect(mainEl, roster, vMain, null);
+
+            // Sub Dropdown: Strict Filter (Exclude Active Starters)
             fillSelect(subEl, roster, vSub, starters);
         }
     }
@@ -423,6 +465,7 @@
     function fillSelect(el, names, currentVal, excludeSet) {
         let html = `<option value="">${el.id.includes('sub')?'-Sub-':'-Start-'}</option>`;
         names.forEach(n => {
+            // Include if NOT in excludeSet OR is current val
             if(!excludeSet || !excludeSet.has(n) || n === currentVal) {
                 html += `<option value="${n}" ${n===currentVal?'selected':''}>${n}</option>`;
             }
@@ -440,7 +483,7 @@
         const oldM = m.value;
         const oldS = s.value;
         
-        // Inject temp options to prevent blanking
+        // Force options if filtered
         if(oldS && !m.querySelector(`option[value="${oldS}"]`)) m.innerHTML += `<option value="${oldS}">${oldS}</option>`;
         if(oldM && !s.querySelector(`option[value="${oldM}"]`)) s.innerHTML += `<option value="${oldM}">${oldM}</option>`;
 
@@ -463,7 +506,7 @@
             rosA: getRosterObj('a'), rosB: getRosterObj('b'),
             linA: getLineupObj('a'), linB: getLineupObj('b')
         };
-        localStorage.setItem('vb_pro_v7', JSON.stringify(data));
+        localStorage.setItem('vb_pro_v8', JSON.stringify(data));
     }
 
     function getRosterObj(t) {
@@ -489,7 +532,7 @@
     }
 
     function loadAll() {
-        const json = localStorage.getItem('vb_pro_v7');
+        const json = localStorage.getItem('vb_pro_v8');
         if(!json) return;
         const d = JSON.parse(json);
 
@@ -569,12 +612,12 @@
             out.innerHTML += `
             <div class="rotation-card">
                 <div class="rot-title">ROTATION ${r+1}</div>
-                <div style="text-align:center; font-weight:bold; color:var(--primary)">${document.getElementById('name-a').value}</div>
+                <div style="text-align:center; font-weight:bold; color:var(--primary); text-align:center; font-size:0.8rem">${document.getElementById('name-a').value}</div>
                 <div class="court-wrapper"><div class="court">
                     ${z(rotA[3],0)}${z(rotA[2],0)}${z(rotA[1],0)}
                     ${z(rotA[4],0)}${z(rotA[5],0)}${z(rotA[0],1)}
                 </div></div>
-                <div style="text-align:center; font-weight:bold; color:var(--secondary)">${document.getElementById('name-b').value}</div>
+                <div style="text-align:center; font-weight:bold; color:var(--secondary); text-align:center; font-size:0.8rem">${document.getElementById('name-b').value}</div>
                 <div class="court-wrapper"><div class="court team-b-bg">
                     ${z(rotB[3],0)}${z(rotB[2],0)}${z(rotB[1],0)}
                     ${z(rotB[4],0)}${z(rotB[5],0)}${z(rotB[0],1)}
@@ -595,7 +638,7 @@
 
     function rotate(arr, steps) {
         let a = [...arr];
-        for(let i=0; i<steps; i++) a = [a[1], a[2], a[3], a[4], a[5], a[0]];
+        for(let k=0; k<steps; k++) a = [a[1], a[2], a[3], a[4], a[5], a[0]];
         return a;
     }
 
