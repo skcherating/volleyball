@@ -38,7 +38,7 @@
             padding: 15px; border-radius: 8px; margin-bottom: 20px;
         }
         .sb-grid {
-            display: grid; grid-template-columns: 1fr 0.8fr 1fr; gap: 10px;
+            display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; /* Changed to even columns for centering */
             align-items: start; text-align: center;
         }
         .team-col { display: flex; flex-direction: column; align-items: center; gap: 5px; }
@@ -59,9 +59,23 @@
         }
         .btn-win-set.loss { background: #ef4444; }
 
-        .sets-col { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; }
+        /* Sets Column - The Middle */
+        .sets-col { 
+            display: flex; flex-direction: column; align-items: center; justify-content: flex-start; height: 100%; 
+            padding-top: 10px;
+        }
         .sets-label { font-size: 0.7rem; text-transform: uppercase; color: #94a3b8; font-weight: bold; letter-spacing: 1px; }
-        .sets-val { font-size: 1.8rem; font-weight: bold; }
+        .sets-val { font-size: 1.8rem; font-weight: bold; margin-bottom: 8px; }
+        
+        .sets-controls-row { display: flex; gap: 5px; margin-bottom: 10px; }
+        .btn-set { background: transparent; border: 1px solid #777; color: #ddd; font-size: 0.7rem; padding: 4px 8px; border-radius: 4px; cursor: pointer; }
+        
+        .btn-reset-match {
+            background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444; color: #fca5a5;
+            font-size: 0.7rem; padding: 6px 12px; border-radius: 4px; cursor: pointer; 
+            font-weight: bold; margin-top: 5px; transition: 0.2s;
+        }
+        .btn-reset-match:hover { background: #ef4444; color: white; }
 
         .history-section {
             margin-top: 15px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1);
@@ -70,11 +84,6 @@
         .history-chips { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-top: 5px; }
         .history-chip { background: rgba(255,255,255,0.1); padding: 2px 8px; border-radius: 10px; font-size: 0.85rem; }
         
-        .btn-reset-match {
-            background: transparent; border: 1px solid #64748b; color: #94a3b8;
-            font-size: 0.7rem; padding: 4px 8px; border-radius: 4px; cursor: pointer; margin-top: 10px;
-        }
-
         /* --- ROSTER --- */
         .roster-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
         .roster-col { background: #f1f5f9; padding: 10px; border-radius: 8px; border: 1px solid #e2e8f0; }
@@ -147,7 +156,7 @@
             .container { box-shadow: none; border: none; padding: 0; margin: 0; width: 100%; max-width: 100%; }
             
             /* HIDE CONTROLS */
-            .no-print, .btn-win-set, .score-controls, .btn-reset-match, .data-tools { display: none !important; }
+            .no-print, .btn-win-set, .score-controls, .btn-reset-match, .data-tools, .sets-controls-row { display: none !important; }
             
             /* SCOREBOARD PRINT STYLE */
             .scoreboard-panel { 
@@ -182,7 +191,6 @@
                 color: #999;
             }
             
-            /* Single View Override */
             .output-grid.single-view { display: block; width: 90%; margin: 20px auto; }
             .output-grid.single-view .zone { height: 80px; font-size: 1.2rem; }
         }
@@ -213,6 +221,14 @@
                 <div class="sets-val">
                     <span id="sets-a-disp">0</span> - <span id="sets-b-disp">0</span>
                 </div>
+                
+                <div class="sets-controls-row no-print">
+                    <button class="btn-set" onclick="updateSet('a', 1)">A+</button>
+                    <button class="btn-set" onclick="resetPointsOnly()">Reset Pts</button>
+                    <button class="btn-set" onclick="updateSet('b', 1)">B+</button>
+                </div>
+
+                <button class="btn-reset-match no-print" onclick="resetMatch()">RESET MATCH</button>
             </div>
 
             <div class="team-col">
@@ -230,7 +246,6 @@
             <div class="history-chips" id="history-list">
                 <span style="opacity:0.5; font-size:0.8rem">No sets completed</span>
             </div>
-            <button class="btn-reset-match no-print" onclick="resetMatch()">RESET MATCH & SCORES</button>
         </div>
     </div>
 
@@ -320,6 +335,22 @@
         scoreA = 0; 
         scoreB = 0;
         
+        updateScoreBoard();
+        saveAll();
+    }
+
+    function resetPointsOnly() {
+        if(confirm("Reset POINTS to 0-0? (Sets will remain)")) {
+            scoreA = 0; scoreB = 0;
+            updateScoreBoard();
+            saveAll();
+        }
+    }
+
+    function updateSet(team, val) {
+        // Manual override for sets
+        if(team === 'a') setsA = Math.max(0, setsA + val);
+        else setsB = Math.max(0, setsB + val);
         updateScoreBoard();
         saveAll();
     }
