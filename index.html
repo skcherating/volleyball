@@ -8,38 +8,39 @@
         :root { 
             --primary: #2563eb; 
             --secondary: #dc2626; 
-            --bg: #f1f5f9; 
+            --bg: #f8fafc; 
             --court-a: #fbbf24; 
             --court-b: #f87171; 
             --dark: #0f172a;
         }
         * { box-sizing: border-box; }
-        body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); padding: 10px; margin: 0; color: #333; }
-        .container { max-width: 1000px; margin: auto; background: white; padding: 15px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); padding: 15px; margin: 0; color: #333; }
+        .container { max-width: 1000px; margin: auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
         
-        .header-section { text-align: center; margin-bottom: 15px; }
-        .school-logo { width: 60px; height: auto; margin-bottom: 5px; }
-        h1 { margin: 0; font-size: 1.3rem; color: var(--dark); }
+        .header-section { text-align: center; margin-bottom: 20px; }
+        .school-logo { width: 70px; height: auto; margin-bottom: 5px; }
+        h1 { margin: 0; font-size: 1.5rem; color: var(--dark); }
 
         .no-print { display: block; }
 
         /* --- SCOREBOARD --- */
         .scoreboard-panel {
             background: var(--dark); color: white;
-            padding: 12px; border-radius: 8px; margin-bottom: 20px;
+            padding: 15px; border-radius: 8px; margin-bottom: 20px;
         }
         .sb-grid {
             display: grid; grid-template-columns: 1fr 0.8fr 1fr; gap: 10px;
             align-items: start; text-align: center;
         }
-        
         .team-col { display: flex; flex-direction: column; align-items: center; gap: 5px; }
-        .team-name { font-size: 0.85rem; font-weight: bold; opacity: 0.8; text-transform: uppercase; }
+        .team-name { font-size: 0.85rem; font-weight: bold; opacity: 0.9; text-transform: uppercase; }
         .big-score { font-size: 3.5rem; font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; }
         
+        .score-controls { display: flex; gap: 8px; margin-top: 5px; }
         .btn-score { 
             background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.2);
-            width: 40px; height: 40px; border-radius: 50%; font-size: 1.4rem; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; margin: 0 2px;
+            width: 40px; height: 40px; border-radius: 50%; font-size: 1.4rem; cursor: pointer; 
+            display: inline-flex; align-items: center; justify-content: center; margin: 0 2px;
         }
         .btn-score:active { background: rgba(255,255,255,0.4); }
 
@@ -53,13 +54,11 @@
         .sets-label { font-size: 0.7rem; text-transform: uppercase; color: #94a3b8; font-weight: bold; letter-spacing: 1px; }
         .sets-val { font-size: 1.8rem; font-weight: bold; }
 
-        /* History Bar */
         .history-section {
             margin-top: 15px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1);
             text-align: center;
         }
-        .history-title { font-size: 0.75rem; color: #94a3b8; margin-bottom: 5px; }
-        .history-chips { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+        .history-chips { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-top: 5px; }
         .history-chip { background: rgba(255,255,255,0.1); padding: 2px 8px; border-radius: 10px; font-size: 0.85rem; }
         
         .btn-reset-match {
@@ -94,11 +93,18 @@
         /* --- CONTROLS --- */
         .filter-bar { background: #eee; padding: 8px; border-radius: 6px; margin-bottom: 15px; text-align: center; }
         .view-select { padding: 6px; border-radius: 4px; font-weight: bold; }
+        
         .btn-group { display: flex; gap: 10px; margin-top: 10px; }
         .btn-main { flex: 1; padding: 12px; border: none; border-radius: 6px; color: white; font-weight: bold; cursor: pointer; font-size: 1rem; }
         .btn-update { background: var(--dark); }
         .btn-print { background: #10b981; }
-        .btn-clear { background: #ef4444; }
+        
+        /* DATA TOOLS */
+        .data-tools { margin-top: 20px; padding: 15px; background: #e2e8f0; border-radius: 8px; display: flex; gap: 10px; align-items: center; justify-content: center; }
+        .btn-data { padding: 10px 16px; border-radius: 6px; border: none; cursor: pointer; font-weight: bold; font-size: 0.85rem; }
+        .btn-export { background: #3b82f6; color: white; }
+        .btn-import { background: #64748b; color: white; }
+        .btn-reset-all { background: #ef4444; color: white; margin-left: auto; }
 
         /* --- OUTPUT --- */
         .output-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 20px; }
@@ -121,6 +127,8 @@
             .roster-wrapper, .setup-grid { grid-template-columns: 1fr; }
             .output-grid { grid-template-columns: 1fr; }
             .sb-grid { grid-template-columns: 1fr; gap: 20px; }
+            .data-tools { flex-direction: column; width: 100%; gap: 15px; }
+            .btn-reset-all { margin-left: 0; width: 100%; }
         }
 
         @media print {
@@ -180,11 +188,10 @@
             </div>
 
             <div class="history-section">
-                <div class="history-title">MATCH HISTORY</div>
                 <div class="history-chips" id="history-list">
                     <span style="opacity:0.5; font-size:0.8rem">No sets completed</span>
                 </div>
-                <button class="btn-reset-match" onclick="fullReset()">RESET MATCH</button>
+                <button class="btn-reset-match" onclick="resetMatch()">RESET SCORES & HISTORY</button>
             </div>
         </div>
 
@@ -232,7 +239,13 @@
         <div class="btn-group">
             <button class="btn-main btn-update" onclick="generate()">Update Display</button>
             <button class="btn-main btn-print" onclick="window.print()">Print</button>
-            <button class="btn-main btn-clear" onclick="clearRoster()">Clear Roster</button>
+        </div>
+
+        <div class="data-tools">
+            <button class="btn-data btn-export" onclick="exportData()">Export Save File</button>
+            <button class="btn-data btn-import" onclick="document.getElementById('import-file').click()">Import Save File</button>
+            <input type="file" id="import-file" style="display:none" onchange="importData(this)">
+            <button class="btn-data btn-reset-all" onclick="factoryReset()">FACTORY RESET ALL</button>
         </div>
     </div>
 
@@ -246,7 +259,7 @@
     let history = []; 
     const roles = `<option value="">-</option><option value="S">S</option><option value="OH">OH</option><option value="MB">MB</option><option value="OP">OP</option><option value="L">L</option><option value="DS">DS</option>`;
 
-    // --- SCOREBOARD FUNCTIONS ---
+    // --- SCOREBOARD LOGIC ---
     function adjScore(team, val) {
         if(team === 'a') scoreA = Math.max(0, scoreA + val);
         else scoreB = Math.max(0, scoreB + val);
@@ -257,7 +270,9 @@
     function finishSet(winner) {
         if(!confirm(`Confirm ${winner === 'a' ? 'HOME' : 'AWAY'} won the set? Points will reset.`)) return;
         
-        history.push(`Set ${history.length + 1}: ${scoreA}-${scoreB} (${winner.toUpperCase()})`);
+        // Save history with winner indicator
+        const wStr = winner === 'a' ? 'HOME' : 'AWAY';
+        history.push(`Set ${history.length + 1}: ${scoreA}-${scoreB} (${wStr})`);
         
         if(winner === 'a') setsA++;
         else setsB++;
@@ -269,8 +284,8 @@
         saveAll();
     }
 
-    function fullReset() {
-        if(confirm("Reset entire match scores and history?")) {
+    function resetMatch() {
+        if(confirm("Reset scores and match history?")) {
             scoreA = 0; scoreB = 0;
             setsA = 0; setsB = 0;
             history = [];
@@ -324,6 +339,52 @@
         loadAll();
     }
 
+    // --- DATA MANAGEMENT ---
+    function exportData() {
+        saveAll();
+        const dataStr = localStorage.getItem('vb_pro_v7');
+        const blob = new Blob([dataStr], {type: "application/json"});
+        const url = URL.createObjectURL(blob);
+        
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        const date = new Date().toISOString().slice(0,10);
+        a.download = `vball_data_${date}.json`;
+        document.body.appendChild(a);
+        a.click();
+        
+        setTimeout(() => {
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }, 100);
+    }
+
+    function importData(input) {
+        const file = input.files[0];
+        if(!file) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                // Verify basic structure
+                const data = JSON.parse(e.target.result);
+                if(!data.nA) throw new Error("Invalid format");
+                localStorage.setItem('vb_pro_v7', JSON.stringify(data));
+                location.reload();
+            } catch(err) {
+                alert("Error: Invalid JSON file.");
+            }
+        };
+        reader.readAsText(file);
+    }
+
+    function factoryReset() {
+        if(confirm("DANGER: This will delete ALL rosters, scores, and lineups.\n\nAre you sure?")) {
+            localStorage.removeItem('vb_pro_v7');
+            location.reload();
+        }
+    }
+
     // --- SMART DROPDOWNS ---
     function getRoster(t) {
         let arr = [];
@@ -354,11 +415,7 @@
             const vMain = mainEl.value;
             const vSub = subEl.value;
 
-            // 1. Main Dropdown: Show ALL roster (Always allow changing starter)
             fillSelect(mainEl, roster, vMain, null);
-
-            // 2. Sub Dropdown: Show Roster MINUS Active Starters
-            // However, we MUST include the currently selected sub (vSub) or it vanishes
             fillSelect(subEl, roster, vSub, starters);
         }
     }
@@ -366,7 +423,6 @@
     function fillSelect(el, names, currentVal, excludeSet) {
         let html = `<option value="">${el.id.includes('sub')?'-Sub-':'-Start-'}</option>`;
         names.forEach(n => {
-            // Add option IF: Not in exclude set OR matches current value
             if(!excludeSet || !excludeSet.has(n) || n === currentVal) {
                 html += `<option value="${n}" ${n===currentVal?'selected':''}>${n}</option>`;
             }
@@ -381,23 +437,18 @@
         const m = document.getElementById(`l-${t}-${pos}`);
         const s = document.getElementById(`l-${t}-${pos}-sub`);
         
-        // Force Values Swap
         const oldM = m.value;
         const oldS = s.value;
         
-        // Temporarily inject options if they are hidden by filter
-        if(oldS && !m.querySelector(`option[value="${oldS}"]`)) {
-            m.innerHTML += `<option value="${oldS}">${oldS}</option>`;
-        }
-        if(oldM && !s.querySelector(`option[value="${oldM}"]`)) {
-            s.innerHTML += `<option value="${oldM}">${oldM}</option>`;
-        }
+        // Inject temp options to prevent blanking
+        if(oldS && !m.querySelector(`option[value="${oldS}"]`)) m.innerHTML += `<option value="${oldS}">${oldS}</option>`;
+        if(oldM && !s.querySelector(`option[value="${oldM}"]`)) s.innerHTML += `<option value="${oldM}">${oldM}</option>`;
 
         m.value = oldS;
         s.value = oldM;
         
         saveAll();
-        refreshDropdowns(t); // Re-run filter logic immediately
+        refreshDropdowns(t);
         generate();
     }
 
@@ -409,12 +460,10 @@
             nB: document.getElementById('name-b').value,
             oA: document.getElementById('start-offset-a').value,
             oB: document.getElementById('start-offset-b').value,
-            // Rosters
             rosA: getRosterObj('a'), rosB: getRosterObj('b'),
-            // Lineups
             linA: getLineupObj('a'), linB: getLineupObj('b')
         };
-        localStorage.setItem('vb_pro_v5', JSON.stringify(data));
+        localStorage.setItem('vb_pro_v7', JSON.stringify(data));
     }
 
     function getRosterObj(t) {
@@ -440,32 +489,27 @@
     }
 
     function loadAll() {
-        const json = localStorage.getItem('vb_pro_v5');
+        const json = localStorage.getItem('vb_pro_v7');
         if(!json) return;
         const d = JSON.parse(json);
 
-        // Scores
         scoreA = d.sA || 0; scoreB = d.sB || 0;
         setsA = d.setsA || 0; setsB = d.setsB || 0;
         history = d.hist || [];
         updateScoreBoard();
 
-        // Meta
         document.getElementById('name-a').value = d.nA || '';
         document.getElementById('name-b').value = d.nB || '';
         document.getElementById('start-offset-a').value = d.oA || '0';
         document.getElementById('start-offset-b').value = d.oB || '0';
         updateNames();
 
-        // Roster Restore
         restoreRoster('a', d.rosA);
         restoreRoster('b', d.rosB);
 
-        // Initial Dropdown Population
         refreshDropdowns('a');
         refreshDropdowns('b');
 
-        // Lineup Restore
         restoreLineup('a', d.linA);
         restoreLineup('b', d.linB);
         
@@ -487,17 +531,12 @@
         arr.forEach((l, i) => {
             const m = document.getElementById(`l-${t}-${i+1}`);
             const s = document.getElementById(`l-${t}-${i+1}-sub`);
-            // Force option if missing
-            if(l.m && !m.querySelector(`option[value="${l.m}"]`)) m.innerHTML += `<option value="${l.m}">${l.m}</option>`;
-            if(l.s && !s.querySelector(`option[value="${l.s}"]`)) s.innerHTML += `<option value="${l.s}">${l.s}</option>`;
+            if(l.m) m.innerHTML += `<option value="${l.m}">${l.m}</option>`;
+            if(l.s) s.innerHTML += `<option value="${l.s}">${l.s}</option>`;
             m.value = l.m;
             s.value = l.s;
         });
-        refreshDropdowns(t); // Clean up duplicates
-    }
-
-    function clearRoster() {
-        if(confirm("Clear Data?")) { localStorage.removeItem('vb_pro_v5'); location.reload(); }
+        refreshDropdowns(t);
     }
 
     // --- GENERATE ---
@@ -530,12 +569,12 @@
             out.innerHTML += `
             <div class="rotation-card">
                 <div class="rot-title">ROTATION ${r+1}</div>
-                <div style="font-weight:bold; color:var(--primary); text-align:center; font-size:0.8rem">${document.getElementById('name-a').value}</div>
+                <div style="text-align:center; font-weight:bold; color:var(--primary)">${document.getElementById('name-a').value}</div>
                 <div class="court-wrapper"><div class="court">
                     ${z(rotA[3],0)}${z(rotA[2],0)}${z(rotA[1],0)}
                     ${z(rotA[4],0)}${z(rotA[5],0)}${z(rotA[0],1)}
                 </div></div>
-                <div style="font-weight:bold; color:var(--secondary); text-align:center; font-size:0.8rem">${document.getElementById('name-b').value}</div>
+                <div style="text-align:center; font-weight:bold; color:var(--secondary)">${document.getElementById('name-b').value}</div>
                 <div class="court-wrapper"><div class="court team-b-bg">
                     ${z(rotB[3],0)}${z(rotB[2],0)}${z(rotB[1],0)}
                     ${z(rotB[4],0)}${z(rotB[5],0)}${z(rotB[0],1)}
