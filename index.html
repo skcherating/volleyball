@@ -15,144 +15,73 @@
         }
         * { box-sizing: border-box; }
         body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); padding: 15px; margin: 0; color: #333; position: relative; min-height: 100vh; }
-        .container { max-width: 1000px; margin: auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); padding-bottom: 40px; }
+        .container { max-width: 1000px; margin: auto; background: white; padding: 15px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); padding-bottom: 40px; }
         
-        /* --- MATCH INFO HEADER --- */
+        /* --- HEADER --- */
         .header-section { text-align: center; margin-bottom: 15px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
-        .school-logo { width: 60px; height: auto; margin-bottom: 5px; }
-        h1 { margin: 0; font-size: 1.4rem; color: var(--dark); }
-        
-        .match-meta { display: flex; justify-content: center; gap: 15px; margin-top: 10px; flex-wrap: wrap; }
+        .school-logo { width: 50px; height: auto; margin-bottom: 5px; }
+        h1 { margin: 0; font-size: 1.2rem; color: var(--dark); }
+        .match-meta { display: flex; justify-content: center; gap: 10px; margin-top: 5px; flex-wrap: wrap; }
         .meta-group { display: flex; align-items: center; gap: 5px; }
-        .meta-label { font-size: 0.75rem; font-weight: bold; color: #64748b; text-transform: uppercase; }
-        .meta-input { border: 1px solid #cbd5e1; padding: 4px 8px; border-radius: 4px; font-size: 0.85rem; width: 140px; color: #333; }
+        .meta-label { font-size: 0.7rem; font-weight: bold; color: #64748b; text-transform: uppercase; }
+        .meta-input { border: 1px solid #cbd5e1; padding: 4px; border-radius: 4px; font-size: 0.8rem; width: 130px; }
 
         .no-print { display: block; }
 
         /* --- SCOREBOARD --- */
-        .scoreboard-panel {
-            background: var(--dark); color: white;
-            padding: 15px; border-radius: 8px; margin-bottom: 20px;
-        }
-        .sb-grid {
-            display: grid; grid-template-columns: 1fr 0.8fr 1fr; gap: 10px;
-            align-items: start; text-align: center;
-        }
+        .scoreboard-panel { background: var(--dark); color: white; padding: 10px; border-radius: 8px; margin-bottom: 15px; }
+        .sb-grid { display: grid; grid-template-columns: 1fr 0.8fr 1fr; gap: 10px; align-items: start; text-align: center; }
         .team-col { display: flex; flex-direction: column; align-items: center; gap: 5px; }
-        .team-name { font-size: 0.9rem; font-weight: bold; opacity: 0.9; text-transform: uppercase; }
-        .big-score { font-size: 3.5rem; font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; }
-        
-        /* Game Stats */
-        .game-stats { 
-            display: grid; grid-template-columns: 1fr 1fr; gap: 8px; 
-            background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 6px; margin-top: 5px; width: 100%;
-        }
+        .team-name { font-size: 0.85rem; font-weight: bold; opacity: 0.9; text-transform: uppercase; }
+        .big-score { font-size: 3rem; font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; }
+        .game-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; background: rgba(255,255,255,0.1); padding: 4px; border-radius: 6px; margin-top: 5px; width: 100%; }
         .stat-box { display: flex; flex-direction: column; align-items: center; }
-        .stat-label { font-size: 0.6rem; opacity: 0.7; text-transform: uppercase; }
-        .to-dots { display: flex; gap: 5px; margin-top: 2px; }
-        .to-dot { width: 12px; height: 12px; border-radius: 50%; background: #475569; border: 1px solid #94a3b8; cursor: pointer; transition: 0.2s; }
+        .stat-label { font-size: 0.55rem; opacity: 0.7; text-transform: uppercase; }
+        .to-dots { display: flex; gap: 4px; margin-top: 2px; }
+        .to-dot { width: 10px; height: 10px; border-radius: 50%; background: #475569; border: 1px solid #94a3b8; cursor: pointer; }
         .to-dot.active { background: #ef4444; border-color: #ef4444; box-shadow: 0 0 5px #ef4444; }
-        .sub-counter { font-size: 0.9rem; font-weight: bold; font-variant-numeric: tabular-nums; cursor: pointer; }
-
-        .score-controls { display: flex; gap: 8px; margin-top: 8px; }
-        .btn-score { 
-            background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.2);
-            width: 36px; height: 36px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; 
-            display: inline-flex; align-items: center; justify-content: center; margin: 0 2px;
-        }
-        .btn-win-set {
-            background: #10b981; color: white; border: none; padding: 6px 12px; border-radius: 4px;
-            font-size: 0.7rem; font-weight: bold; cursor: pointer; text-transform: uppercase; margin-top: 8px; width: 100%;
-        }
+        .sub-counter { font-size: 0.8rem; font-weight: bold; font-variant-numeric: tabular-nums; cursor: pointer; }
+        .score-controls { display: flex; gap: 5px; margin-top: 5px; }
+        .btn-score { background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.2); width: 32px; height: 32px; border-radius: 50%; font-size: 1.1rem; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
+        .btn-win-set { background: #10b981; color: white; border: none; padding: 5px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; cursor: pointer; text-transform: uppercase; margin-top: 5px; width: 100%; }
         .btn-win-set.loss { background: #ef4444; }
-
-        .sets-col { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; height: 100%; padding-top: 10px; }
-        .sets-label { font-size: 0.7rem; text-transform: uppercase; color: #94a3b8; font-weight: bold; letter-spacing: 1px; }
-        .sets-val { font-size: 2rem; font-weight: bold; margin-bottom: 10px; }
-        .sets-controls-row { display: flex; gap: 5px; margin-bottom: 15px; justify-content: center; }
-        .btn-set { background: rgba(255,255,255,0.1); border: 1px solid #64748b; color: #cbd5e1; font-size: 0.7rem; padding: 6px 8px; border-radius: 4px; cursor: pointer; }
+        .sets-col { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; height: 100%; padding-top: 5px; }
+        .sets-label { font-size: 0.65rem; text-transform: uppercase; color: #94a3b8; letter-spacing: 1px; }
+        .sets-val { font-size: 1.8rem; font-weight: bold; margin-bottom: 5px; }
+        .sets-controls-row { display: flex; gap: 3px; margin-bottom: 10px; justify-content: center; }
+        .btn-set { background: rgba(255,255,255,0.1); border: 1px solid #64748b; color: #cbd5e1; font-size: 0.65rem; padding: 4px 6px; border-radius: 4px; cursor: pointer; }
         .btn-reset-pts { background: rgba(234, 179, 8, 0.2); border: 1px solid #eab308; color: #fde047; }
-        .btn-reset-match { background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444; color: #fca5a5; font-size: 0.7rem; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; margin-top: 5px; }
+        .btn-reset-match { background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444; color: #fca5a5; font-size: 0.65rem; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-weight: bold; margin-top: 5px; }
+        .history-section { margin-top: 10px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; }
+        .history-chips { display: flex; justify-content: center; gap: 5px; flex-wrap: wrap; margin-top: 5px; }
+        .history-chip { background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 8px; font-size: 0.75rem; }
 
-        .history-section { margin-top: 15px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; }
-        .history-chips { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-top: 5px; }
-        .history-chip { background: rgba(255,255,255,0.1); padding: 2px 8px; border-radius: 10px; font-size: 0.85rem; }
-        
-        /* --- SERVE ANALYSIS (UPDATED) --- */
-        .analysis-section { 
-            margin-top: 20px; border: 1px solid #e2e8f0; border-radius: 8px; padding: 15px; background: #f8fafc;
-        }
-        .analysis-header { font-weight: bold; text-align: center; margin-bottom: 5px; color: #475569; font-size: 0.9rem; text-transform: uppercase; }
-        
-        /* SPLIT VIEW */
-        .analysis-wrapper { display: grid; grid-template-columns: 250px 1fr; gap: 20px; align-items: start; }
-        
-        /* Left: Map */
-        .map-col { display: flex; flex-direction: column; align-items: center; }
-        .serve-input-row { display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 10px; }
-        .serve-input { padding: 5px; border: 2px solid #3b82f6; border-radius: 4px; width: 120px; text-align: center; font-weight: bold; font-size: 0.9rem; }
-        .analysis-container { position: relative; width: 240px; height: 240px; background: #fbbf24; border: 2px solid #b45309; cursor: crosshair; }
-        .analysis-grid { 
-            display: grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr 1fr; 
-            width: 100%; height: 100%; position: absolute; top: 0; left: 0; pointer-events: none;
-        }
-        .analysis-cell { border: 1px solid rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; color: rgba(0,0,0,0.2); font-weight:bold; font-size: 1.2rem; }
-        
-        .serve-mark { 
-            position: absolute; width: 24px; height: 24px; border-radius: 50%; 
-            transform: translate(-50%, -50%); border: 2px solid white; box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-            display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 0.7rem;
-            z-index: 10; text-shadow: 0 0 2px black;
-        }
-        
-        /* Right: Stats List */
-        .stats-col { background: white; border: 1px solid #e2e8f0; border-radius: 6px; padding: 10px; min-height: 240px; max-height: 300px; overflow-y: auto; }
-        .stats-title { font-size: 0.8rem; font-weight: bold; color: #64748b; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 5px; display: flex; justify-content: space-between; }
-        .server-list { display: flex; flex-direction: column; gap: 5px; }
-        .server-item { 
-            display: flex; align-items: center; justify-content: space-between; 
-            font-size: 0.85rem; padding: 6px; border-radius: 4px; background: #f1f5f9; 
-        }
-        .server-info { display: flex; align-items: center; gap: 8px; }
-        .color-swatch { width: 12px; height: 12px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.2); }
-        .server-stats { font-weight: bold; color: #334155; font-size: 0.8rem; }
+        /* --- TABS --- */
+        .tabs-nav { display: flex; margin-bottom: 15px; border-bottom: 2px solid #e2e8f0; }
+        .tab-btn { flex: 1; padding: 12px; font-weight: bold; cursor: pointer; background: var(--bg); border: none; color: #64748b; font-size: 0.9rem; transition: 0.2s; }
+        .tab-btn.active { background: white; color: var(--primary); border-bottom: 3px solid var(--primary); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- ROSTER & LAYOUT --- */
+        /* --- ROTATION DISPLAY --- */
         .roster-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
         .roster-col { background: #f1f5f9; padding: 10px; border-radius: 8px; border: 1px solid #e2e8f0; }
-        .team-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; border-bottom: 2px solid #cbd5e1; padding-bottom: 5px; }
-        .team-name-input { font-size: 1rem; font-weight: 800; border: none; outline: none; background: transparent; width: 60%; color: var(--dark); }
         .roster-list { display: flex; flex-direction: column; gap: 3px; }
-        .roster-row { display: grid; grid-template-columns: 20px 1fr 55px; gap: 4px; align-items: center; }
+        .roster-row { display: grid; grid-template-columns: 20px 1fr 50px; gap: 4px; align-items: center; }
         .roster-row span { font-size: 0.7rem; color: #888; font-weight: bold; text-align: center; }
         .roster-row input { padding: 4px; border: 1px solid #cbd5e1; border-radius: 3px; font-size: 0.85rem; width: 100%; }
         .roster-row select { padding: 4px 0; border: 1px solid #cbd5e1; border-radius: 3px; font-size: 0.7rem; font-weight: bold; color: #444; width: 100%; }
-
         .setup-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
         .team-box { padding: 10px; border-radius: 8px; border: 2px solid #e2e8f0; background: white; }
         .lineup-row { display: grid; grid-template-columns: 30px 1fr 30px 1fr; gap: 4px; align-items: center; margin-bottom: 6px; }
         .lineup-row label { font-size: 0.75rem; font-weight: bold; color: #555; }
         .lineup-select { width: 100%; padding: 6px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 0.85rem; background: white; }
         .icon-swap { font-size: 1rem; cursor: pointer; color: #94a3b8; text-align: center; }
-        .icon-swap:hover { color: var(--primary); transform: scale(1.2); }
-
-        .filter-bar { background: #eee; padding: 8px; border-radius: 6px; margin-bottom: 15px; text-align: center; }
-        .view-select { padding: 6px; border-radius: 4px; font-weight: bold; }
-        .btn-group { display: flex; gap: 10px; margin-top: 10px; }
-        .btn-main { flex: 1; padding: 12px; border: none; border-radius: 6px; color: white; font-weight: bold; cursor: pointer; font-size: 1rem; }
-        .btn-update { background: var(--dark); }
-        .btn-print { background: #10b981; }
         
-        .data-tools { margin-top: 20px; padding: 15px; background: #e2e8f0; border-radius: 8px; display: flex; gap: 10px; align-items: center; justify-content: center; }
-        .btn-data { padding: 10px 16px; border-radius: 6px; border: none; cursor: pointer; font-weight: bold; font-size: 0.85rem; }
-        .btn-export { background: #3b82f6; color: white; }
-        .btn-import { background: #64748b; color: white; }
-        .btn-reset-all { background: #ef4444; color: white; margin-left: auto; }
-
         .output-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 20px; }
         .rotation-card { border: 2px solid #334155; border-radius: 8px; padding: 10px; background: #fff; page-break-inside: avoid; }
         .rot-title { text-align: center; font-weight: bold; font-size: 0.9rem; margin-bottom: 8px; background: #334155; color: white; padding: 4px; border-radius: 4px; }
-        .court-wrapper { position: relative; }
         .court { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; background: var(--court-a); padding: 5px; border: 2px solid #92400e; border-radius: 4px; margin-bottom: 10px; }
         .court.team-b-bg { background: var(--court-b); border-color: #991b1b; }
         .zone { background: rgba(255,255,255,0.95); height: 50px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: bold; border-radius: 2px; position: relative; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
@@ -162,6 +91,47 @@
         .role-badge.libero { background: #eab308; color: black; } 
         .sub-name { font-size: 0.7rem; color: #dc2626; font-style: italic; margin-top: 1px; }
         .server-badge { position: absolute; top: 2px; right: 2px; background: #10b981; color: white; font-size: 0.55rem; padding: 1px 3px; border-radius: 3px; }
+
+        /* --- ANALYSIS --- */
+        .analysis-section { padding: 15px; background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0; }
+        .analysis-wrapper { display: grid; grid-template-columns: 250px 1fr; gap: 20px; align-items: start; }
+        .serve-input-row { display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 10px; }
+        .serve-input { padding: 5px; border: 2px solid #3b82f6; border-radius: 4px; width: 120px; text-align: center; font-weight: bold; font-size: 0.9rem; }
+        
+        .analysis-container { position: relative; width: 240px; height: 240px; background: #fbbf24; border: 2px solid #b45309; cursor: crosshair; }
+        .analysis-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr 1fr; width: 100%; height: 100%; position: absolute; top: 0; left: 0; pointer-events: none; }
+        .analysis-cell { border: 1px solid rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; color: rgba(0,0,0,0.2); font-weight:bold; font-size: 1.2rem; }
+        .serve-mark { 
+            position: absolute; width: 24px; height: 24px; border-radius: 50%; transform: translate(-50%, -50%); border: 2px solid white; box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+            display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 0.7rem; z-index: 10; text-shadow: 0 0 2px black;
+        }
+        
+        /* Stats List Styling */
+        .stats-col { background: white; border: 1px solid #e2e8f0; border-radius: 6px; padding: 10px; min-height: 240px; max-height: 400px; overflow-y: auto; }
+        .stats-title { font-size: 0.8rem; font-weight: bold; color: #64748b; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 5px; display: flex; justify-content: space-between; }
+        .server-list { display: flex; flex-direction: column; gap: 8px; }
+        .server-item { padding: 8px; border-radius: 6px; background: #f8fafc; border: 1px solid #e2e8f0; }
+        .server-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+        .server-info { display: flex; align-items: center; gap: 8px; }
+        .color-swatch { width: 12px; height: 12px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.2); }
+        .total-badge { background: #334155; color: white; font-size: 0.7rem; padding: 1px 6px; border-radius: 10px; }
+        .stat-badges { display: flex; flex-wrap: wrap; gap: 4px; }
+        .stat-badge { background: white; border: 1px solid #cbd5e1; color: #334155; font-size: 0.7rem; padding: 2px 6px; border-radius: 4px; font-weight: bold; }
+
+        /* General Controls */
+        .filter-bar { background: #eee; padding: 8px; border-radius: 6px; margin-bottom: 15px; text-align: center; }
+        .view-select { padding: 6px; border-radius: 4px; font-weight: bold; }
+        .btn-group { display: flex; gap: 10px; margin-top: 10px; align-items: center; }
+        .btn-main { padding: 12px; border: none; border-radius: 6px; color: white; font-weight: bold; cursor: pointer; font-size: 1rem; }
+        .btn-update { background: var(--dark); flex: 1; }
+        .btn-print { background: #10b981; flex: 1; }
+        .print-select { padding: 12px; border-radius: 6px; border: 1px solid #ccc; font-weight: bold; color: #333; }
+        
+        .data-tools { margin-top: 20px; padding: 15px; background: #e2e8f0; border-radius: 8px; display: flex; gap: 10px; align-items: center; justify-content: center; }
+        .btn-data { padding: 10px 16px; border-radius: 6px; border: none; cursor: pointer; font-weight: bold; font-size: 0.85rem; }
+        .btn-export { background: #3b82f6; color: white; }
+        .btn-import { background: #64748b; color: white; }
+        .btn-reset-all { background: #ef4444; color: white; margin-left: auto; }
         .watermark { text-align: center; font-size: 0.7rem; color: #ccc; margin-top: 20px; font-family: monospace; }
 
         @media screen and (max-width: 768px) {
@@ -171,57 +141,52 @@
             .data-tools { flex-direction: column; width: 100%; gap: 15px; }
             .btn-reset-all { margin-left: 0; width: 100%; }
             .analysis-wrapper { grid-template-columns: 1fr; }
+            .btn-group { flex-wrap: wrap; }
+            .print-select { width: 100%; }
         }
 
+        /* --- PRINT STYLES --- */
         @media print {
             @page { size: A4 portrait; margin: 5mm; }
             body { background: white; padding: 0; margin: 0; }
             .container { box-shadow: none; border: none; padding: 0; margin: 0; width: 100%; max-width: 100%; }
-            .no-print, .btn-win-set, .score-controls, .btn-reset-match, .data-tools, .sets-controls-row, .btn-undo, .serve-input-row { display: none !important; }
+            .no-print, .btn-win-set, .score-controls, .btn-reset-match, .data-tools, .sets-controls-row, .btn-undo, .serve-input-row, .tabs-nav { display: none !important; }
             .meta-input { border: none; font-weight: bold; padding: 0; }
+            
+            /* PRINT MODE LOGIC */
+            .tab-content { display: none !important; }
+            body.print-all .tab-content { display: block !important; margin-bottom: 20px; }
+            body.print-rotations #tab-rotations { display: block !important; }
+            body.print-analysis #tab-analysis { display: block !important; }
+
             .scoreboard-panel { background: white; border: 1px solid #000; color: black; padding: 5px; margin-bottom: 10px; }
             .big-score { font-size: 2rem; }
-            .sets-val { font-size: 1.2rem; }
             .game-stats { color: black; background: transparent; border: 1px solid #ccc; }
             .to-dot { background: #eee; border-color: #000; }
             .to-dot.active { background: #000; }
             
             .analysis-section { border: 1px solid #000; background: white; page-break-inside: avoid; }
+            .analysis-wrapper { display: flex; gap: 20px; }
             .analysis-container { border-color: #000; }
-            .analysis-wrapper { display: flex; gap: 20px; } /* Keep side by side on print */
-            
             .history-section { border-top: 1px solid #ccc; margin-top: 5px; padding-top: 5px; }
             .history-chip { background: #eee; color: #000; border: 1px solid #ccc; font-size: 0.7rem; padding: 1px 6px; }
             
-            .output-grid { display: grid; grid-template-columns: 49% 49%; grid-template-rows: auto auto auto; column-gap: 2%; row-gap: 8px; margin-top: 0; }
-            .rotation-card { border: 1px solid #000; padding: 4px; break-inside: avoid; page-break-inside: avoid; }
-            .rot-title { font-size: 0.8rem; padding: 1px; margin-bottom: 2px; background: #000 !important; color: white !important; }
-            .court { gap: 1px; padding: 1px; border-width: 1px; margin-bottom: 4px; }
-            .zone { height: 35px; font-size: 0.7rem; box-shadow: none; border: 1px solid #eee; }
-            .role-badge { font-size: 0.5rem; padding: 0 2px; }
-            .sub-name { font-size: 0.6rem; }
-            .watermark { position: fixed; bottom: 5px; right: 5px; font-size: 0.6rem; color: #999; }
-            .output-grid.single-view { display: block; width: 90%; margin: 20px auto; }
-            .output-grid.single-view .zone { height: 80px; font-size: 1.2rem; }
+            .output-grid { display: grid; grid-template-columns: 49% 49%; column-gap: 2%; row-gap: 8px; }
+            .rotation-card { border: 1px solid #000; padding: 4px; break-inside: avoid; }
+            .court { border-width: 1px; }
+            .watermark { position: fixed; bottom: 5px; right: 5px; }
         }
     </style>
 </head>
-<body>
+<body class="print-all">
 
 <div class="container">
     <div class="header-section">
         <img src="logo_sekolah.jpg" alt="Logo" class="school-logo">
-        <h1 style="margin: 0;">Volleyball Rotation Planner</h1>
-        
+        <h1 style="margin: 0;">Volleyball Manager Pro</h1>
         <div class="match-meta">
-            <div class="meta-group">
-                <span class="meta-label">Date:</span>
-                <input type="date" id="match-date" class="meta-input" oninput="saveAll()">
-            </div>
-            <div class="meta-group">
-                <span class="meta-label">Venue:</span>
-                <input type="text" id="match-venue" class="meta-input" placeholder="Gym / Court" oninput="saveAll()">
-            </div>
+            <div class="meta-group"><span class="meta-label">Date:</span><input type="date" id="match-date" class="meta-input" oninput="saveAll()"></div>
+            <div class="meta-group"><span class="meta-label">Venue:</span><input type="text" id="match-venue" class="meta-input" placeholder="Gym / Court" oninput="saveAll()"></div>
         </div>
     </div>
 
@@ -231,624 +196,328 @@
                 <div class="team-name" id="sb-name-a">HOME</div>
                 <div class="big-score" id="score-a-disp">0</div>
                 <div class="game-stats">
-                    <div class="stat-box">
-                        <span class="stat-label">TIMEOUTS</span>
-                        <div class="to-dots">
-                            <div class="to-dot" id="to-a-1" onclick="toggleTO('a',1)"></div>
-                            <div class="to-dot" id="to-a-2" onclick="toggleTO('a',2)"></div>
-                        </div>
-                    </div>
-                    <div class="stat-box">
-                        <span class="stat-label">SUBS</span>
-                        <div class="sub-counter" id="subs-a-disp" onclick="adjSubs('a', 1)">0/12</div>
-                    </div>
+                    <div class="stat-box"><span class="stat-label">TIMEOUTS</span><div class="to-dots"><div class="to-dot" id="to-a-1" onclick="toggleTO('a',1)"></div><div class="to-dot" id="to-a-2" onclick="toggleTO('a',2)"></div></div></div>
+                    <div class="stat-box"><span class="stat-label">SUBS</span><div class="sub-counter" id="subs-a-disp" onclick="adjSubs('a', 1)">0/12</div></div>
                 </div>
                 <div class="score-controls no-print">
-                    <button class="btn-score" onclick="adjScore('a', -1)">-</button>
-                    <button class="btn-score" onclick="adjScore('a', 1)">+</button>
+                    <button class="btn-score" onclick="adjScore('a', -1)">-</button><button class="btn-score" onclick="adjScore('a', 1)">+</button>
                 </div>
                 <button class="btn-win-set no-print" onclick="finishSet('a')">Win Set</button>
             </div>
-
             <div class="sets-col">
                 <div class="sets-label">SETS WON</div>
-                <div class="sets-val">
-                    <span id="sets-a-disp">0</span> - <span id="sets-b-disp">0</span>
-                </div>
+                <div class="sets-val"><span id="sets-a-disp">0</span> - <span id="sets-b-disp">0</span></div>
                 <div class="sets-controls-row no-print">
-                    <button class="btn-set" onclick="updateSet('a', 1)">Set A+</button>
-                    <button class="btn-set btn-reset-pts" onclick="resetPointsOnly()">Reset Pts</button>
-                    <button class="btn-set" onclick="updateSet('b', 1)">Set B+</button>
+                    <button class="btn-set" onclick="updateSet('a', 1)">A+</button><button class="btn-set btn-reset-pts" onclick="resetPointsOnly()">0-0</button><button class="btn-set" onclick="updateSet('b', 1)">B+</button>
                 </div>
                 <button class="btn-reset-match no-print" onclick="resetMatch()">RESET MATCH</button>
             </div>
-
             <div class="team-col">
                 <div class="team-name" id="sb-name-b">AWAY</div>
                 <div class="big-score" id="score-b-disp">0</div>
                 <div class="game-stats">
-                    <div class="stat-box">
-                        <span class="stat-label">TIMEOUTS</span>
-                        <div class="to-dots">
-                            <div class="to-dot" id="to-b-1" onclick="toggleTO('b',1)"></div>
-                            <div class="to-dot" id="to-b-2" onclick="toggleTO('b',2)"></div>
-                        </div>
-                    </div>
-                    <div class="stat-box">
-                        <span class="stat-label">SUBS</span>
-                        <div class="sub-counter" id="subs-b-disp" onclick="adjSubs('b', 1)">0/12</div>
-                    </div>
+                    <div class="stat-box"><span class="stat-label">TIMEOUTS</span><div class="to-dots"><div class="to-dot" id="to-b-1" onclick="toggleTO('b',1)"></div><div class="to-dot" id="to-b-2" onclick="toggleTO('b',2)"></div></div></div>
+                    <div class="stat-box"><span class="stat-label">SUBS</span><div class="sub-counter" id="subs-b-disp" onclick="adjSubs('b', 1)">0/12</div></div>
                 </div>
                 <div class="score-controls no-print">
-                    <button class="btn-score" onclick="adjScore('b', -1)">-</button>
-                    <button class="btn-score" onclick="adjScore('b', 1)">+</button>
+                    <button class="btn-score" onclick="adjScore('b', -1)">-</button><button class="btn-score" onclick="adjScore('b', 1)">+</button>
                 </div>
                 <button class="btn-win-set loss no-print" onclick="finishSet('b')">Win Set</button>
             </div>
         </div>
-
         <div class="history-section">
-            <div class="history-chips" id="history-list">
-                <span style="opacity:0.5; font-size:0.8rem">No sets completed</span>
+            <div class="history-chips" id="history-list"><span style="opacity:0.5; font-size:0.8rem">No sets completed</span></div>
+        </div>
+    </div>
+
+    <div class="tabs-nav no-print">
+        <button class="tab-btn active" onclick="switchTab('rotations')">Game Rotations</button>
+        <button class="tab-btn" onclick="switchTab('analysis')">Serve Analysis</button>
+    </div>
+
+    <div id="tab-rotations" class="tab-content active">
+        <div class="no-print">
+            <div class="filter-bar">
+                Display Mode: <select id="view-mode" class="view-select" onchange="generate()"><option value="all">Show All 6</option><option value="1">Rotation 1</option><option value="2">Rotation 2</option><option value="3">Rotation 3</option><option value="4">Rotation 4</option><option value="5">Rotation 5</option><option value="6">Rotation 6</option></select>
+            </div>
+            <div class="roster-wrapper">
+                <div class="roster-col">
+                    <div class="team-header"><input type="text" id="name-a" class="team-name-input" value="SK CHERATING" oninput="saveAll(); updateNames()"><div style="font-size:0.8rem;">Start: <select id="start-offset-a" onchange="saveAll(); generate()"><option value="0">1</option><option value="1">2</option><option value="2">3</option><option value="3">4</option><option value="4">5</option><option value="5">6</option></select></div></div>
+                    <div class="roster-list" id="roster-list-a"></div>
+                </div>
+                <div class="roster-col">
+                    <div class="team-header"><input type="text" id="name-b" class="team-name-input" value="OPPONENT" oninput="saveAll(); updateNames()"><div style="font-size:0.8rem;">Start: <select id="start-offset-b" onchange="saveAll(); generate()"><option value="0">1</option><option value="1">2</option><option value="2">3</option><option value="3">4</option><option value="4">5</option><option value="5">6</option></select></div></div>
+                    <div class="roster-list" id="roster-list-b"></div>
+                </div>
+            </div>
+            <div class="setup-grid">
+                <div class="team-box team-a"><div style="text-align:center; font-weight:bold; margin-bottom:5px; color:var(--primary)">STARTING LINEUP A</div><div id="selectors-a"></div></div>
+                <div class="team-box team-b"><div style="text-align:center; font-weight:bold; margin-bottom:5px; color:var(--secondary)">STARTING LINEUP B</div><div id="selectors-b"></div></div>
+            </div>
+        </div>
+        <div id="output" class="output-grid"></div>
+    </div>
+
+    <div id="tab-analysis" class="tab-content">
+        <div class="analysis-section">
+            <div class="analysis-header">Opponent Serve Analysis</div>
+            <div class="analysis-wrapper">
+                <div class="map-col">
+                    <div class="serve-input-row">
+                        <span style="font-size:0.8rem; font-weight:bold; color:#64748b;">SERVER:</span>
+                        <input type="text" id="serve-player-input" class="serve-input" placeholder="Name or #" title="Enter name then click court">
+                    </div>
+                    <div class="analysis-container" id="serve-court" onclick="recordServe(event)">
+                        <div class="analysis-grid">
+                            <div class="analysis-cell">4</div><div class="analysis-cell">3</div><div class="analysis-cell">2</div>
+                            <div class="analysis-cell">5</div><div class="analysis-cell">6</div><div class="analysis-cell">1</div>
+                            <div class="analysis-cell">7</div><div class="analysis-cell">8</div><div class="analysis-cell">9</div>
+                        </div>
+                    </div>
+                    <div style="text-align:center; margin-top:10px;"><button style="background:#64748b; color:white; border:none; padding:5px 10px; border-radius:4px; font-size:0.8rem;" onclick="undoServeMark(event)">Undo Last Mark</button></div>
+                </div>
+                <div class="stats-col">
+                    <div class="stats-title"><span>PLAYER</span><span>ZONES HIT</span></div>
+                    <div id="server-stats-list" class="server-list"></div>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="analysis-section">
-        <div class="analysis-header">Opponent Serve Analysis</div>
-        <div class="analysis-wrapper">
-            <div class="map-col">
-                <div class="serve-input-row">
-                    <span style="font-size:0.8rem; font-weight:bold; color:#64748b;">SERVER:</span>
-                    <input type="text" id="serve-player-input" class="serve-input" placeholder="Name or #" title="Enter name then click court">
-                </div>
-                <div class="analysis-container" id="serve-court" onclick="recordServe(event)">
-                    <div class="analysis-grid">
-                        <div class="analysis-cell">4</div><div class="analysis-cell">3</div><div class="analysis-cell">2</div>
-                        <div class="analysis-cell">5</div><div class="analysis-cell">6</div><div class="analysis-cell">1</div>
-                        <div class="analysis-cell">7</div><div class="analysis-cell">8</div><div class="analysis-cell">9</div>
-                    </div>
-                    </div>
-                <div class="analysis-controls">
-                    <button class="btn-undo" onclick="undoServeMark(event)">Undo Last Mark</button>
-                </div>
-            </div>
-            
-            <div class="stats-col">
-                <div class="stats-title">
-                    <span>PLAYER</span>
-                    <span>STATS</span>
-                </div>
-                <div id="server-stats-list" class="server-list">
-                    <div style="text-align:center; color:#999; font-size:0.8rem; padding:10px;">No serves recorded</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="no-print">
-        <div class="filter-bar">
-            Display Mode: 
-            <select id="view-mode" class="view-select" onchange="generate()">
-                <option value="all">Show All 6</option>
-                <option value="1">Rotation 1</option>
-                <option value="2">Rotation 2</option>
-                <option value="3">Rotation 3</option>
-                <option value="4">Rotation 4</option>
-                <option value="5">Rotation 5</option>
-                <option value="6">Rotation 6</option>
-            </select>
-        </div>
-
-        <div class="roster-wrapper">
-            <div class="roster-col">
-                <div class="team-header">
-                    <input type="text" id="name-a" class="team-name-input" value="SK CHERATING" oninput="saveAll(); updateNames()">
-                    <div style="font-size:0.8rem;">Start Rot: <select id="start-offset-a" onchange="saveAll(); generate()"><option value="0">1</option><option value="1">2</option><option value="2">3</option><option value="3">4</option><option value="4">5</option><option value="5">6</option></select></div>
-                </div>
-                <div class="roster-list" id="roster-list-a"></div>
-            </div>
-            <div class="roster-col">
-                <div class="team-header">
-                    <input type="text" id="name-b" class="team-name-input" value="OPPONENT" oninput="saveAll(); updateNames()">
-                    <div style="font-size:0.8rem;">Start Rot: <select id="start-offset-b" onchange="saveAll(); generate()"><option value="0">1</option><option value="1">2</option><option value="2">3</option><option value="3">4</option><option value="4">5</option><option value="5">6</option></select></div>
-                </div>
-                <div class="roster-list" id="roster-list-b"></div>
-            </div>
-        </div>
-
-        <div class="setup-grid">
-            <div class="team-box team-a">
-                <div style="text-align:center; font-weight:bold; margin-bottom:5px; color:var(--primary)">STARTING LINEUP A</div>
-                <div id="selectors-a"></div>
-            </div>
-            <div class="team-box team-b">
-                <div style="text-align:center; font-weight:bold; margin-bottom:5px; color:var(--secondary)">STARTING LINEUP B</div>
-                <div id="selectors-b"></div>
-            </div>
-        </div>
-
+    <div class="no-print" style="margin-top:20px;">
         <div class="btn-group">
             <button class="btn-main btn-update" onclick="generate()">Update Display</button>
+            <select id="print-mode" class="print-select" onchange="updatePrintMode()">
+                <option value="all">Print: All</option>
+                <option value="rotations">Print: Rotations Only</option>
+                <option value="analysis">Print: Analysis Only</option>
+            </select>
             <button class="btn-main btn-print" onclick="window.print()">Print</button>
         </div>
-
         <div class="data-tools">
-            <button class="btn-data btn-export" onclick="exportData()">Export Save File</button>
-            <button class="btn-data btn-import" onclick="document.getElementById('import-file').click()">Import Save File</button>
+            <button class="btn-data btn-export" onclick="exportData()">Export Data</button>
+            <button class="btn-data btn-import" onclick="document.getElementById('import-file').click()">Import Data</button>
             <input type="file" id="import-file" style="display:none" onchange="importData(this)">
-            <button class="btn-data btn-reset-all" onclick="factoryReset()">FACTORY RESET ALL</button>
+            <button class="btn-data btn-reset-all" onclick="factoryReset()">FACTORY RESET</button>
         </div>
     </div>
 
-    <div id="output" class="output-grid"></div>
     <div class="watermark">codedby03093msf</div>
 </div>
 
 <script>
-    // --- VARIABLES ---
-    let scoreA=0, scoreB=0;
-    let setsA=0, setsB=0;
-    let history=[];
-    let timeouts = { a: [false, false], b: [false, false] };
-    let subCounts = { a: 0, b: 0 };
-    let serveStats = []; // Array of {x: %, y: %, player: string}
+    // --- APP STATE ---
+    let scoreA=0, scoreB=0, setsA=0, setsB=0;
+    let history=[], serveStats=[];
+    let timeouts={a:[false,false],b:[false,false]};
+    let subCounts={a:0,b:0};
     const roles = `<option value="">-</option><option value="S">S</option><option value="OH">OH</option><option value="MB">MB</option><option value="OP">OP</option><option value="L">L</option><option value="DS">DS</option>`;
 
+    // --- TABS & PRINT MODE ---
+    function switchTab(tabId) {
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+        document.getElementById('tab-' + tabId).classList.add('active');
+        const btns = document.querySelectorAll('.tab-btn');
+        if(tabId === 'rotations') btns[0].classList.add('active'); else btns[1].classList.add('active');
+    }
+    function updatePrintMode() {
+        const mode = document.getElementById('print-mode').value;
+        document.body.classList.remove('print-all', 'print-rotations', 'print-analysis');
+        document.body.classList.add('print-' + mode);
+    }
+
     // --- SCOREBOARD ---
-    function adjScore(t, v) { 
-        if(t==='a') scoreA = Math.max(0, scoreA+v); 
-        else scoreB = Math.max(0, scoreB+v); 
-        updateScoreBoard(); saveAll(); 
-    }
-
-    function toggleTO(team, num) {
-        const idx = num - 1;
-        timeouts[team][idx] = !timeouts[team][idx];
-        updateScoreBoard(); saveAll();
-    }
-
-    function adjSubs(team, val) {
-        if(confirm(`Adjust substitutions for Team ${team.toUpperCase()}?`)) {
-            const newVal = prompt("Enter sub count (0-12):", subCounts[team]);
-            if(newVal !== null) {
-                subCounts[team] = Math.min(12, Math.max(0, parseInt(newVal) || 0));
-                updateScoreBoard(); saveAll();
-            }
+    function adjScore(t, v) { if(t==='a') scoreA=Math.max(0,scoreA+v); else scoreB=Math.max(0,scoreB+v); updateScoreBoard(); saveAll(); }
+    function toggleTO(t, n) { timeouts[t][n-1]=!timeouts[t][n-1]; updateScoreBoard(); saveAll(); }
+    function adjSubs(t, v) {
+        if(confirm(`Adjust substitutions for Team ${t.toUpperCase()}?`)) {
+            const val = prompt("Count (0-12):", subCounts[t]);
+            if(val!==null) { subCounts[t]=Math.min(12,Math.max(0,parseInt(val)||0)); updateScoreBoard(); saveAll(); }
         }
     }
-
-    function incrementSubCount(team) {
-        if(subCounts[team] < 12) {
-            subCounts[team]++;
-            updateScoreBoard();
-        } else {
-            alert("Max substitutions (12) reached for this set!");
-        }
-    }
-
-    function finishSet(winner) {
-        if(!confirm(`Confirm ${winner==='a'?'HOME':'AWAY'} won the set? Score & Stats will reset.`)) return;
-        const wStr = winner==='a' ? document.getElementById('name-a').value : document.getElementById('name-b').value;
+    function incrementSubCount(t) { if(subCounts[t]<12) { subCounts[t]++; updateScoreBoard(); } else alert("Max subs reached!"); }
+    function finishSet(w) {
+        if(!confirm(`Confirm ${w==='a'?'HOME':'AWAY'} won set? Resets score.`)) return;
+        const wStr = w==='a'?document.getElementById('name-a').value:document.getElementById('name-b').value;
         history.push(`Set ${history.length+1}: ${scoreA}-${scoreB} (${wStr})`);
-        if(winner==='a') setsA++; else setsB++;
-        
-        scoreA=0; scoreB=0;
-        timeouts = { a: [false, false], b: [false, false] };
-        subCounts = { a: 0, b: 0 };
+        if(w==='a') setsA++; else setsB++;
+        scoreA=0; scoreB=0; timeouts={a:[false,false],b:[false,false]}; subCounts={a:0,b:0};
         updateScoreBoard(); saveAll();
     }
-
-    function resetPointsOnly() {
-        if(confirm("Reset POINTS to 0-0? (Sets will remain)")) {
-            scoreA=0; scoreB=0; updateScoreBoard(); saveAll();
-        }
-    }
-
-    function updateSet(team, val) {
-        if(team==='a') setsA=Math.max(0, setsA+val); else setsB=Math.max(0, setsB+val);
-        updateScoreBoard(); saveAll();
-    }
-
+    function resetPointsOnly() { if(confirm("Reset Pts to 0-0?")) { scoreA=0; scoreB=0; updateScoreBoard(); saveAll(); } }
+    function updateSet(t,v) { if(t==='a') setsA=Math.max(0,setsA+v); else setsB=Math.max(0,setsB+v); updateScoreBoard(); saveAll(); }
     function resetMatch() {
-        if(confirm("Reset entire match (Scores, History, Stats)? Rosters stay.")) {
-            scoreA=0; scoreB=0; setsA=0; setsB=0; history=[];
-            timeouts = { a: [false, false], b: [false, false] };
-            subCounts = { a: 0, b: 0 };
-            serveStats = [];
-            renderServeMarks();
-            updateScoreBoard(); saveAll();
+        if(confirm("Reset FULL MATCH?")) {
+            scoreA=0; scoreB=0; setsA=0; setsB=0; history=[]; serveStats=[];
+            timeouts={a:[false,false],b:[false,false]}; subCounts={a:0,b:0};
+            renderServeMarks(); updateScoreBoard(); saveAll();
         }
     }
-
     function updateScoreBoard() {
-        document.getElementById('score-a-disp').innerText = scoreA;
-        document.getElementById('score-b-disp').innerText = scoreB;
-        document.getElementById('sets-a-disp').innerText = setsA;
-        document.getElementById('sets-b-disp').innerText = setsB;
-        
-        for(let i=1; i<=2; i++) {
-            document.getElementById(`to-a-${i}`).className = timeouts.a[i-1] ? 'to-dot active' : 'to-dot';
-            document.getElementById(`to-b-${i}`).className = timeouts.b[i-1] ? 'to-dot active' : 'to-dot';
+        document.getElementById('score-a-disp').innerText=scoreA; document.getElementById('score-b-disp').innerText=scoreB;
+        document.getElementById('sets-a-disp').innerText=setsA; document.getElementById('sets-b-disp').innerText=setsB;
+        for(let i=1;i<=2;i++){
+            document.getElementById(`to-a-${i}`).className=timeouts.a[i-1]?'to-dot active':'to-dot';
+            document.getElementById(`to-b-${i}`).className=timeouts.b[i-1]?'to-dot active':'to-dot';
         }
-        
-        document.getElementById('subs-a-disp').innerText = `${subCounts.a}/12`;
-        document.getElementById('subs-b-disp').innerText = `${subCounts.b}/12`;
-
-        const hEl = document.getElementById('history-list');
-        if(history.length===0) hEl.innerHTML='<span style="opacity:0.5; font-size:0.8rem">No sets completed</span>';
-        else hEl.innerHTML = history.map(h => `<div class="history-chip">${h}</div>`).join('');
+        document.getElementById('subs-a-disp').innerText=`${subCounts.a}/12`; document.getElementById('subs-b-disp').innerText=`${subCounts.b}/12`;
+        const h=document.getElementById('history-list');
+        h.innerHTML=history.length===0?'<span style="opacity:0.5;font-size:0.8rem">No sets completed</span>':history.map(s=>`<div class="history-chip">${s}</div>`).join('');
     }
-
     function updateNames() {
-        document.getElementById('sb-name-a').innerText = document.getElementById('name-a').value||'HOME';
-        document.getElementById('sb-name-b').innerText = document.getElementById('name-b').value||'AWAY';
+        document.getElementById('sb-name-a').innerText=document.getElementById('name-a').value||'HOME';
+        document.getElementById('sb-name-b').innerText=document.getElementById('name-b').value||'AWAY';
     }
 
-    // --- SERVE ANALYSIS LOGIC ---
-    // Generate color from string
+    // --- SERVE ANALYSIS ---
     function stringToColor(str) {
-        let hash = 0;
-        for (let i = 0; i < str.length; i++) {
-            hash = str.charCodeAt(i) + ((hash << 5) - hash);
-        }
-        const c = (hash & 0x00FFFFFF).toString(16).toUpperCase();
-        return '#' + "00000".substring(0, 6 - c.length) + c;
+        let hash=0; for (let i=0;i<str.length;i++) hash=str.charCodeAt(i)+((hash<<5)-hash);
+        const c=(hash&0x00FFFFFF).toString(16).toUpperCase();
+        return '#'+'00000'.substring(0,6-c.length)+c;
     }
-
-    // Calculate Zone (1-9 Grid)
     function getZone(x, y) {
-        // x and y are percentages (0-100)
-        let col = Math.floor(x / 33.34);
-        let row = Math.floor(y / 33.34);
-        
-        // Map [row][col] to Zone Number
-        // Row 0: 4, 3, 2
-        // Row 1: 5, 6, 1
-        // Row 2: 7, 8, 9
-        const zoneMap = [
-            [4, 3, 2],
-            [5, 6, 1],
-            [7, 8, 9]
-        ];
-        return zoneMap[row] ? zoneMap[row][col] : '?';
+        let col=Math.floor(x/33.34), row=Math.floor(y/33.34);
+        const zm=[[4,3,2],[5,6,1],[7,8,9]];
+        return zm[row]?zm[row][col]:'?';
     }
-
     function recordServe(e) {
-        const rect = e.currentTarget.getBoundingClientRect();
-        const x = Math.min(98, Math.max(2, ((e.clientX - rect.left) / rect.width) * 100)); // Constrain to box
-        const y = Math.min(98, Math.max(2, ((e.clientY - rect.top) / rect.height) * 100));
-        
-        const playerVal = document.getElementById('serve-player-input').value.trim();
-        const playerLabel = playerVal || "Unk"; 
-
-        serveStats.push({x, y, player: playerLabel});
-        renderServeMarks();
-        saveAll();
+        const r=e.currentTarget.getBoundingClientRect();
+        const x=Math.min(98,Math.max(2,((e.clientX-r.left)/r.width)*100));
+        const y=Math.min(98,Math.max(2,((e.clientY-r.top)/r.height)*100));
+        const p=document.getElementById('serve-player-input').value.trim()||"Unk";
+        serveStats.push({x,y,player:p});
+        renderServeMarks(); saveAll();
     }
-
-    function undoServeMark(e) {
-        e.stopPropagation(); 
-        serveStats.pop();
-        renderServeMarks();
-        saveAll();
-    }
-
+    function undoServeMark(e) { e.stopPropagation(); serveStats.pop(); renderServeMarks(); saveAll(); }
     function renderServeMarks() {
-        const container = document.getElementById('serve-court');
-        const oldMarks = container.querySelectorAll('.serve-mark');
-        oldMarks.forEach(m => m.remove());
-        
-        // Stats Aggregation
-        let playerStats = {};
-
-        serveStats.forEach(stat => {
-            // Draw Mark
-            const mark = document.createElement('div');
-            mark.className = 'serve-mark';
-            mark.style.left = stat.x + '%';
-            mark.style.top = stat.y + '%';
-            mark.innerText = stat.player;
-            mark.style.backgroundColor = stringToColor(stat.player);
-            container.appendChild(mark);
-
-            // Aggregate Stats
-            if (!playerStats[stat.player]) {
-                playerStats[stat.player] = { count: 0, zones: {} };
-            }
-            playerStats[stat.player].count++;
-            
-            const z = getZone(stat.x, stat.y);
-            if (!playerStats[stat.player].zones[z]) playerStats[stat.player].zones[z] = 0;
-            playerStats[stat.player].zones[z]++;
+        const c=document.getElementById('serve-court');
+        c.querySelectorAll('.serve-mark').forEach(m=>m.remove());
+        let stats={};
+        serveStats.forEach(s => {
+            const m=document.createElement('div'); m.className='serve-mark';
+            m.style.left=s.x+'%'; m.style.top=s.y+'%';
+            m.innerText=s.player; m.style.backgroundColor=stringToColor(s.player);
+            c.appendChild(m);
+            if(!stats[s.player]) stats[s.player]={count:0,zones:{}};
+            stats[s.player].count++;
+            const z=getZone(s.x,s.y);
+            if(!stats[s.player].zones[z]) stats[s.player].zones[z]=0;
+            stats[s.player].zones[z]++;
         });
-
-        updateServerList(playerStats);
+        updateServerList(stats);
     }
-
     function updateServerList(stats) {
-        const listEl = document.getElementById('server-stats-list');
-        listEl.innerHTML = '';
-
-        if (Object.keys(stats).length === 0) {
-            listEl.innerHTML = '<div style="text-align:center; color:#999; font-size:0.8rem; padding:10px;">No serves recorded</div>';
-            return;
-        }
-
-        for (const [name, data] of Object.entries(stats)) {
-            // Find top zone
-            let topZone = '-';
-            let maxCount = -1;
-            for (const [z, count] of Object.entries(data.zones)) {
-                if (count > maxCount) {
-                    maxCount = count;
-                    topZone = z;
-                }
-            }
-
-            const item = document.createElement('div');
-            item.className = 'server-item';
-            
-            const color = stringToColor(name);
-            
-            item.innerHTML = `
-                <div class="server-info">
-                    <div class="color-swatch" style="background-color:${color}"></div>
-                    <span style="font-weight:bold">${name}</span>
+        const l=document.getElementById('server-stats-list'); l.innerHTML='';
+        if(Object.keys(stats).length===0) { l.innerHTML='<div style="text-align:center;color:#999;font-size:0.8rem;padding:10px;">No serves recorded</div>'; return; }
+        for(const [n,d] of Object.entries(stats)) {
+            const color = stringToColor(n);
+            let badges = '';
+            Object.keys(d.zones).sort().forEach(z => { badges += `<span class="stat-badge">Z${z}: ${d.zones[z]}</span>`; });
+            const div=document.createElement('div'); div.className='server-item';
+            div.innerHTML=`
+                <div class="server-header">
+                    <div class="server-info"><div class="color-swatch" style="background:${color}"></div><span style="font-weight:bold">${n}</span></div>
+                    <span class="total-badge">Total: ${d.count}</span>
                 </div>
-                <div class="server-stats">
-                    Total: ${data.count} | Best Zone: ${topZone}
-                </div>
-            `;
-            listEl.appendChild(item);
+                <div class="stat-badges">${badges}</div>`;
+            l.appendChild(div);
         }
     }
 
-    // --- INITIALIZATION ---
+    // --- SETUP ---
     function init() {
         ['a','b'].forEach(t => {
-            const rList = document.getElementById(`roster-list-${t}`);
-            for(let i=1; i<=12; i++) {
-                rList.innerHTML += `<div class="roster-row"><span>${i}</span><input type="text" id="p-${t}-${i}-name" placeholder="Name" oninput="handleRosterInput('${t}')"><select id="p-${t}-${i}-role" onchange="saveAll()">${roles}</select></div>`;
-            }
-            const sList = document.getElementById(`selectors-${t}`);
-            for(let i=1; i<=6; i++) {
-                let l = `Pos ${i}`; if(i===1) l+= " (S)";
-                sList.innerHTML += `<div class="lineup-row"><label>${l}</label><select id="l-${t}-${i}" class="lineup-select" onchange="handleLineupChange('${t}')"></select><div class="icon-swap" onclick="doSwap('${t}', ${i})">⇄</div><select id="l-${t}-${i}-sub" class="lineup-select" onchange="handleLineupChange('${t}')"></select></div>`;
+            const r=document.getElementById(`roster-list-${t}`);
+            for(let i=1;i<=12;i++) r.innerHTML+=`<div class="roster-row"><span>${i}</span><input type="text" id="p-${t}-${i}-name" placeholder="Name" oninput="handleRosterInput('${t}')"><select id="p-${t}-${i}-role" onchange="saveAll()">${roles}</select></div>`;
+            const s=document.getElementById(`selectors-${t}`);
+            for(let i=1;i<=6;i++) {
+                let l=`Pos ${i}`; if(i===1) l+=" (S)";
+                s.innerHTML+=`<div class="lineup-row"><label>${l}</label><select id="l-${t}-${i}" class="lineup-select" onchange="handleLineupChange('${t}')"></select><div class="icon-swap" onclick="doSwap('${t}',${i})">⇄</div><select id="l-${t}-${i}-sub" class="lineup-select" onchange="handleLineupChange('${t}')"></select></div>`;
             }
         });
         loadAll();
     }
 
-    // --- DATA ---
-    function exportData() {
-        saveAll();
-        const dataStr = localStorage.getItem('vb_pro_v13');
-        const blob = new Blob([dataStr], {type: "application/json"});
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a'); a.style.display='none'; a.href=url;
-        a.download = `vball_data_${new Date().toISOString().slice(0,10)}.json`;
-        document.body.appendChild(a); a.click();
-        setTimeout(()=>{document.body.removeChild(a); window.URL.revokeObjectURL(url);},100);
-    }
-
-    function importData(input) {
-        const file = input.files[0]; if(!file) return;
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            try {
-                const data = JSON.parse(e.target.result);
-                if(!data.meta || !data.meta.nA) throw new Error("Invalid structure");
-                localStorage.setItem('vb_pro_v13', JSON.stringify(data));
-                location.reload();
-            } catch(err) { alert("Error importing file. Invalid format."); }
-        };
-        reader.readAsText(file);
-    }
-
-    function factoryReset() {
-        if(confirm("DELETE EVERYTHING?")) { localStorage.removeItem('vb_pro_v13'); location.reload(); }
-    }
-
-    // --- SMART LOGIC ---
+    // --- CORE LOGIC ---
     function getRoster(t) {
-        let arr=[]; for(let i=1; i<=12; i++) {
-            let n = document.getElementById(`p-${t}-${i}-name`).value.trim();
-            if(n) arr.push(n);
-        }
-        return arr.sort();
+        let a=[]; for(let i=1;i<=12;i++){let n=document.getElementById(`p-${t}-${i}-name`).value.trim(); if(n) a.push(n);} return a.sort();
     }
-
     function getActiveStarters(t) {
-        let s = new Set();
-        for(let i=1; i<=6; i++) {
-            let v = document.getElementById(`l-${t}-${i}`).value;
-            if(v) s.add(v);
-        }
-        return s;
+        let s=new Set(); for(let i=1;i<=6;i++){let v=document.getElementById(`l-${t}-${i}`).value; if(v) s.add(v);} return s;
     }
-
     function refreshDropdowns(t) {
-        const roster = getRoster(t);
-        const starters = getActiveStarters(t);
-        for(let i=1; i<=6; i++) {
-            const mEl = document.getElementById(`l-${t}-${i}`);
-            const sEl = document.getElementById(`l-${t}-${i}-sub`);
-            fillSelect(mEl, roster, mEl.value, null);
-            fillSelect(sEl, roster, sEl.value, starters);
+        const r=getRoster(t), st=getActiveStarters(t);
+        for(let i=1;i<=6;i++) {
+            const m=document.getElementById(`l-${t}-${i}`), s=document.getElementById(`l-${t}-${i}-sub`);
+            fillSelect(m,r,m.value,null); fillSelect(s,r,s.value,st);
         }
     }
-
-    function fillSelect(el, names, cur, excl) {
-        let h = `<option value="">${el.id.includes('sub')?'-Sub-':'-Start-'}</option>`;
-        names.forEach(n => {
-            if(!excl || !excl.has(n) || n===cur) {
-                h += `<option value="${n}" ${n===cur?'selected':''}>${n}</option>`;
-            }
-        });
-        el.innerHTML = h;
+    function fillSelect(el,names,cur,excl) {
+        let h=`<option value="">${el.id.includes('sub')?'-Sub-':'-Start-'}</option>`;
+        names.forEach(n=>{ if(!excl||!excl.has(n)||n===cur) h+=`<option value="${n}" ${n===cur?'selected':''}>${n}</option>`; });
+        el.innerHTML=h;
     }
-
-    function handleRosterInput(t) { saveAll(); refreshDropdowns(t); }
-    function handleLineupChange(t) { saveAll(); refreshDropdowns(t); }
-
-    function doSwap(t, pos) {
-        const m = document.getElementById(`l-${t}-${pos}`);
-        const s = document.getElementById(`l-${t}-${pos}-sub`);
-        const ovM = m.value; const ovS = s.value;
-        
-        if(ovS) {
+    function handleRosterInput(t){ saveAll(); refreshDropdowns(t); }
+    function handleLineupChange(t){ saveAll(); refreshDropdowns(t); }
+    function doSwap(t,p) {
+        const m=document.getElementById(`l-${t}-${p}`), s=document.getElementById(`l-${t}-${p}-sub`);
+        const om=m.value, os=s.value;
+        if(os) {
             incrementSubCount(t);
-            if(!m.querySelector(`option[value="${ovS}"]`)) m.innerHTML += `<option value="${ovS}">${ovS}</option>`;
-            if(ovM && !s.querySelector(`option[value="${ovM}"]`)) s.innerHTML += `<option value="${ovM}">${ovM}</option>`;
-            m.value = ovS; s.value = ovM;
+            if(!m.querySelector(`option[value="${os}"]`)) m.innerHTML+=`<option value="${os}">${os}</option>`;
+            if(om && !s.querySelector(`option[value="${om}"]`)) s.innerHTML+=`<option value="${om}">${om}</option>`;
+            m.value=os; s.value=om;
             saveAll(); refreshDropdowns(t); generate();
         }
     }
 
+    // --- DATA ---
     function saveAll() {
-        const data = {
-            sA: scoreA, sB: scoreB, setsA: setsA, setsB: setsB, hist: history,
-            tos: timeouts, subs: subCounts, serveStats: serveStats,
-            meta: {
-                nA: document.getElementById('name-a').value,
-                nB: document.getElementById('name-b').value,
-                date: document.getElementById('match-date').value,
-                venue: document.getElementById('match-venue').value,
-                oA: document.getElementById('start-offset-a').value,
-                oB: document.getElementById('start-offset-b').value
-            },
-            rosA: getRosterObj('a'), rosB: getRosterObj('b'),
-            linA: getLineupObj('a'), linB: getLineupObj('b')
+        const d={
+            sA:scoreA, sB:scoreB, setsA:setsA, setsB:setsB, hist:history, tos:timeouts, subs:subCounts, serveStats:serveStats,
+            meta:{ nA:document.getElementById('name-a').value, nB:document.getElementById('name-b').value, date:document.getElementById('match-date').value, venue:document.getElementById('match-venue').value, oA:document.getElementById('start-offset-a').value, oB:document.getElementById('start-offset-b').value },
+            rosA:getRosterObj('a'), rosB:getRosterObj('b'), linA:getLineupObj('a'), linB:getLineupObj('b')
         };
-        localStorage.setItem('vb_pro_v13', JSON.stringify(data));
+        localStorage.setItem('vb_pro_v16', JSON.stringify(d));
     }
-
-    function getRosterObj(t) {
-        let arr=[]; for(let i=1; i<=12; i++) arr.push({
-            n: document.getElementById(`p-${t}-${i}-name`).value,
-            r: document.getElementById(`p-${t}-${i}-role`).value
-        }); return arr;
-    }
-    function getLineupObj(t) {
-        let arr=[]; for(let i=1; i<=6; i++) arr.push({
-            m: document.getElementById(`l-${t}-${i}`).value,
-            s: document.getElementById(`l-${t}-${i}-sub`).value
-        }); return arr;
-    }
-
+    function getRosterObj(t){ let a=[]; for(let i=1;i<=12;i++) a.push({n:document.getElementById(`p-${t}-${i}-name`).value, r:document.getElementById(`p-${t}-${i}-role`).value}); return a; }
+    function getLineupObj(t){ let a=[]; for(let i=1;i<=6;i++) a.push({m:document.getElementById(`l-${t}-${i}`).value, s:document.getElementById(`l-${t}-${i}-sub`).value}); return a; }
     function loadAll() {
-        const json = localStorage.getItem('vb_pro_v13');
-        if(!json) return;
-        const d = JSON.parse(json);
-        
-        scoreA=d.sA||0; scoreB=d.sB||0; setsA=d.setsA||0; setsB=d.setsB||0;
-        history=d.hist||[]; timeouts=d.tos||{a:[false,false],b:[false,false]};
-        subCounts=d.subs||{a:0,b:0};
-        serveStats=d.serveStats||[];
-        
-        updateScoreBoard();
-        renderServeMarks();
-
+        const j=localStorage.getItem('vb_pro_v16'); if(!j) return;
+        const d=JSON.parse(j);
+        scoreA=d.sA||0; scoreB=d.sB||0; setsA=d.setsA||0; setsB=d.setsB||0; history=d.hist||[]; timeouts=d.tos||{a:[0,0],b:[0,0]}; subCounts=d.subs||{a:0,b:0}; serveStats=d.serveStats||[];
+        updateScoreBoard(); renderServeMarks();
         if(d.meta) {
-            document.getElementById('name-a').value = d.meta.nA;
-            document.getElementById('name-b').value = d.meta.nB;
-            document.getElementById('match-date').value = d.meta.date||'';
-            document.getElementById('match-venue').value = d.meta.venue||'';
-            document.getElementById('start-offset-a').value = d.meta.oA;
-            document.getElementById('start-offset-b').value = d.meta.oB;
+            document.getElementById('name-a').value=d.meta.nA; document.getElementById('name-b').value=d.meta.nB;
+            document.getElementById('match-date').value=d.meta.date||''; document.getElementById('match-venue').value=d.meta.venue||'';
+            document.getElementById('start-offset-a').value=d.meta.oA; document.getElementById('start-offset-b').value=d.meta.oB;
         }
         updateNames();
-
-        restoreRoster('a', d.rosA); restoreRoster('b', d.rosB);
-        refreshDropdowns('a'); refreshDropdowns('b');
-        restoreLineup('a', d.linA); restoreLineup('b', d.linB);
-        generate();
+        restoreRoster('a',d.rosA); restoreRoster('b',d.rosB); refreshDropdowns('a'); refreshDropdowns('b'); restoreLineup('a',d.linA); restoreLineup('b',d.linB); generate();
     }
+    function restoreRoster(t,a){ if(!a)return; a.forEach((p,i)=>{ if(i<12){document.getElementById(`p-${t}-${i+1}-name`).value=p.n; document.getElementById(`p-${t}-${i+1}-role`).value=p.r;} }); }
+    function restoreLineup(t,a){ if(!a)return; a.forEach((l,i)=>{ const m=document.getElementById(`l-${t}-${i+1}`), s=document.getElementById(`l-${t}-${i+1}-sub`); if(l.m)m.innerHTML+=`<option value="${l.m}">${l.m}</option>`; if(l.s)s.innerHTML+=`<option value="${l.s}">${l.s}</option>`; m.value=l.m; s.value=l.s; }); refreshDropdowns(t); }
+    function exportData() { saveAll(); const b=new Blob([localStorage.getItem('vb_pro_v16')],{type:"application/json"}); const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download=`vb_data_${new Date().toISOString().slice(0,10)}.json`; a.click(); }
+    function importData(inp) { const f=inp.files[0]; if(!f)return; const r=new FileReader(); r.onload=e=>{ try{const d=JSON.parse(e.target.result); if(!d.meta)throw 1; localStorage.setItem('vb_pro_v16',JSON.stringify(d)); location.reload();}catch(x){alert('Invalid File');} }; r.readAsText(f); }
+    function factoryReset() { if(confirm("DELETE ALL DATA?")) { localStorage.removeItem('vb_pro_v16'); location.reload(); } }
 
-    function restoreRoster(t, arr) {
-        if(!arr) return;
-        arr.forEach((p,i) => {
-            if(i<12) {
-                document.getElementById(`p-${t}-${i+1}-name`).value=p.n;
-                document.getElementById(`p-${t}-${i+1}-role`).value=p.r;
-            }
-        });
-    }
-    function restoreLineup(t, arr) {
-        if(!arr) return;
-        arr.forEach((l,i) => {
-            const m = document.getElementById(`l-${t}-${i+1}`);
-            const s = document.getElementById(`l-${t}-${i+1}-sub`);
-            if(l.m) m.innerHTML+=`<option value="${l.m}">${l.m}</option>`;
-            if(l.s) s.innerHTML+=`<option value="${l.s}">${l.s}</option>`;
-            m.value=l.m; s.value=l.s;
-        });
-        refreshDropdowns(t);
-    }
-
-    function getRole(name, t) {
-        for(let i=1; i<=12; i++) {
-            if(document.getElementById(`p-${t}-${i}-name`).value===name)
-                return document.getElementById(`p-${t}-${i}-role`).value;
-        } return '';
-    }
-
+    // --- GENERATE ---
+    function getRole(n,t){ for(let i=1;i<=12;i++) if(document.getElementById(`p-${t}-${i}-name`).value===n) return document.getElementById(`p-${t}-${i}-role`).value; return ''; }
     function generate() {
-        const out = document.getElementById('output');
-        out.innerHTML = '';
-        const mode = document.getElementById('view-mode').value;
-        if(mode!=='all') out.classList.add('single-view'); else out.classList.remove('single-view');
-        
-        let start=0, end=6;
-        if(mode!=='all') { start=parseInt(mode)-1; end=start+1; }
-
-        const arrA = buildArr('a');
-        const arrB = buildArr('b');
-        const offA = parseInt(document.getElementById('start-offset-a').value);
-        const offB = parseInt(document.getElementById('start-offset-b').value);
-
-        for(let r=start; r<end; r++) {
-            const rotA = rotate(arrA, r+offA);
-            const rotB = rotate(arrB, r+offB);
-            
-            out.innerHTML += `
-            <div class="rotation-card">
-                <div class="rot-title">ROTATION ${r+1}</div>
-                <div style="text-align:center; font-weight:bold; color:var(--primary); font-size:0.8rem">${document.getElementById('name-a').value}</div>
-                <div class="court-wrapper"><div class="court">
-                    ${z(rotA[3],0)}${z(rotA[2],0)}${z(rotA[1],0)}
-                    ${z(rotA[4],0)}${z(rotA[5],0)}${z(rotA[0],1)}
-                </div></div>
-                <div style="text-align:center; font-weight:bold; color:var(--secondary); font-size:0.8rem">${document.getElementById('name-b').value}</div>
-                <div class="court-wrapper"><div class="court team-b-bg">
-                    ${z(rotB[3],0)}${z(rotB[2],0)}${z(rotB[1],0)}
-                    ${z(rotB[4],0)}${z(rotB[5],0)}${z(rotB[0],1)}
-                </div></div>
-            </div>`;
+        const out=document.getElementById('output'), m=document.getElementById('view-mode').value;
+        out.innerHTML=''; if(m!=='all') out.classList.add('single-view'); else out.classList.remove('single-view');
+        let s=0, e=6; if(m!=='all'){ s=parseInt(m)-1; e=s+1; }
+        const aA=buildArr('a'), aB=buildArr('b');
+        const oA=parseInt(document.getElementById('start-offset-a').value), oB=parseInt(document.getElementById('start-offset-b').value);
+        for(let r=s; r<e; r++) {
+            const rA=rotate(aA,r+oA), rB=rotate(aB,r+oB);
+            out.innerHTML+=`<div class="rotation-card"><div class="rot-title">ROTATION ${r+1}</div><div style="text-align:center;font-weight:bold;color:var(--primary);font-size:0.8rem">${document.getElementById('name-a').value}</div><div class="court-wrapper"><div class="court">${z(rA[3],0)}${z(rA[2],0)}${z(rA[1],0)}${z(rA[4],0)}${z(rA[5],0)}${z(rA[0],1)}</div></div><div style="text-align:center;font-weight:bold;color:var(--secondary);font-size:0.8rem">${document.getElementById('name-b').value}</div><div class="court-wrapper"><div class="court team-b-bg">${z(rB[3],0)}${z(rB[2],0)}${z(rB[1],0)}${z(rB[4],0)}${z(rB[5],0)}${z(rB[0],1)}</div></div></div>`;
         }
     }
-
-    function buildArr(t) {
-        let arr=[]; for(let i=1; i<=6; i++) {
-            let m=document.getElementById(`l-${t}-${i}`).value||`P${i}`;
-            let s=document.getElementById(`l-${t}-${i}-sub`).value;
-            arr.push({n:m, s:s, r:getRole(m,t)});
-        } return arr;
-    }
-    function rotate(arr, s) { let a=[...arr]; for(let k=0; k<s; k++) a=[a[1],a[2],a[3],a[4],a[5],a[0]]; return a; }
-    function z(p, isP1) {
-        const isL = p.r==='L';
-        return `<div class="zone" ${isP1?'style="border:2px solid #000"':''}>
-            ${isP1?'<div class="server-badge">S</div>':''}
-            <span class="pos-label">${isP1?'P1':''}</span>
-            <div class="player-content">
-                ${p.r?`<span class="role-badge ${isL?'libero':''}">${p.r}</span>`:''}
-                <span>${p.n}</span>
-                ${p.s?`<span class="sub-name">(${p.s})</span>`:''}
-            </div>
-        </div>`;
-    }
+    function buildArr(t){ let a=[]; for(let i=1;i<=6;i++){ let m=document.getElementById(`l-${t}-${i}`).value||`P${i}`, s=document.getElementById(`l-${t}-${i}-sub`).value; a.push({n:m,s:s,r:getRole(m,t)}); } return a; }
+    function rotate(a,s){ let r=[...a]; for(let k=0;k<s;k++) r=[r[1],r[2],r[3],r[4],r[5],r[0]]; return r; }
+    function z(p,ip1){ const l=p.r==='L'; return `<div class="zone" ${ip1?'style="border:2px solid #000"':''}>${ip1?'<div class="server-badge">S</div>':''}<span class="pos-label">${ip1?'P1':''}</span><div class="player-content">${p.r?`<span class="role-badge ${l?'libero':''}">${p.r}</span>`:''}<span>${p.n}</span>${p.s?`<span class="sub-name">(${p.s})</span>`:''}</div></div>`; }
 
     init();
 </script>
