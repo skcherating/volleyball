@@ -8,6 +8,7 @@
         :root { 
             --primary: #2563eb; 
             --secondary: #dc2626; 
+            --highlight: #2563eb; /* Color for Best Zone */
             --bg: #f8fafc; 
             --court-orange: #f97316;
             --court-blue: #3b82f6;
@@ -40,8 +41,7 @@
         .user-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid #eee; }
         .user-info { font-size: 0.8rem; color: #64748b; font-weight: bold; }
         .btn-logout { background: #94a3b8; color: white; border: none; padding: 4px 10px; border-radius: 4px; font-size: 0.7rem; cursor: pointer; }
-        .btn-admin { background: var(--dark); color: white; border: none; padding: 4px 10px; border-radius: 4px; font-size: 0.7rem; cursor: pointer; margin-right: 5px; display: none; }
-
+        
         .header-section { text-align: center; margin-bottom: 15px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
         .school-logo { width: 50px; height: auto; margin-bottom: 5px; }
         h1 { margin: 0; font-size: 1.2rem; color: var(--dark); }
@@ -132,14 +132,23 @@
             background: var(--court-orange); border: 4px solid white; 
             box-shadow: 0 0 0 10px var(--court-blue); cursor: crosshair; margin: 10px 10px 30px 10px;
         }
+        
+        /* UPDATED NET INDICATOR (High Visibility) */
         .net-indicator {
             position: absolute; top: -25px; left: -10px; right: -10px; height: 10px; 
-            background: repeating-linear-gradient(90deg, #fff, #fff 2px, #333 2px, #333 4px);
-            border: 1px solid #000; display: flex; align-items: center; justify-content: center; color: black; font-size: 0.7rem; font-weight: bold;
+            background: repeating-linear-gradient(90deg, #e5e5e5, #e5e5e5 2px, #333 2px, #333 4px);
+            border: 1px solid #000; display: flex; align-items: center; justify-content: center; z-index: 5;
         }
+        .net-text-badge {
+            background: white; color: black; font-size: 0.7rem; font-weight: 800;
+            padding: 1px 8px; border-radius: 4px; border: 1px solid #333;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
         .analysis-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr 1fr; width: 100%; height: 100%; position: absolute; top: 0; left: 0; pointer-events: none; }
         .analysis-cell { border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.4); font-weight:bold; font-size: 1.2rem; }
         .analysis-cell:nth-child(1), .analysis-cell:nth-child(2), .analysis-cell:nth-child(3) { border-bottom: 3px solid white; }
+        
         .serve-mark { 
             position: absolute; width: 24px; height: 24px; border-radius: 50%; 
             transform: translate(-50%, -50%); border: 2px solid white; box-shadow: 0 1px 3px rgba(0,0,0,0.5); 
@@ -157,7 +166,17 @@
         .color-swatch { width: 12px; height: 12px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.2); }
         .total-badge { background: #334155; color: white; font-size: 0.7rem; padding: 1px 6px; border-radius: 10px; }
         .stat-badges { display: flex; flex-wrap: wrap; gap: 4px; }
+        
         .stat-badge { background: white; border: 1px solid #cbd5e1; color: #334155; font-size: 0.75rem; padding: 2px 6px; border-radius: 4px; font-weight: bold; }
+        
+        /* Highlight for the MOST HIT Zone */
+        .stat-badge.best-zone {
+            background-color: var(--highlight);
+            color: white;
+            border-color: var(--highlight);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transform: scale(1.05);
+        }
 
         /* General Controls */
         .filter-bar { background: #eee; padding: 8px; border-radius: 6px; margin-bottom: 15px; text-align: center; }
@@ -203,7 +222,6 @@
             .game-stats { color: black; background: transparent; border: 1px solid #ccc; }
             .to-dot { background: #eee; border-color: #000; }
             .to-dot.active { background: #000; }
-            
             .analysis-section { border: 1px solid #000; background: white; page-break-inside: avoid; }
             .analysis-wrapper { display: flex; gap: 20px; }
             .analysis-container { border-color: #000; box-shadow: 0 0 0 5px #ccc; break-inside: avoid; }
@@ -329,7 +347,7 @@
                     
                     <div class="map-scroll-container" id="maps-container">
                         <div class="analysis-container" id="serve-court-0" onclick="recordServe(event, 0)">
-                            <div class="net-indicator">NET (SET 1)</div>
+                            <div class="net-indicator"><span class="net-text-badge">NET (SET 1)</span></div>
                             <div class="analysis-grid"><div class="analysis-cell">4</div><div class="analysis-cell">3</div><div class="analysis-cell">2</div><div class="analysis-cell">7</div><div class="analysis-cell">8</div><div class="analysis-cell">9</div><div class="analysis-cell">5</div><div class="analysis-cell">6</div><div class="analysis-cell">1</div></div>
                         </div>
                     </div>
@@ -386,7 +404,7 @@
 
     // --- APP STATE ---
     let scoreA=0, scoreB=0, setsA=0, setsB=0;
-    let history=[], serveStats=[]; // Array of {x, y, player, mapId}
+    let history=[], serveStats=[]; 
     let mapCount = 1; 
     let timeouts={a:[false,false],b:[false,false]}, subCounts={a:0,b:0};
     const roles = `<option value="">-</option><option value="S">S</option><option value="OH">OH</option><option value="MB">MB</option><option value="OP">OP</option><option value="L">L</option><option value="DS">DS</option>`;
@@ -421,7 +439,7 @@
     }
     function resetPointsOnly(){ if(confirm("Reset Pts?")){scoreA=0;scoreB=0;updateScoreBoard();saveAll();} }
     function updateSet(t,v){ if(t==='a')setsA=Math.max(0,setsA+v);else setsB=Math.max(0,setsB+v); updateScoreBoard(); saveAll(); }
-    function resetMatch(){ if(confirm("RESET ALL?")){ localStorage.removeItem('vb_pro_v18'); location.reload(); } }
+    function resetMatch(){ if(confirm("RESET ALL?")){ localStorage.removeItem('vb_pro_v19'); location.reload(); } }
     function updateScoreBoard(){
         document.getElementById('score-a-disp').innerText=scoreA; document.getElementById('score-b-disp').innerText=scoreB;
         document.getElementById('sets-a-disp').innerText=setsA; document.getElementById('sets-b-disp').innerText=setsB;
@@ -446,12 +464,12 @@
     function addMap() {
         mapCount++;
         const c = document.getElementById('maps-container');
-        const id = mapCount-1; // 0-indexed internally for array mapping
+        const id = mapCount-1;
         const div = document.createElement('div');
         div.className = 'analysis-container';
         div.id = `serve-court-${id}`;
         div.onclick = (e) => recordServe(e, id);
-        div.innerHTML = `<div class="net-indicator">NET (SET ${mapCount})</div>
+        div.innerHTML = `<div class="net-indicator"><span class="net-text-badge">NET (SET ${mapCount})</span></div>
                         <div class="analysis-grid"><div class="analysis-cell">4</div><div class="analysis-cell">3</div><div class="analysis-cell">2</div><div class="analysis-cell">7</div><div class="analysis-cell">8</div><div class="analysis-cell">9</div><div class="analysis-cell">5</div><div class="analysis-cell">6</div><div class="analysis-cell">1</div></div>`;
         c.appendChild(div);
         saveAll();
@@ -473,7 +491,7 @@
             serveStats = [];
             document.getElementById('maps-container').innerHTML = `
                 <div class="analysis-container" id="serve-court-0" onclick="recordServe(event, 0)">
-                    <div class="net-indicator">NET (SET 1)</div>
+                    <div class="net-indicator"><span class="net-text-badge">NET (SET 1)</span></div>
                     <div class="analysis-grid"><div class="analysis-cell">4</div><div class="analysis-cell">3</div><div class="analysis-cell">2</div><div class="analysis-cell">7</div><div class="analysis-cell">8</div><div class="analysis-cell">9</div><div class="analysis-cell">5</div><div class="analysis-cell">6</div><div class="analysis-cell">1</div></div>
                 </div>`;
             mapCount = 1;
@@ -482,18 +500,11 @@
     }
 
     function renderAllMarks() {
-        // Clear all maps marks first
         document.querySelectorAll('.serve-mark').forEach(m => m.remove());
-        
         let stats = {};
         
         serveStats.forEach(s => {
-            // Ensure map exists (for loaded data)
-            if(s.mapId >= mapCount) {
-                // If data has more maps than currently rendered, render them
-                for(let i=mapCount; i<=s.mapId; i++) addMap();
-            }
-
+            if(s.mapId >= mapCount) for(let i=mapCount; i<=s.mapId; i++) addMap();
             const container = document.getElementById(`serve-court-${s.mapId}`);
             if(container) {
                 const mark = document.createElement('div');
@@ -504,15 +515,12 @@
                 mark.style.backgroundColor = getColor(s.player);
                 container.appendChild(mark);
             }
-
-            // Stats
             if(!stats[s.player]) stats[s.player] = { count:0, zones:{} };
             stats[s.player].count++;
             const z = getZone(s.x, s.y);
             if(!stats[s.player].zones[z]) stats[s.player].zones[z]=0;
             stats[s.player].zones[z]++;
         });
-        
         updateServerList(stats);
     }
 
@@ -529,7 +537,17 @@
         for(const [n,d] of Object.entries(stats)) {
             const color = getColor(n);
             let badges = '';
-            Object.keys(d.zones).sort((a,b)=>a-b).forEach(z => badges+=`<span class="stat-badge">Z${z}: ${d.zones[z]}</span>`);
+            
+            // Calculate Max Hit Count
+            let maxCount = 0;
+            Object.values(d.zones).forEach(c => { if(c > maxCount) maxCount = c; });
+
+            Object.keys(d.zones).sort((a,b)=>a-b).forEach(z => { 
+                const count = d.zones[z];
+                const isBest = count === maxCount;
+                const extraClass = isBest ? 'best-zone' : '';
+                badges+=`<span class="stat-badge ${extraClass}">Z${z}: ${count}</span>`;
+            });
             
             const div = document.createElement('div'); div.className='server-item';
             div.onclick = () => { document.getElementById('serve-player-input').value = n; };
@@ -590,28 +608,27 @@
             meta:{ nA:document.getElementById('name-a').value, nB:document.getElementById('name-b').value, date:document.getElementById('match-date').value, venue:document.getElementById('match-venue').value, oA:document.getElementById('start-offset-a').value, oB:document.getElementById('start-offset-b').value },
             rosA:getRosterObj('a'), rosB:getRosterObj('b'), linA:getLineupObj('a'), linB:getLineupObj('b')
         };
-        localStorage.setItem('vb_pro_v18', JSON.stringify(d));
+        localStorage.setItem('vb_pro_v19', JSON.stringify(d));
     }
     function getRosterObj(t){ let a=[]; for(let i=1;i<=12;i++) a.push({n:document.getElementById(`p-${t}-${i}-name`).value, r:document.getElementById(`p-${t}-${i}-role`).value}); return a; }
     function getLineupObj(t){ let a=[]; for(let i=1;i<=6;i++) a.push({m:document.getElementById(`l-${t}-${i}`).value, s:document.getElementById(`l-${t}-${i}-sub`).value}); return a; }
     
     function loadAll() {
-        const j=localStorage.getItem('vb_pro_v18'); if(!j) return;
+        const j=localStorage.getItem('vb_pro_v19'); if(!j) return;
         const d=JSON.parse(j);
         scoreA=d.sA||0; scoreB=d.sB||0; setsA=d.setsA||0; setsB=d.setsB||0; history=d.hist||[]; 
         timeouts=d.tos||{a:[0,0],b:[0,0]}; subCounts=d.subs||{a:0,b:0}; 
         serveStats=d.serveStats||[]; 
-        mapCount = d.mapCount || 1; // Restore map count
+        mapCount = d.mapCount || 1; 
         
-        // Restore maps DOM
         const c = document.getElementById('maps-container');
-        c.innerHTML = ''; // Clear default
+        c.innerHTML = ''; 
         for(let i=0; i<mapCount; i++) {
             const div = document.createElement('div');
             div.className = 'analysis-container';
             div.id = `serve-court-${i}`;
             div.onclick = (e) => recordServe(e, i);
-            div.innerHTML = `<div class="net-indicator">NET (SET ${i+1})</div>
+            div.innerHTML = `<div class="net-indicator"><span class="net-text-badge">NET (SET ${i+1})</span></div>
                             <div class="analysis-grid"><div class="analysis-cell">4</div><div class="analysis-cell">3</div><div class="analysis-cell">2</div><div class="analysis-cell">7</div><div class="analysis-cell">8</div><div class="analysis-cell">9</div><div class="analysis-cell">5</div><div class="analysis-cell">6</div><div class="analysis-cell">1</div></div>`;
             c.appendChild(div);
         }
@@ -628,9 +645,9 @@
     }
     function restoreRoster(t,a){ if(!a)return; a.forEach((p,i)=>{ if(i<12){document.getElementById(`p-${t}-${i+1}-name`).value=p.n; document.getElementById(`p-${t}-${i+1}-role`).value=p.r;} }); }
     function restoreLineup(t,a){ if(!a)return; a.forEach((l,i)=>{ const m=document.getElementById(`l-${t}-${i+1}`), s=document.getElementById(`l-${t}-${i+1}-sub`); if(l.m)m.innerHTML+=`<option value="${l.m}">${l.m}</option>`; if(l.s)s.innerHTML+=`<option value="${l.s}">${l.s}</option>`; m.value=l.m; s.value=l.s; }); refreshDropdowns(t); }
-    function exportData() { saveAll(); const b=new Blob([localStorage.getItem('vb_pro_v18')],{type:"application/json"}); const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download=`vb_data.json`; a.click(); }
-    function importData(inp) { const f=inp.files[0]; if(!f)return; const r=new FileReader(); r.onload=e=>{ try{const d=JSON.parse(e.target.result); if(!d.meta)throw 1; localStorage.setItem('vb_pro_v18',JSON.stringify(d)); location.reload();}catch(x){alert('Invalid File');} }; r.readAsText(f); }
-    function factoryReset() { if(confirm("DELETE ALL?")) { localStorage.removeItem('vb_pro_v18'); location.reload(); } }
+    function exportData() { saveAll(); const b=new Blob([localStorage.getItem('vb_pro_v19')],{type:"application/json"}); const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download=`vb_data.json`; a.click(); }
+    function importData(inp) { const f=inp.files[0]; if(!f)return; const r=new FileReader(); r.onload=e=>{ try{const d=JSON.parse(e.target.result); if(!d.meta)throw 1; localStorage.setItem('vb_pro_v19',JSON.stringify(d)); location.reload();}catch(x){alert('Invalid File');} }; r.readAsText(f); }
+    function factoryReset() { if(confirm("DELETE ALL?")) { localStorage.removeItem('vb_pro_v19'); location.reload(); } }
 
     function getRole(n,t){ for(let i=1;i<=12;i++) if(document.getElementById(`p-${t}-${i}-name`).value===n) return document.getElementById(`p-${t}-${i}-role`).value; return ''; }
     function generate() {
