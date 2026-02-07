@@ -8,14 +8,15 @@
         :root { 
             --primary: #2563eb; 
             --secondary: #dc2626; 
-            --bg: #f8fafc; 
-            --court-a: #fbbf24; 
-            --court-b: #f87171; 
+            --bg: #f1f5f9; 
+            --court-orange: #f97316;
+            --court-blue: #3b82f6;
+            --line-color: #ffffff;
             --dark: #0f172a;
         }
         * { box-sizing: border-box; }
         body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); padding: 15px; margin: 0; color: #333; position: relative; min-height: 100vh; }
-        .container { max-width: 1000px; margin: auto; background: white; padding: 15px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); padding-bottom: 40px; }
+        .container { max-width: 1000px; margin: auto; background: white; padding: 15px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); padding-bottom: 40px; }
         
         /* --- HEADER --- */
         .header-section { text-align: center; margin-bottom: 15px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
@@ -78,12 +79,11 @@
         .lineup-row label { font-size: 0.75rem; font-weight: bold; color: #555; }
         .lineup-select { width: 100%; padding: 6px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 0.85rem; background: white; }
         .icon-swap { font-size: 1rem; cursor: pointer; color: #94a3b8; text-align: center; }
-        
         .output-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 20px; }
         .rotation-card { border: 2px solid #334155; border-radius: 8px; padding: 10px; background: #fff; page-break-inside: avoid; }
         .rot-title { text-align: center; font-weight: bold; font-size: 0.9rem; margin-bottom: 8px; background: #334155; color: white; padding: 4px; border-radius: 4px; }
-        .court { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; background: var(--court-a); padding: 5px; border: 2px solid #92400e; border-radius: 4px; margin-bottom: 10px; }
-        .court.team-b-bg { background: var(--court-b); border-color: #991b1b; }
+        .court { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; background: #fbbf24; padding: 5px; border: 2px solid #92400e; border-radius: 4px; margin-bottom: 10px; }
+        .court.team-b-bg { background: #f87171; border-color: #991b1b; }
         .zone { background: rgba(255,255,255,0.95); height: 50px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: bold; border-radius: 2px; position: relative; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
         .pos-label { font-size: 0.55rem; color: #64748b; position: absolute; top: 2px; left: 2px; }
         .player-content { display: flex; flex-direction: column; align-items: center; line-height: 1.1; width: 100%; overflow: hidden; }
@@ -92,31 +92,60 @@
         .sub-name { font-size: 0.7rem; color: #dc2626; font-style: italic; margin-top: 1px; }
         .server-badge { position: absolute; top: 2px; right: 2px; background: #10b981; color: white; font-size: 0.55rem; padding: 1px 3px; border-radius: 3px; }
 
-        /* --- ANALYSIS --- */
+        /* --- REALISTIC COURT ANALYSIS --- */
         .analysis-section { padding: 15px; background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0; }
-        .analysis-wrapper { display: grid; grid-template-columns: 250px 1fr; gap: 20px; align-items: start; }
-        .serve-input-row { display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 10px; }
-        .serve-input { padding: 5px; border: 2px solid #3b82f6; border-radius: 4px; width: 120px; text-align: center; font-weight: bold; font-size: 0.9rem; }
+        .analysis-header { font-weight: bold; text-align: center; margin-bottom: 10px; color: #475569; font-size: 0.9rem; text-transform: uppercase; }
+        .analysis-wrapper { display: grid; grid-template-columns: 320px 1fr; gap: 20px; align-items: start; }
         
-        .analysis-container { position: relative; width: 240px; height: 240px; background: #fbbf24; border: 2px solid #b45309; cursor: crosshair; }
+        .map-col { display: flex; flex-direction: column; align-items: center; }
+        .serve-input-row { display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 15px; }
+        .serve-input { padding: 8px; border: 2px solid #3b82f6; border-radius: 6px; width: 140px; text-align: center; font-weight: bold; font-size: 1rem; }
+        
+        /* The Realistic Court */
+        .analysis-container { 
+            position: relative; width: 300px; height: 300px; 
+            background: var(--court-orange); 
+            border: 4px solid white; 
+            box-shadow: 0 0 0 10px var(--court-blue); /* Out of bounds */
+            cursor: crosshair; 
+            margin: 10px;
+        }
+        .net-indicator {
+            position: absolute; top: -25px; left: -10px; right: -10px;
+            height: 10px; background: repeating-linear-gradient(90deg, #fff, #fff 2px, #333 2px, #333 4px);
+            border: 1px solid #000;
+            display: flex; align-items: center; justify-content: center; color: black; font-size: 0.7rem; font-weight: bold;
+        }
+        
+        /* 3x3 Grid Overlay */
         .analysis-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr 1fr; width: 100%; height: 100%; position: absolute; top: 0; left: 0; pointer-events: none; }
-        .analysis-cell { border: 1px solid rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; color: rgba(0,0,0,0.2); font-weight:bold; font-size: 1.2rem; }
+        .analysis-cell { 
+            border: 1px solid rgba(255,255,255,0.2); 
+            display: flex; align-items: center; justify-content: center; 
+            color: rgba(255,255,255,0.4); font-weight:bold; font-size: 1.2rem; 
+        }
+        
+        /* The Attack Line (Between Row 1 and Row 2) */
+        .analysis-cell:nth-child(1), .analysis-cell:nth-child(2), .analysis-cell:nth-child(3) {
+            border-bottom: 3px solid white; /* Attack Line */
+        }
+
         .serve-mark { 
-            position: absolute; width: 24px; height: 24px; border-radius: 50%; transform: translate(-50%, -50%); border: 2px solid white; box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+            position: absolute; width: 24px; height: 24px; border-radius: 50%; transform: translate(-50%, -50%); border: 2px solid white; box-shadow: 0 1px 3px rgba(0,0,0,0.5);
             display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 0.7rem; z-index: 10; text-shadow: 0 0 2px black;
         }
         
         /* Stats List Styling */
-        .stats-col { background: white; border: 1px solid #e2e8f0; border-radius: 6px; padding: 10px; min-height: 240px; max-height: 400px; overflow-y: auto; }
+        .stats-col { background: white; border: 1px solid #e2e8f0; border-radius: 6px; padding: 10px; min-height: 300px; max-height: 400px; overflow-y: auto; }
         .stats-title { font-size: 0.8rem; font-weight: bold; color: #64748b; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 5px; display: flex; justify-content: space-between; }
         .server-list { display: flex; flex-direction: column; gap: 8px; }
         .server-item { padding: 8px; border-radius: 6px; background: #f8fafc; border: 1px solid #e2e8f0; }
-        .server-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+        .server-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
         .server-info { display: flex; align-items: center; gap: 8px; }
         .color-swatch { width: 12px; height: 12px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.2); }
         .total-badge { background: #334155; color: white; font-size: 0.7rem; padding: 1px 6px; border-radius: 10px; }
         .stat-badges { display: flex; flex-wrap: wrap; gap: 4px; }
-        .stat-badge { background: white; border: 1px solid #cbd5e1; color: #334155; font-size: 0.7rem; padding: 2px 6px; border-radius: 4px; font-weight: bold; }
+        .stat-badge { background: white; border: 1px solid #cbd5e1; color: #334155; font-size: 0.75rem; padding: 2px 6px; border-radius: 4px; font-weight: bold; }
 
         /* General Controls */
         .filter-bar { background: #eee; padding: 8px; border-radius: 6px; margin-bottom: 15px; text-align: center; }
@@ -167,7 +196,7 @@
             
             .analysis-section { border: 1px solid #000; background: white; page-break-inside: avoid; }
             .analysis-wrapper { display: flex; gap: 20px; }
-            .analysis-container { border-color: #000; }
+            .analysis-container { border-color: #000; box-shadow: 0 0 0 5px #ccc; }
             .history-section { border-top: 1px solid #ccc; margin-top: 5px; padding-top: 5px; }
             .history-chip { background: #eee; color: #000; border: 1px solid #ccc; font-size: 0.7rem; padding: 1px 6px; }
             
@@ -260,7 +289,7 @@
 
     <div id="tab-analysis" class="tab-content">
         <div class="analysis-section">
-            <div class="analysis-header">Opponent Serve Analysis</div>
+            <div class="analysis-header">Opponent Serve Analysis (9-Zone)</div>
             <div class="analysis-wrapper">
                 <div class="map-col">
                     <div class="serve-input-row">
@@ -268,10 +297,11 @@
                         <input type="text" id="serve-player-input" class="serve-input" placeholder="Name or #" title="Enter name then click court">
                     </div>
                     <div class="analysis-container" id="serve-court" onclick="recordServe(event)">
+                        <div class="net-indicator">NET</div>
                         <div class="analysis-grid">
                             <div class="analysis-cell">4</div><div class="analysis-cell">3</div><div class="analysis-cell">2</div>
-                            <div class="analysis-cell">5</div><div class="analysis-cell">6</div><div class="analysis-cell">1</div>
                             <div class="analysis-cell">7</div><div class="analysis-cell">8</div><div class="analysis-cell">9</div>
+                            <div class="analysis-cell">5</div><div class="analysis-cell">6</div><div class="analysis-cell">1</div>
                         </div>
                     </div>
                     <div style="text-align:center; margin-top:10px;"><button style="background:#64748b; color:white; border:none; padding:5px 10px; border-radius:4px; font-size:0.8rem;" onclick="undoServeMark(event)">Undo Last Mark</button></div>
@@ -378,7 +408,7 @@
     }
     function getZone(x, y) {
         let col=Math.floor(x/33.34), row=Math.floor(y/33.34);
-        const zm=[[4,3,2],[5,6,1],[7,8,9]];
+        const zm=[[4,3,2],[7,8,9],[5,6,1]]; // Updated 9-Zone logic (Front/Mid/Deep)
         return zm[row]?zm[row][col]:'?';
     }
     function recordServe(e) {
@@ -413,7 +443,8 @@
         for(const [n,d] of Object.entries(stats)) {
             const color = stringToColor(n);
             let badges = '';
-            Object.keys(d.zones).sort().forEach(z => { badges += `<span class="stat-badge">Z${z}: ${d.zones[z]}</span>`; });
+            // Sort zones 1-9
+            Object.keys(d.zones).sort((a,b)=>a-b).forEach(z => { badges += `<span class="stat-badge">Z${z}: ${d.zones[z]}</span>`; });
             const div=document.createElement('div'); div.className='server-item';
             div.innerHTML=`
                 <div class="server-header">
