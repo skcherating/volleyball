@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Volleyball Manager Pro (Cloud Edition)</title>
+    
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
+
     <style>
         :root { 
             --primary: #2563eb; 
@@ -19,10 +23,7 @@
         /* --- LOGIN OVERLAY --- */
         #login-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--dark); z-index: 9999; display: flex; align-items: center; justify-content: center; flex-direction: column; }
         .login-box { background: white; padding: 30px; border-radius: 12px; width: 90%; max-width: 350px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
-        
-        /* FIXED LOGO STYLING */
         .login-logo { width: 80px; height: auto; max-height: 80px; object-fit: contain; margin-bottom: 15px; }
-        
         .login-input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; }
         .btn-login { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 6px; font-weight: bold; font-size: 1rem; cursor: pointer; }
         .btn-login:hover { background: #1d4ed8; }
@@ -46,7 +47,6 @@
         .btn-reset-dev { background: #eab308; color: black; border: none; padding: 3px 6px; border-radius: 3px; cursor: pointer; font-size: 0.7rem; margin-right: 5px;}
 
         .header-section { text-align: center; margin-bottom: 15px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
-        .school-logo { width: 50px; height: auto; margin-bottom: 5px; }
         h1 { margin: 0; font-size: 1.2rem; color: var(--dark); }
         .match-meta { display: flex; justify-content: center; gap: 10px; margin-top: 5px; flex-wrap: wrap; }
         .meta-group { display: flex; align-items: center; gap: 5px; }
@@ -70,11 +70,13 @@
         .score-controls { display: flex; gap: 5px; margin-top: 5px; }
         .btn-score { background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.2); width: 32px; height: 32px; border-radius: 50%; font-size: 1.1rem; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
         .btn-win-set { background: #10b981; color: white; border: none; padding: 5px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; cursor: pointer; text-transform: uppercase; margin-top: 5px; width: 100%; }
+        .btn-win-set.loss { background: #ef4444; }
         .sets-col { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; height: 100%; padding-top: 5px; }
         .sets-label { font-size: 0.65rem; text-transform: uppercase; color: #94a3b8; letter-spacing: 1px; }
         .sets-val { font-size: 1.8rem; font-weight: bold; margin-bottom: 5px; }
         .sets-controls-row { display: flex; gap: 3px; margin-bottom: 10px; justify-content: center; }
         .btn-set { background: rgba(255,255,255,0.1); border: 1px solid #64748b; color: #cbd5e1; font-size: 0.65rem; padding: 4px 6px; border-radius: 4px; cursor: pointer; }
+        .btn-reset-pts { background: rgba(234, 179, 8, 0.2); border: 1px solid #eab308; color: #fde047; }
         .btn-reset-match { background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444; color: #fca5a5; font-size: 0.65rem; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-weight: bold; margin-top: 5px; }
         .history-section { margin-top: 10px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; }
         .history-chips { display: flex; justify-content: center; gap: 5px; flex-wrap: wrap; margin-top: 5px; }
@@ -111,6 +113,7 @@
         .role-badge { font-size: 0.6rem; background: #333; color: white; padding: 1px 4px; border-radius: 3px; margin-bottom: 2px; }
         .role-badge.libero { background: #eab308; color: black; } 
         .sub-name { font-size: 0.7rem; color: #dc2626; font-style: italic; margin-top: 1px; }
+        .server-badge { position: absolute; top: 2px; right: 2px; background: #10b981; color: white; font-size: 0.55rem; padding: 1px 3px; border-radius: 3px; }
 
         /* --- TAB 2: ANALYSIS --- */
         .analysis-section { padding: 15px; background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0; }
@@ -119,7 +122,6 @@
         .map-col { display: flex; flex-direction: column; align-items: center; width: 100%; }
         .serve-input-row { display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 15px; }
         .serve-input { padding: 8px; border: 2px solid #3b82f6; border-radius: 6px; width: 160px; text-align: center; font-weight: bold; font-size: 1rem; }
-        
         .map-scroll-container { max-height: 600px; overflow-y: auto; padding: 10px; border: 1px solid #eee; border-radius: 8px; background: white; margin-bottom: 10px; width: 100%; display: flex; flex-direction: column; align-items: center; }
         .analysis-container { position: relative; width: 420px; height: 420px; background: var(--court-orange); border: 4px solid white; box-shadow: 0 0 0 10px var(--court-blue); cursor: crosshair; margin: 20px 10px 30px 10px; }
         .net-indicator { position: absolute; top: -25px; left: -10px; right: -10px; height: 10px; background: repeating-linear-gradient(90deg, #e5e5e5, #e5e5e5 2px, #333 2px, #333 4px); border: 1px solid #000; display: flex; align-items: center; justify-content: center; z-index: 5; }
@@ -137,14 +139,14 @@
         .stats-col { background: white; border: 1px solid #e2e8f0; border-radius: 6px; padding: 10px; min-height: 420px; max-height: 600px; overflow-y: auto; }
         .stats-title { font-size: 0.8rem; font-weight: bold; color: #64748b; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 5px; display: flex; justify-content: space-between; }
         .server-list { display: flex; flex-direction: column; gap: 8px; }
-        .server-item { padding: 8px; border-radius: 6px; background: #f8fafc; border: 1px solid #e2e8f0; cursor: pointer; transition: 0.2s; }
+        .server-item { padding: 8px; border-radius: 6px; background: #f8fafc; border: 1px solid #e2e8f0; cursor: pointer; transition: 0.2s; margin-bottom: 8px;}
         .server-item:hover { background: #e2e8f0; }
         .server-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
         .server-info { display: flex; align-items: center; gap: 8px; }
-        .color-swatch { width: 12px; height: 12px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.2); }
+        .color-swatch { width: 12px; height: 12px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.2); display: inline-block; margin-right: 5px;}
         .total-badge { background: #334155; color: white; font-size: 0.7rem; padding: 1px 6px; border-radius: 10px; }
         .stat-badges { display: flex; flex-wrap: wrap; gap: 4px; }
-        .stat-badge { background: white; border: 1px solid #cbd5e1; color: #334155; font-size: 0.75rem; padding: 2px 6px; border-radius: 4px; font-weight: bold; }
+        .stat-badge { background: white; border: 1px solid #cbd5e1; color: #334155; font-size: 0.75rem; padding: 2px 6px; border-radius: 4px; font-weight: bold; display: inline-block; margin: 2px;}
         .stat-badge.best-zone { background-color: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 2px 4px rgba(0,0,0,0.2); transform: scale(1.05); }
 
         /* --- TAB 3: ERROR TRACKING --- */
@@ -156,7 +158,6 @@
         }
         .player-chip:hover { border-color: var(--primary); color: var(--primary); }
         .player-chip.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 2px 6px rgba(37,99,235,0.4); }
-        
         .error-action-area { display: flex; flex-direction: column; gap: 15px; }
         .error-buttons { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; background: white; padding: 15px; border: 1px solid #e2e8f0; border-radius: 8px; }
         .err-btn { padding: 15px 5px; font-size: 1rem; font-weight: bold; border-radius: 8px; border: none; cursor: pointer; color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: 0.1s; }
@@ -166,13 +167,13 @@
         .bg-be { background: #8b5cf6; } .bg-bhe { background: #06b6d4; } .bg-fe { background: #64748b; }
         .err-subtext { display: block; font-size: 0.65rem; font-weight: normal; margin-top: 2px; opacity: 0.9; }
 
-        .error-log-panel { background: white; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; }
+        .error-log-panel { background: white; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; margin-top:15px;}
         .err-log-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 10px; font-weight: bold; color: #475569; }
         .btn-undo-err { background: #94a3b8; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; cursor: pointer; }
         .err-player-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px dashed #f1f5f9; }
         .err-player-name { font-weight: bold; font-size: 0.9rem; color: #1e293b; width: 100px; }
         .err-badges { display: flex; gap: 5px; flex-wrap: wrap; flex: 1; }
-        .e-badge { padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; color: white; }
+        .e-badge { padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; color: white; margin-left: 4px;}
 
         /* General Controls */
         .filter-bar { background: #eee; padding: 8px; border-radius: 6px; margin-bottom: 15px; text-align: center; }
@@ -210,8 +211,7 @@
             .scoreboard-panel { background: white; border: 1px solid #000; color: black; padding: 5px; margin-bottom: 10px; }
             .big-score { font-size: 2rem; }
             .game-stats { color: black; background: transparent; border: 1px solid #ccc; }
-            .to-dot { background: #eee; border-color: #000; }
-            .to-dot.active { background: #000; }
+            .to-dot { background: #eee; border-color: #000; } .to-dot.active { background: #000; }
             
             .analysis-section, .error-log-panel { border: 1px solid #000; background: white; page-break-inside: avoid; }
             .analysis-wrapper { display: grid; grid-template-columns: 250px 1fr; gap: 15px; }
@@ -236,7 +236,7 @@
         <h2 style="margin-top:0; color:#0f172a;">SK Cherating Volleyball</h2>
         <input type="text" id="username" class="login-input" placeholder="Username">
         <input type="password" id="password" class="login-input" placeholder="Password">
-        <button class="btn-login" onclick="loginUser()">Login</button>
+        <button class="btn-login" onclick="login()">Login</button>
         <div id="login-error" class="login-error">Invalid Credentials or Device Limit Reached.</div>
         <div style="margin-top:15px; font-size:0.8rem; color:#666;">Connecting to Cloud...</div>
     </div>
@@ -260,10 +260,10 @@
 <div id="app-container" class="container">
     
     <div class="user-bar no-print">
-        <div class="user-info">Live Sync Active | User: <span id="current-user-display"></span></div>
+        <div class="user-info">Live Sync Active | User: <span id="current-user"></span></div>
         <div>
             <button id="btn-admin-panel" class="btn-admin" onclick="openAdmin()">Admin Panel</button>
-            <button class="btn-logout" onclick="logoutUser()">Logout</button>
+            <button class="btn-logout" onclick="logout()">Logout</button>
         </div>
     </div>
 
@@ -329,11 +329,11 @@
             </div>
             <div class="roster-wrapper">
                 <div class="roster-col">
-                    <div class="team-header"><input type="text" id="name-a" class="team-name-input" value="SK CHERATING" onblur="triggerSync()"><div style="font-size:0.8rem;">Start: <select id="start-offset-a" onchange="triggerSync(); generate()"><option value="0">1</option><option value="1">2</option><option value="2">3</option><option value="3">4</option><option value="4">5</option><option value="5">6</option></select></div></div>
+                    <div class="team-header"><input type="text" id="name-a" class="team-name-input" value="SK CHERATING" onblur="updateNames(); triggerSync()"><div style="font-size:0.8rem;">Start: <select id="start-offset-a" onchange="generate(); triggerSync()"><option value="0">1</option><option value="1">2</option><option value="2">3</option><option value="3">4</option><option value="4">5</option><option value="5">6</option></select></div></div>
                     <div class="roster-list" id="roster-list-a"></div>
                 </div>
                 <div class="roster-col">
-                    <div class="team-header"><input type="text" id="name-b" class="team-name-input" value="OPPONENT" onblur="triggerSync()"><div style="font-size:0.8rem;">Start: <select id="start-offset-b" onchange="triggerSync(); generate()"><option value="0">1</option><option value="1">2</option><option value="2">3</option><option value="3">4</option><option value="4">5</option><option value="5">6</option></select></div></div>
+                    <div class="team-header"><input type="text" id="name-b" class="team-name-input" value="OPPONENT" onblur="updateNames(); triggerSync()"><div style="font-size:0.8rem;">Start: <select id="start-offset-b" onchange="generate(); triggerSync()"><option value="0">1</option><option value="1">2</option><option value="2">3</option><option value="3">4</option><option value="4">5</option><option value="5">6</option></select></div></div>
                     <div class="roster-list" id="roster-list-b"></div>
                 </div>
             </div>
@@ -421,18 +421,18 @@
                 <option value="analysis">Print: Analysis Only</option>
                 <option value="errors">Print: Errors Only</option>
             </select>
-            <button style="background:var(--dark); color:white; padding:12px; border:none; border-radius:6px; font-weight:bold; cursor:pointer;" onclick="generate()">Update View</button>
-            <button style="background:#10b981; color:white; padding:12px; border:none; border-radius:6px; font-weight:bold; cursor:pointer;" onclick="window.print()">Print</button>
+            <button style="background:var(--dark); color:white; padding:12px; border:none; border-radius:6px; font-weight:bold; cursor:pointer; flex:1;" onclick="generate()">Update View</button>
+            <button style="background:#10b981; color:white; padding:12px; border:none; border-radius:6px; font-weight:bold; cursor:pointer; flex:1;" onclick="window.print()">Print</button>
         </div>
     </div>
 
     <div class="watermark">codedby03093msf | Cloud Sync Active</div>
 </div>
 
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-    import { getFirestore, doc, setDoc, getDoc, getDocs, collection, deleteDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
-
+<script>
+    // ==============================================
+    // FIREBASE COMPAT SETUP (Allows direct file open)
+    // ==============================================
     const firebaseConfig = {
       apiKey: "AIzaSyCt9LXGreBiZrnAIdSaWUBvMv9CLr5V-a8",
       authDomain: "nexus-vball.firebaseapp.com",
@@ -442,20 +442,17 @@
       appId: "1:553789970554:web:b97da5007ac3bcc17843c3"
     };
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
 
-    // Ensure Master Admin exists in DB
-    async function ensureMasterAdmin() {
-        const adminRef = doc(db, "app_users", "admin");
-        const adminSnap = await getDoc(adminRef);
-        if(!adminSnap.exists()) {
-            await setDoc(adminRef, { password: "admin123", role: "admin", active_devices: [] });
+    // Ensure Master Admin
+    db.collection("app_users").doc("admin").get().then((doc) => {
+        if(!doc.exists) {
+            db.collection("app_users").doc("admin").set({ password: "admin123", role: "admin", active_devices: [] });
         }
-    }
-    ensureMasterAdmin();
+    });
 
-    // Get or Create Device ID
+    // Device ID setup
     let myDeviceId = localStorage.getItem('vb_device_id');
     if(!myDeviceId) {
         myDeviceId = 'dev_' + Math.random().toString(36).substr(2, 9);
@@ -465,21 +462,18 @@
     let currentUser = sessionStorage.getItem('vb_current_user');
     if(currentUser) { checkLoginState(currentUser); }
 
-    async function checkLoginState(u) {
-        const userRef = doc(db, "app_users", u);
-        const snap = await getDoc(userRef);
-        if(snap.exists()) {
-            const data = snap.data();
-            if(data.active_devices.includes(myDeviceId)) {
-                startApp(u, data.role);
-            } else {
-                logoutUser();
-            }
-        } else { logoutUser(); }
+    function checkLoginState(u) {
+        db.collection("app_users").doc(u).get().then((doc) => {
+            if(doc.exists) {
+                const data = doc.data();
+                if(data.active_devices.includes(myDeviceId)) {
+                    startApp(u, data.role);
+                } else { logout(); }
+            } else { logout(); }
+        });
     }
 
-    // Expose Login Function to Window
-    window.loginUser = async function() {
+    function login() {
         const u = document.getElementById('username').value.trim();
         const p = document.getElementById('password').value.trim();
         const errEl = document.getElementById('login-error');
@@ -487,22 +481,19 @@
 
         if(!u || !p) return;
 
-        try {
-            const userRef = doc(db, "app_users", u);
-            const snap = await getDoc(userRef);
-            
-            if(snap.exists() && snap.data().password === p) {
-                let active = snap.data().active_devices || [];
+        db.collection("app_users").doc(u).get().then((doc) => {
+            if(doc.exists && doc.data().password === p) {
+                let active = doc.data().active_devices || [];
                 
                 if(active.includes(myDeviceId)) {
                     sessionStorage.setItem('vb_current_user', u);
-                    startApp(u, snap.data().role);
-                } 
-                else if(active.length < 2) {
+                    startApp(u, doc.data().role);
+                } else if(active.length < 2) {
                     active.push(myDeviceId);
-                    await setDoc(userRef, { active_devices: active }, { merge: true });
-                    sessionStorage.setItem('vb_current_user', u);
-                    startApp(u, snap.data().role);
+                    db.collection("app_users").doc(u).set({ active_devices: active }, { merge: true }).then(() => {
+                        sessionStorage.setItem('vb_current_user', u);
+                        startApp(u, doc.data().role);
+                    });
                 } else {
                     errEl.innerText = "Device limit (2) reached. Ask Admin to reset.";
                     errEl.style.display = 'block';
@@ -511,10 +502,12 @@
                 errEl.innerText = "Invalid Username or Password";
                 errEl.style.display = 'block';
             }
-        } catch(e) { console.error(e); errEl.innerText = "Connection Error."; errEl.style.display = 'block'; }
+        }).catch(e => {
+            errEl.innerText = "Connection Error."; errEl.style.display = 'block';
+        });
     }
 
-    window.logoutUser = function() {
+    function logout() {
         sessionStorage.removeItem('vb_current_user');
         location.reload();
     }
@@ -522,7 +515,7 @@
     function startApp(u, role) {
         document.getElementById('login-overlay').style.display = 'none';
         document.getElementById('app-container').style.display = 'block';
-        document.getElementById('current-user-display').innerText = u;
+        document.getElementById('current-user').innerText = u;
         if(role === 'admin') document.getElementById('btn-admin-panel').style.display = 'inline-block';
         
         buildDOM(); 
@@ -530,65 +523,64 @@
     }
 
     // --- ADMIN CONTROLS ---
-    window.openAdmin = async function() {
+    function openAdmin() {
         document.getElementById('admin-modal').style.display = 'flex';
-        await refreshUserList();
+        refreshUserList();
     }
-    window.closeAdmin = function() { document.getElementById('admin-modal').style.display = 'none'; }
+    function closeAdmin() { document.getElementById('admin-modal').style.display = 'none'; }
     
-    async function refreshUserList() {
+    function refreshUserList() {
         const list = document.getElementById('user-list');
         list.innerHTML = 'Loading...';
-        const querySnapshot = await getDocs(collection(db, "app_users"));
-        list.innerHTML = '';
-        querySnapshot.forEach((doc) => {
-            const u = doc.id; const d = doc.data();
-            const row = document.createElement('div'); row.className = 'user-row';
-            let btns = '';
-            if(u !== 'admin') {
-                btns = `<button class="btn-reset-dev" onclick="resetUserDev('${u}')">Reset Devs (${d.active_devices.length}/2)</button>
-                        <button class="btn-del-user" onclick="deleteUser('${u}')">Del</button>`;
-            } else {
-                btns = `<span style="font-size:0.7rem; color:#666;">(Master Admin)</span>`;
-            }
-            row.innerHTML = `<span><b>${u}</b></span> <div>${btns}</div>`;
-            list.appendChild(row);
+        db.collection("app_users").get().then((querySnapshot) => {
+            list.innerHTML = '';
+            querySnapshot.forEach((doc) => {
+                const u = doc.id; const d = doc.data();
+                const row = document.createElement('div'); row.className = 'user-row';
+                let btns = '';
+                if(u !== 'admin') {
+                    btns = `<button class="btn-reset-dev" onclick="resetUserDev('${u}')">Reset Devs (${(d.active_devices||[]).length}/2)</button>
+                            <button class="btn-del-user" onclick="deleteUser('${u}')">Del</button>`;
+                } else {
+                    btns = `<span style="font-size:0.7rem; color:#666;">(Master Admin)</span>`;
+                }
+                row.innerHTML = `<span><b>${u}</b></span> <div>${btns}</div>`;
+                list.appendChild(row);
+            });
         });
     }
     
-    window.addUser = async function() {
+    function addUser() {
         const u = document.getElementById('new-user').value.trim();
         const p = document.getElementById('new-pass').value.trim();
         if(u && p) {
-            const userRef = doc(db, "app_users", u);
-            const snap = await getDoc(userRef);
-            if(snap.exists()) alert("User already exists!");
-            else {
-                await setDoc(userRef, { password: p, role: "user", active_devices: [] });
-                document.getElementById('new-user').value = '';
-                document.getElementById('new-pass').value = '';
-                refreshUserList();
-            }
+            db.collection("app_users").doc(u).get().then((doc) => {
+                if(doc.exists) alert("User already exists!");
+                else {
+                    db.collection("app_users").doc(u).set({ password: p, role: "user", active_devices: [] }).then(() => {
+                        document.getElementById('new-user').value = '';
+                        document.getElementById('new-pass').value = '';
+                        refreshUserList();
+                    });
+                }
+            });
         }
     }
 
-    window.deleteUser = async function(u) {
+    function deleteUser(u) {
         if(confirm(`Delete user ${u}?`)) {
-            await deleteDoc(doc(db, "app_users", u));
-            refreshUserList();
+            db.collection("app_users").doc(u).delete().then(() => refreshUserList());
         }
     }
 
-    window.resetUserDev = async function(u) {
+    function resetUserDev(u) {
         if(confirm(`Reset device count for ${u} back to 0?`)) {
-            await setDoc(doc(db, "app_users", u), { active_devices: [] }, { merge: true });
-            refreshUserList();
+            db.collection("app_users").doc(u).set({ active_devices: [] }, { merge: true }).then(() => refreshUserList());
         }
     }
-
 
     // ==========================================
-    // APP LOGIC & STATE (Synced to Firestore)
+    // APP LOGIC & STATE 
     // ==========================================
     
     let scoreA=0, scoreB=0, setsA=0, setsB=0;
@@ -603,7 +595,7 @@
     function buildDOM() {
         ['a','b'].forEach(t => {
             const r=document.getElementById(`roster-list-${t}`);
-            for(let i=1;i<=12;i++) r.innerHTML+=`<div class="roster-row"><span>${i}</span><input type="text" id="p-${t}-${i}-name" placeholder="Name" onblur="triggerSync()"><select id="p-${t}-${i}-role" onchange="triggerSync()">${roles}</select></div>`;
+            for(let i=1;i<=12;i++) r.innerHTML+=`<div class="roster-row"><span>${i}</span><input type="text" id="p-${t}-${i}-name" placeholder="Name" onblur="triggerSync(); handleRosterInput('${t}')"><select id="p-${t}-${i}-role" onchange="triggerSync()">${roles}</select></div>`;
             const s=document.getElementById(`selectors-${t}`);
             for(let i=1;i<=6;i++) s.innerHTML+=`<div class="lineup-row"><label>Pos ${i}</label><select id="l-${t}-${i}" class="lineup-select" onchange="handleLineupChange('${t}')"></select><div class="icon-swap" onclick="doSwap('${t}',${i})">⇄</div><select id="l-${t}-${i}-sub" class="lineup-select" onchange="handleLineupChange('${t}')"></select></div>`;
         });
@@ -615,8 +607,8 @@
     let isSyncing = false; 
 
     function listenToCloudData() {
-        onSnapshot(doc(db, "matches", "live_match"), (doc) => {
-            if(doc.exists()) {
+        db.collection("matches").doc("live_match").onSnapshot((doc) => {
+            if(doc.exists) {
                 isSyncing = true;
                 applyCloudData(doc.data());
                 isSyncing = false;
@@ -624,9 +616,9 @@
         });
     }
 
-    window.triggerSync = async function() {
+    function triggerSync() {
         if(isSyncing) return;
-        
+        saveAll(); // Local save
         const data = {
             sA:scoreA, sB:scoreB, setsA:setsA, setsB:setsB, hist:history, tos:timeouts, subs:subCounts, 
             serveStats:serveStats, mapCount: mapCount, errStats: errorStats, errHist: errorHistory,
@@ -637,12 +629,12 @@
             },
             rosA:getRosterObj('a'), rosB:getRosterObj('b'), linA:getLineupObj('a'), linB:getLineupObj('b')
         };
-        await setDoc(doc(db, "matches", "live_match"), data);
+        db.collection("matches").doc("live_match").set(data);
     }
 
     function applyCloudData(d) {
         scoreA=d.sA||0; scoreB=d.sB||0; setsA=d.setsA||0; setsB=d.setsB||0; history=d.hist||[]; 
-        timeouts=d.tos||{a:[0,0],b:[0,0]}; subCounts=d.subs||{a:0,b:0}; 
+        timeouts=d.tos||{a:[false,false],b:[false,false]}; subCounts=d.subs||{a:0,b:0}; 
         serveStats=d.serveStats||[]; mapCount=d.mapCount||1; 
         errorStats=d.errStats||{}; errorHistory=d.errHist||[];
         
@@ -656,7 +648,7 @@
         restoreRoster('a', d.rosA); restoreRoster('b', d.rosB);
         
         const c = document.getElementById('maps-container');
-        if(c.children.length !== mapCount) {
+        if(c && c.children.length !== mapCount) {
             c.innerHTML = ''; 
             for(let i=0; i<mapCount; i++) {
                 const div = document.createElement('div'); div.className = 'analysis-container'; div.id = `serve-court-${i}`; div.onclick = (e) => recordServe(e, i);
@@ -698,13 +690,22 @@
         refreshDropdowns(t); 
     }
 
-    // --- Expose App Functions to Window ---
-    window.switchTab = switchTab;
-    window.updatePrintMode = updatePrintMode;
-    window.adjScore = (t,v) => { if(t==='a')scoreA=Math.max(0,scoreA+v);else scoreB=Math.max(0,scoreB+v); updateScoreBoard(); triggerSync(); }
-    window.toggleTO = (t,n) => { timeouts[t][n-1]=!timeouts[t][n-1]; updateScoreBoard(); triggerSync(); }
-    window.adjSubs = (t) => { const v=prompt("Subs (0-12):",subCounts[t]); if(v!==null) { subCounts[t]=Math.min(12,Math.max(0,parseInt(v)||0)); updateScoreBoard(); triggerSync(); } }
-    window.finishSet = (w) => { 
+    // --- GENERIC FUNCTIONS ---
+    function switchTab(id) {
+        document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(e=>e.classList.remove('active'));
+        document.getElementById('tab-'+id).classList.add('active');
+        const bs=document.querySelectorAll('.tab-btn');
+        if(id==='rotations') bs[0].classList.add('active'); 
+        else if (id==='analysis') bs[1].classList.add('active');
+        else bs[2].classList.add('active');
+    }
+    function updatePrintMode() { document.body.className = 'print-' + document.getElementById('print-mode').value; }
+
+    function adjScore(t,v){ if(t==='a')scoreA=Math.max(0,scoreA+v);else scoreB=Math.max(0,scoreB+v); updateScoreBoard(); triggerSync(); }
+    function toggleTO(t,n){ timeouts[t][n-1]=!timeouts[t][n-1]; updateScoreBoard(); triggerSync(); }
+    function adjSubs(t){ const v=prompt("Subs (0-12):",subCounts[t]); if(v!==null) { subCounts[t]=Math.min(12,Math.max(0,parseInt(v)||0)); updateScoreBoard(); triggerSync(); } }
+    function finishSet(w){ 
         if(!confirm("Confirm Set Win?"))return; 
         const wStr = w==='a'?document.getElementById('name-a').value:document.getElementById('name-b').value;
         history.push(`Set ${history.length+1}: ${scoreA}-${scoreB} (${wStr})`); 
@@ -712,44 +713,52 @@
         scoreA=0; scoreB=0; timeouts={a:[false,false],b:[false,false]}; subCounts={a:0,b:0}; 
         updateScoreBoard(); triggerSync(); 
     }
-    window.resetPointsOnly = () => { if(confirm("Reset Pts?")){scoreA=0;scoreB=0;updateScoreBoard();triggerSync();} }
-    window.updateSet = (t,v) => { if(t==='a')setsA=Math.max(0,setsA+v);else setsB=Math.max(0,setsB+v); updateScoreBoard(); triggerSync(); }
-    window.resetMatch = () => {
+    function resetPointsOnly(){ if(confirm("Reset Pts?")){scoreA=0;scoreB=0;updateScoreBoard();triggerSync();} }
+    function updateSet(t,v){ if(t==='a')setsA=Math.max(0,setsA+v);else setsB=Math.max(0,setsB+v); updateScoreBoard(); triggerSync(); }
+    function resetMatch(){
         if(confirm("Reset FULL MATCH?")) {
             scoreA=0; scoreB=0; setsA=0; setsB=0; history=[]; serveStats=[]; errorStats={}; errorHistory=[]; mapCount=1;
             timeouts={a:[false,false],b:[false,false]}; subCounts={a:0,b:0};
             renderServeMarks(); renderErrorStats(); updateScoreBoard(); triggerSync();
         }
     }
-
-    // Server Logic
-    window.addMap = () => {
-        mapCount++; const c = document.getElementById('maps-container'); const id = mapCount-1;
-        const div = document.createElement('div'); div.className = 'analysis-container'; div.id = `serve-court-${id}`; div.onclick = (e) => recordServe(e, id);
-        div.innerHTML = `<div class="net-indicator"><span class="net-text-badge">NET (SET ${mapCount})</span></div><div class="analysis-grid"><div class="analysis-cell">4</div><div class="analysis-cell">3</div><div class="analysis-cell">2</div><div class="analysis-cell">7</div><div class="analysis-cell">8</div><div class="analysis-cell">9</div><div class="analysis-cell">5</div><div class="analysis-cell">6</div><div class="analysis-cell">1</div></div>`;
-        c.appendChild(div); triggerSync();
+    function updateScoreBoard(){
+        document.getElementById('score-a-disp').innerText=scoreA; document.getElementById('score-b-disp').innerText=scoreB;
+        document.getElementById('sets-a-disp').innerText=setsA; document.getElementById('sets-b-disp').innerText=setsB;
+        for(let i=1;i<=2;i++){ document.getElementById(`to-a-${i}`).className=timeouts.a[i-1]?'to-dot active':'to-dot'; document.getElementById(`to-b-${i}`).className=timeouts.b[i-1]?'to-dot active':'to-dot'; }
+        document.getElementById('subs-a-disp').innerText=`${subCounts.a}/12`; document.getElementById('subs-b-disp').innerText=`${subCounts.b}/12`;
+        document.getElementById('history-list').innerHTML=history.length?history.map(s=>`<div class="history-chip">${s}</div>`).join(''):'<span style="opacity:0.5;font-size:0.8rem">No sets completed</span>';
     }
-    window.recordServe = (e, mapId) => {
-        const rect = e.currentTarget.getBoundingClientRect();
-        const x = Math.min(98, Math.max(2, ((e.clientX - rect.left) / rect.width) * 100));
-        const y = Math.min(98, Math.max(2, ((e.clientY - rect.top) / rect.height) * 100));
-        const p = document.getElementById('serve-player-input').value.trim() || "Unk";
-        serveStats.push({x, y, player: p, mapId: mapId}); renderAllMarks(); triggerSync();
-    }
-    window.undoServeMark = (e) => { e.stopPropagation(); serveStats.pop(); renderAllMarks(); triggerSync(); }
-    window.resetAnalysisOnly = () => {
-        if(confirm("Clear ALL Serve Analysis data?")) { serveStats = []; mapCount = 1; renderAllMarks(); triggerSync(); }
+    function updateNames() {
+        document.getElementById('sb-name-a').innerText=document.getElementById('name-a').value||'HOME';
+        document.getElementById('sb-name-b').innerText=document.getElementById('name-b').value||'AWAY';
     }
 
-    // Error Logic
-    window.selectErrorPlayer = selectErrorPlayer;
-    window.addError = (type) => {
+    function updateErrorPlayerChips() {
+        const roster = getRoster('a');
+        const container = document.getElementById('error-player-chips');
+        if(roster.length === 0) {
+            container.innerHTML = '<span style="color:#999; font-size:0.8rem;">Fill in Team A Roster on Tab 1.</span>';
+            selectedErrorPlayer = null; toggleErrorButtons(false); return;
+        }
+        container.innerHTML = '';
+        roster.forEach(n => {
+            const chip = document.createElement('div');
+            chip.className = `player-chip ${n === selectedErrorPlayer ? 'active' : ''}`;
+            chip.innerText = n; chip.onclick = () => selectErrorPlayer(n);
+            container.appendChild(chip);
+        });
+        if(!roster.includes(selectedErrorPlayer)) { selectedErrorPlayer = null; toggleErrorButtons(false); }
+    }
+    function selectErrorPlayer(name) { selectedErrorPlayer = name; updateErrorPlayerChips(); toggleErrorButtons(true); }
+    function toggleErrorButtons(enable) { document.querySelectorAll('.err-btn').forEach(b => b.disabled = !enable); }
+    function addError(type) {
         if(!selectedErrorPlayer) return;
         if(!errorStats[selectedErrorPlayer]) errorStats[selectedErrorPlayer] = { SE:0, RE:0, AE:0, BE:0, BHE:0, FE:0 };
         errorStats[selectedErrorPlayer][type]++; errorHistory.push({ p: selectedErrorPlayer, e: type });
         renderErrorStats(); triggerSync();
     }
-    window.undoLastError = () => {
+    function undoLastError() {
         if(errorHistory.length === 0) return;
         const last = errorHistory.pop();
         if(errorStats[last.p] && errorStats[last.p][last.e] > 0) {
@@ -759,49 +768,51 @@
         }
         renderErrorStats(); triggerSync();
     }
-    window.resetErrorsOnly = () => { if(confirm("Clear all Error Tracking data?")) { errorStats={}; errorHistory=[]; renderErrorStats(); triggerSync(); } }
-
-    window.handleLineupChange = (t) => { triggerSync(); refreshDropdowns(t); }
-    window.doSwap = (t,p) => {
-        const m=document.getElementById(`l-${t}-${p}`), s=document.getElementById(`l-${t}-${p}-sub`);
-        const om=m.value, os=s.value;
-        if(os) {
-            if(subCounts[t]<12) { subCounts[t]++; updateScoreBoard(); } else alert("Max subs!");
-            if(!m.querySelector(`option[value="${os}"]`)) m.innerHTML+=`<option value="${os}">${os}</option>`;
-            if(om && !s.querySelector(`option[value="${om}"]`)) s.innerHTML+=`<option value="${om}">${om}</option>`;
-            m.value=os; s.value=om; triggerSync(); refreshDropdowns(t); generate();
+    function resetErrorsOnly() { if(confirm("Clear all Error Tracking data?")) { errorStats={}; errorHistory=[]; renderErrorStats(); triggerSync(); } }
+    
+    const errColors = { SE:'#f59e0b', RE:'#3b82f6', AE:'#ef4444', BE:'#8b5cf6', BHE:'#06b6d4', FE:'#64748b' };
+    function renderErrorStats() {
+        const list = document.getElementById('error-summary-list'); list.innerHTML = '';
+        if(Object.keys(errorStats).length === 0) { list.innerHTML = '<div style="text-align:center; color:#999; font-size:0.8rem; padding:10px;">No errors recorded</div>'; return; }
+        for(const [player, stats] of Object.entries(errorStats)) {
+            let badges = '';
+            for(const [type, count] of Object.entries(stats)) {
+                if(count > 0) badges += `<span class="e-badge" style="background-color:${errColors[type]}">${type}: ${count}</span>`;
+            }
+            if(badges) {
+                const row = document.createElement('div'); row.className = 'err-player-row';
+                row.innerHTML = `<span class="err-player-name">${player}</span><div class="err-badges">${badges}</div>`;
+                list.appendChild(row);
+            }
         }
     }
 
-    window.generate = generate;
-    
-    function getRoster(t) { let a=[]; for(let i=1;i<=12;i++){let n=document.getElementById(`p-${t}-${i}-name`).value.trim(); if(n) a.push(n);} return a.sort(); }
-    function getActiveStarters(t) { let s=new Set(); for(let i=1;i<=6;i++){let v=document.getElementById(`l-${t}-${i}`).value; if(v) s.add(v);} return s; }
-    function refreshDropdowns(t) {
-        const r=getRoster(t), st=getActiveStarters(t);
-        for(let i=1;i<=6;i++) {
-            const m=document.getElementById(`l-${t}-${i}`), s=document.getElementById(`l-${t}-${i}-sub`);
-            if(document.activeElement!==m) fillSelect(m,r,m.value,null); 
-            if(document.activeElement!==s) fillSelect(s,r,s.value,st);
+    function addMap() {
+        mapCount++; const c = document.getElementById('maps-container'); const id = mapCount-1;
+        const div = document.createElement('div'); div.className = 'analysis-container'; div.id = `serve-court-${id}`; div.onclick = (e) => recordServe(e, id);
+        div.innerHTML = `<div class="net-indicator"><span class="net-text-badge">NET (SET ${mapCount})</span></div><div class="analysis-grid"><div class="analysis-cell">4</div><div class="analysis-cell">3</div><div class="analysis-cell">2</div><div class="analysis-cell">7</div><div class="analysis-cell">8</div><div class="analysis-cell">9</div><div class="analysis-cell">5</div><div class="analysis-cell">6</div><div class="analysis-cell">1</div></div>`;
+        c.appendChild(div); triggerSync();
+    }
+    function recordServe(e, mapId) {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const x = Math.min(98, Math.max(2, ((e.clientX - rect.left) / rect.width) * 100));
+        const y = Math.min(98, Math.max(2, ((e.clientY - rect.top) / rect.height) * 100));
+        const p = document.getElementById('serve-player-input').value.trim() || "Unk";
+        serveStats.push({x, y, player: p, mapId: mapId}); renderAllMarks(); triggerSync();
+    }
+    function undoServeMark(e) { e.stopPropagation(); serveStats.pop(); renderAllMarks(); triggerSync(); }
+    function resetAnalysisOnly() {
+        if(confirm("Clear ALL Serve Analysis data?")) {
+            serveStats = []; mapCount = 1;
+            document.getElementById('maps-container').innerHTML = `<div class="analysis-container" id="serve-court-0" onclick="recordServe(event, 0)"><div class="net-indicator"><span class="net-text-badge">NET (SET 1)</span></div><div class="analysis-grid"><div class="analysis-cell">4</div><div class="analysis-cell">3</div><div class="analysis-cell">2</div><div class="analysis-cell">7</div><div class="analysis-cell">8</div><div class="analysis-cell">9</div><div class="analysis-cell">5</div><div class="analysis-cell">6</div><div class="analysis-cell">1</div></div></div>`;
+            renderAllMarks(); triggerSync();
         }
     }
-    function fillSelect(el,names,cur,excl) {
-        let h=`<option value="">${el.id.includes('sub')?'-Sub-':'-Start-'}</option>`;
-        names.forEach(n=>{ if(!excl||!excl.has(n)||n===cur) h+=`<option value="${n}" ${n===cur?'selected':''}>${n}</option>`; });
-        el.innerHTML=h;
-    }
-
-    function getColor(name) {
-        if(!playerColors[name]) { const idx = Object.keys(playerColors).length % colors.length; playerColors[name] = colors[idx]; }
-        return playerColors[name];
-    }
-
-    function getZone(x, y) { let col = Math.floor(x/33.34), row = Math.floor(y/33.34); const zm = [[4,3,2],[7,8,9],[5,6,1]]; return zm[row]?zm[row][col]:'?'; }
-    
     function renderAllMarks() {
         document.querySelectorAll('.serve-mark').forEach(m => m.remove());
         let stats = {};
         serveStats.forEach(s => {
+            if(s.mapId >= mapCount) for(let i=mapCount; i<=s.mapId; i++) addMap();
             const container = document.getElementById(`serve-court-${s.mapId}`);
             if(container) {
                 const mark = document.createElement('div'); mark.className = 'serve-mark';
@@ -818,6 +829,11 @@
         updateServerList(stats);
     }
 
+    function getZone(x, y) { let col = Math.floor(x/33.34), row = Math.floor(y/33.34); const zm = [[4,3,2],[7,8,9],[5,6,1]]; return zm[row]?zm[row][col]:'?'; }
+    function getColor(name) {
+        if(!playerColors[name]) { const idx = Object.keys(playerColors).length % colors.length; playerColors[name] = colors[idx]; }
+        return playerColors[name];
+    }
     function updateServerList(stats) {
         const l = document.getElementById('server-stats-list'); l.innerHTML='';
         if(Object.keys(stats).length===0) { l.innerHTML='<div style="text-align:center;color:#999;font-size:0.8rem;padding:10px;">No data</div>'; return; }
@@ -833,6 +849,34 @@
             div.innerHTML = `<div class="server-header"><div class="server-info"><div class="color-swatch" style="background:${color}"></div><span style="font-weight:bold">${n}</span></div><span class="total-badge">Total: ${d.count}</span></div><div class="stat-badges">${badges}</div>`;
             l.appendChild(div);
         }
+    }
+
+    function handleLineupChange(t){ triggerSync(); refreshDropdowns(t); }
+    function handleRosterInput(t){ triggerSync(); refreshDropdowns(t); if(t==='a') updateErrorPlayerChips(); }
+    function doSwap(t,p) {
+        const m=document.getElementById(`l-${t}-${p}`), s=document.getElementById(`l-${t}-${p}-sub`);
+        const om=m.value, os=s.value;
+        if(os) {
+            if(subCounts[t]<12) { subCounts[t]++; updateScoreBoard(); } else alert("Max subs!");
+            if(!m.querySelector(`option[value="${os}"]`)) m.innerHTML+=`<option value="${os}">${os}</option>`;
+            if(om && !s.querySelector(`option[value="${om}"]`)) s.innerHTML+=`<option value="${om}">${om}</option>`;
+            m.value=os; s.value=om; triggerSync(); refreshDropdowns(t); generate();
+        }
+    }
+    function getRoster(t) { let a=[]; for(let i=1;i<=12;i++){let n=document.getElementById(`p-${t}-${i}-name`).value.trim(); if(n) a.push(n);} return a.sort(); }
+    function getActiveStarters(t) { let s=new Set(); for(let i=1;i<=6;i++){let v=document.getElementById(`l-${t}-${i}`).value; if(v) s.add(v);} return s; }
+    function refreshDropdowns(t) {
+        const r=getRoster(t), st=getActiveStarters(t);
+        for(let i=1;i<=6;i++) {
+            const m=document.getElementById(`l-${t}-${i}`), s=document.getElementById(`l-${t}-${i}-sub`);
+            if(document.activeElement!==m) fillSelect(m,r,m.value,null); 
+            if(document.activeElement!==s) fillSelect(s,r,s.value,st);
+        }
+    }
+    function fillSelect(el,names,cur,excl) {
+        let h=`<option value="">${el.id.includes('sub')?'-Sub-':'-Start-'}</option>`;
+        names.forEach(n=>{ if(!excl||!excl.has(n)||n===cur) h+=`<option value="${n}" ${n===cur?'selected':''}>${n}</option>`; });
+        el.innerHTML=h;
     }
 
     function getRole(n,t){ for(let i=1;i<=12;i++) if(document.getElementById(`p-${t}-${i}-name`).value===n) return document.getElementById(`p-${t}-${i}-role`).value; return ''; }
@@ -851,6 +895,9 @@
     function rotate(a,s){ let r=[...a]; for(let k=0;k<s;k++) r=[r[1],r[2],r[3],r[4],r[5],r[0]]; return r; }
     function z(p,ip1){ const l=p.r==='L'; return `<div class="zone" ${ip1?'style="border:2px solid #000"':''}>${ip1?'<div class="server-badge">S</div>':''}<span class="pos-label">${ip1?'P1':''}</span><div class="player-content">${p.r?`<span class="role-badge ${l?'libero':''}">${p.r}</span>`:''}<span>${p.n}</span>${p.s?`<span class="sub-name">(${p.s})</span>`:''}</div></div>`; }
 
+    // local save fallbacks
+    function saveAll() { localStorage.setItem('vb_pro_v22', JSON.stringify({ sA:scoreA, sB:scoreB, setsA:setsA, setsB:setsB, hist:history, tos:timeouts, subs:subCounts, serveStats:serveStats, mapCount: mapCount, errStats: errorStats, errHist: errorHistory, meta:{ nA:document.getElementById('name-a').value, nB:document.getElementById('name-b').value, date:document.getElementById('match-date').value, venue:document.getElementById('match-venue').value, oA:document.getElementById('start-offset-a').value, oB:document.getElementById('start-offset-b').value }, rosA:getRosterObj('a'), rosB:getRosterObj('b'), linA:getLineupObj('a'), linB:getLineupObj('b') })); }
+    
 </script>
 </body>
 </html>
