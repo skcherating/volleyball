@@ -19,8 +19,13 @@
         /* --- LOGIN OVERLAY --- */
         #login-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--dark); z-index: 9999; display: flex; align-items: center; justify-content: center; flex-direction: column; }
         .login-box { background: white; padding: 30px; border-radius: 12px; width: 90%; max-width: 350px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        
+        /* FIXED LOGO STYLING */
+        .login-logo { width: 80px; height: auto; max-height: 80px; object-fit: contain; margin-bottom: 15px; }
+        
         .login-input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; }
         .btn-login { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 6px; font-weight: bold; font-size: 1rem; cursor: pointer; }
+        .btn-login:hover { background: #1d4ed8; }
         .login-error { color: var(--secondary); font-size: 0.85rem; margin-top: 10px; display: none; font-weight: bold;}
         
         /* --- APP CONTAINER --- */
@@ -41,6 +46,7 @@
         .btn-reset-dev { background: #eab308; color: black; border: none; padding: 3px 6px; border-radius: 3px; cursor: pointer; font-size: 0.7rem; margin-right: 5px;}
 
         .header-section { text-align: center; margin-bottom: 15px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        .school-logo { width: 50px; height: auto; margin-bottom: 5px; }
         h1 { margin: 0; font-size: 1.2rem; color: var(--dark); }
         .match-meta { display: flex; justify-content: center; gap: 10px; margin-top: 5px; flex-wrap: wrap; }
         .meta-group { display: flex; align-items: center; gap: 5px; }
@@ -108,10 +114,12 @@
 
         /* --- TAB 2: ANALYSIS --- */
         .analysis-section { padding: 15px; background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0; }
+        .analysis-header { font-weight: bold; text-align: center; margin-bottom: 10px; color: #475569; font-size: 0.9rem; text-transform: uppercase; }
         .analysis-wrapper { display: grid; grid-template-columns: 280px 1fr; gap: 20px; align-items: start; }
         .map-col { display: flex; flex-direction: column; align-items: center; width: 100%; }
         .serve-input-row { display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 15px; }
         .serve-input { padding: 8px; border: 2px solid #3b82f6; border-radius: 6px; width: 160px; text-align: center; font-weight: bold; font-size: 1rem; }
+        
         .map-scroll-container { max-height: 600px; overflow-y: auto; padding: 10px; border: 1px solid #eee; border-radius: 8px; background: white; margin-bottom: 10px; width: 100%; display: flex; flex-direction: column; align-items: center; }
         .analysis-container { position: relative; width: 420px; height: 420px; background: var(--court-orange); border: 4px solid white; box-shadow: 0 0 0 10px var(--court-blue); cursor: crosshair; margin: 20px 10px 30px 10px; }
         .net-indicator { position: absolute; top: -25px; left: -10px; right: -10px; height: 10px; background: repeating-linear-gradient(90deg, #e5e5e5, #e5e5e5 2px, #333 2px, #333 4px); border: 1px solid #000; display: flex; align-items: center; justify-content: center; z-index: 5; }
@@ -119,34 +127,66 @@
         .analysis-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr 1fr; width: 100%; height: 100%; position: absolute; top: 0; left: 0; pointer-events: none; }
         .analysis-cell { border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.4); font-weight:bold; font-size: 1.5rem; }
         .analysis-cell:nth-child(1), .analysis-cell:nth-child(2), .analysis-cell:nth-child(3) { border-bottom: 3px solid white; }
-        .serve-mark { position: absolute; min-width: 28px; width: max-content; padding: 0 6px; box-sizing: border-box; height: 28px; border-radius: 14px; transform: translate(-50%, -50%); border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 0.8rem; z-index: 10; text-shadow: 0 0 2px black; pointer-events: none; white-space: nowrap; }
+        
+        .serve-mark { 
+            position: absolute; min-width: 28px; width: max-content; padding: 0 6px; box-sizing: border-box; height: 28px; border-radius: 14px; 
+            transform: translate(-50%, -50%); border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.6); 
+            display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 0.8rem; z-index: 10; text-shadow: 0 0 2px black; pointer-events: none; white-space: nowrap; 
+        }
+        
         .stats-col { background: white; border: 1px solid #e2e8f0; border-radius: 6px; padding: 10px; min-height: 420px; max-height: 600px; overflow-y: auto; }
-        .server-item { padding: 8px; border-radius: 6px; background: #f8fafc; border: 1px solid #e2e8f0; cursor: pointer; transition: 0.2s; margin-bottom: 8px;}
+        .stats-title { font-size: 0.8rem; font-weight: bold; color: #64748b; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 5px; display: flex; justify-content: space-between; }
+        .server-list { display: flex; flex-direction: column; gap: 8px; }
+        .server-item { padding: 8px; border-radius: 6px; background: #f8fafc; border: 1px solid #e2e8f0; cursor: pointer; transition: 0.2s; }
         .server-item:hover { background: #e2e8f0; }
-        .color-swatch { width: 12px; height: 12px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.2); display: inline-block; margin-right: 5px;}
-        .stat-badge { background: white; border: 1px solid #cbd5e1; color: #334155; font-size: 0.75rem; padding: 2px 6px; border-radius: 4px; font-weight: bold; display: inline-block; margin: 2px;}
-        .stat-badge.best-zone { background-color: var(--primary); color: white; border-color: var(--primary); }
+        .server-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+        .server-info { display: flex; align-items: center; gap: 8px; }
+        .color-swatch { width: 12px; height: 12px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.2); }
+        .total-badge { background: #334155; color: white; font-size: 0.7rem; padding: 1px 6px; border-radius: 10px; }
+        .stat-badges { display: flex; flex-wrap: wrap; gap: 4px; }
+        .stat-badge { background: white; border: 1px solid #cbd5e1; color: #334155; font-size: 0.75rem; padding: 2px 6px; border-radius: 4px; font-weight: bold; }
+        .stat-badge.best-zone { background-color: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 2px 4px rgba(0,0,0,0.2); transform: scale(1.05); }
 
-        /* --- TAB 3: ERRORS --- */
+        /* --- TAB 3: ERROR TRACKING --- */
         .error-layout { display: grid; grid-template-columns: 1fr 2fr; gap: 20px; align-items: start; }
         .player-chips { display: flex; flex-wrap: wrap; gap: 8px; padding: 15px; background: white; border: 1px solid #e2e8f0; border-radius: 8px; }
-        .player-chip { padding: 8px 10px; min-width: 75px; text-align: center; background: #f1f5f9; border: 2px solid #cbd5e1; border-radius: 20px; font-size: 0.85rem; font-weight: bold; color: #475569; cursor: pointer; transition: 0.2s; }
-        .player-chip.active { background: var(--primary); color: white; border-color: var(--primary); }
+        .player-chip { 
+            padding: 8px 10px; min-width: 75px; text-align: center; display: inline-flex; justify-content: center;
+            background: #f1f5f9; border: 2px solid #cbd5e1; border-radius: 20px; font-size: 0.85rem; font-weight: bold; color: #475569; cursor: pointer; transition: 0.2s; 
+        }
+        .player-chip:hover { border-color: var(--primary); color: var(--primary); }
+        .player-chip.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 2px 6px rgba(37,99,235,0.4); }
+        
+        .error-action-area { display: flex; flex-direction: column; gap: 15px; }
         .error-buttons { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; background: white; padding: 15px; border: 1px solid #e2e8f0; border-radius: 8px; }
-        .err-btn { padding: 15px 5px; font-size: 1rem; font-weight: bold; border-radius: 8px; border: none; cursor: pointer; color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .err-btn { padding: 15px 5px; font-size: 1rem; font-weight: bold; border-radius: 8px; border: none; cursor: pointer; color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: 0.1s; }
+        .err-btn:active { transform: scale(0.95); }
         .err-btn:disabled { opacity: 0.4; cursor: not-allowed; }
         .bg-se { background: #f59e0b; } .bg-re { background: #3b82f6; } .bg-ae { background: #ef4444; } 
         .bg-be { background: #8b5cf6; } .bg-bhe { background: #06b6d4; } .bg-fe { background: #64748b; }
         .err-subtext { display: block; font-size: 0.65rem; font-weight: normal; margin-top: 2px; opacity: 0.9; }
-        .error-log-panel { background: white; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; margin-top:15px;}
+
+        .error-log-panel { background: white; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; }
+        .err-log-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 10px; font-weight: bold; color: #475569; }
+        .btn-undo-err { background: #94a3b8; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; cursor: pointer; }
         .err-player-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px dashed #f1f5f9; }
-        .e-badge { padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; color: white; margin-left: 4px;}
+        .err-player-name { font-weight: bold; font-size: 0.9rem; color: #1e293b; width: 100px; }
+        .err-badges { display: flex; gap: 5px; flex-wrap: wrap; flex: 1; }
+        .e-badge { padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; color: white; }
 
         /* General Controls */
+        .filter-bar { background: #eee; padding: 8px; border-radius: 6px; margin-bottom: 15px; text-align: center; }
+        .view-select { padding: 6px; border-radius: 4px; font-weight: bold; }
         .btn-group { display: flex; gap: 10px; margin-top: 10px; align-items: center; }
         .btn-main { padding: 12px; border: none; border-radius: 6px; color: white; font-weight: bold; cursor: pointer; font-size: 1rem; flex: 1;}
         .print-select { padding: 12px; border-radius: 6px; border: 1px solid #ccc; font-weight: bold; color: #333; }
-        
+        .data-tools { margin-top: 20px; padding: 15px; background: #e2e8f0; border-radius: 8px; display: flex; gap: 10px; align-items: center; justify-content: center; }
+        .btn-data { padding: 10px 16px; border-radius: 6px; border: none; cursor: pointer; font-weight: bold; font-size: 0.85rem; }
+        .btn-export { background: #3b82f6; color: white; }
+        .btn-import { background: #64748b; color: white; }
+        .btn-reset-all { background: #ef4444; color: white; margin-left: auto; }
+        .watermark { text-align: center; font-size: 0.7rem; color: #ccc; margin-top: 20px; font-family: monospace; }
+
         @media screen and (max-width: 768px) {
             .roster-wrapper, .setup-grid, .sb-grid, .analysis-wrapper, .error-layout { grid-template-columns: 1fr; }
             .analysis-container { width: 300px; height: 300px; }
@@ -158,26 +198,33 @@
             @page { size: A4 portrait; margin: 5mm; }
             body { background: white; padding: 0; margin: 0; }
             .container { box-shadow: none; border: none; padding: 0; margin: 0; width: 100%; max-width: 100%; }
-            .no-print, .btn-win-set, .score-controls, .btn-reset-match, .sets-controls-row, .tabs-nav, .user-bar, .error-buttons, .player-chips { display: none !important; }
+            .no-print, .btn-win-set, .score-controls, .btn-reset-match, .data-tools, .sets-controls-row, .btn-undo, .serve-input-row, .tabs-nav, .user-bar, .error-buttons, .player-chips, .btn-undo-err { display: none !important; }
             .meta-input { border: none; font-weight: bold; padding: 0; }
             
             .tab-content { display: none !important; }
-            body.print-all .tab-content, body.print-rotations #tab-rotations, body.print-analysis #tab-analysis, body.print-errors #tab-errors { display: block !important; margin-bottom: 20px; }
+            body.print-all .tab-content { display: block !important; margin-bottom: 20px; }
+            body.print-rotations #tab-rotations { display: block !important; }
+            body.print-analysis #tab-analysis { display: block !important; }
+            body.print-errors #tab-errors { display: block !important; }
 
             .scoreboard-panel { background: white; border: 1px solid #000; color: black; padding: 5px; margin-bottom: 10px; }
             .big-score { font-size: 2rem; }
             .game-stats { color: black; background: transparent; border: 1px solid #ccc; }
-            .to-dot { background: #eee; border-color: #000; } .to-dot.active { background: #000; }
+            .to-dot { background: #eee; border-color: #000; }
+            .to-dot.active { background: #000; }
             
             .analysis-section, .error-log-panel { border: 1px solid #000; background: white; page-break-inside: avoid; }
             .analysis-wrapper { display: grid; grid-template-columns: 250px 1fr; gap: 15px; }
             .analysis-container { width: 340px; height: 340px; border-color: #000; box-shadow: 0 0 0 5px #ccc; break-inside: avoid; margin: 10px auto; }
             .map-scroll-container { max-height: none; overflow: visible; border: none; padding: 0; }
-            .serve-mark { font-size: 0.6rem; }
+            .serve-mark { min-width: 24px; height: 24px; border-radius: 12px; font-size: 0.6rem; }
             
+            .history-section { border-top: 1px solid #ccc; margin-top: 5px; padding-top: 5px; }
+            .history-chip { background: #eee; color: #000; border: 1px solid #ccc; font-size: 0.7rem; padding: 1px 6px; }
             .output-grid { display: grid; grid-template-columns: 49% 49%; column-gap: 2%; row-gap: 8px; }
             .rotation-card { border: 1px solid #000; padding: 4px; break-inside: avoid; }
             .court { border-width: 1px; }
+            .watermark { position: fixed; bottom: 5px; right: 5px; }
         }
     </style>
 </head>
@@ -302,17 +349,21 @@
         <div class="analysis-section">
             <div class="analysis-header">Opponent Serve Analysis (9-Zone)</div>
             <div class="analysis-wrapper">
+                
                 <div class="stats-col">
                     <div class="stats-title"><span>CLICK NAME TO SELECT</span><span>ZONES HIT</span></div>
                     <div id="server-stats-list" class="server-list"></div>
                 </div>
+
                 <div class="map-col">
                     <div class="serve-input-row no-print">
                         <span style="font-size:0.8rem; font-weight:bold; color:#64748b;">SERVER:</span>
                         <input type="text" id="serve-player-input" class="serve-input" placeholder="Name or #" title="Enter name then click court">
                     </div>
+                    
                     <div class="map-scroll-container" id="maps-container">
                         </div>
+
                     <div class="no-print" style="text-align:center; margin-top:10px; display:flex; gap:10px; justify-content:center;">
                         <button style="background:#2563eb; color:white; border:none; padding:6px 12px; border-radius:4px; font-weight:bold; font-size:0.8rem; cursor:pointer;" onclick="addMap()">+ Add Set Map</button>
                         <button style="background:#64748b; color:white; border:none; padding:6px 12px; border-radius:4px; font-weight:bold; font-size:0.8rem; cursor:pointer;" onclick="undoServeMark(event)">Undo</button>
@@ -321,16 +372,20 @@
                         <button style="background:transparent; border:1px solid #ef4444; color:#ef4444; padding:4px 8px; border-radius:4px; font-size:0.7rem; cursor:pointer;" onclick="resetAnalysisOnly()">Reset Analysis Only</button>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
 
     <div id="tab-errors" class="tab-content">
         <h2 style="text-align:center; margin-top:0; color:#475569; font-size:1.1rem;">Team Error Tracking</h2>
+        
         <div class="error-layout">
             <div>
                 <div style="font-weight:bold; font-size:0.8rem; color:#64748b; margin-bottom:8px;">1. SELECT PLAYER (Home Team)</div>
-                <div class="player-chips" id="error-player-chips"><span style="color:#999; font-size:0.8rem;">Fill in Roster on Tab 1 first.</span></div>
+                <div class="player-chips" id="error-player-chips">
+                    <span style="color:#999; font-size:0.8rem;">Fill in Roster on Tab 1 first.</span>
+                </div>
             </div>
             <div class="error-action-area">
                 <div class="no-print">
@@ -470,8 +525,8 @@
         document.getElementById('current-user-display').innerText = u;
         if(role === 'admin') document.getElementById('btn-admin-panel').style.display = 'inline-block';
         
-        buildDOM(); // Build the inputs first
-        listenToCloudData(); // Start real-time sync
+        buildDOM(); 
+        listenToCloudData(); 
     }
 
     // --- ADMIN CONTROLS ---
@@ -557,7 +612,7 @@
     }
 
     // REAL-TIME SYNC ENGINE
-    let isSyncing = false; // Prevent infinite loops during local updates
+    let isSyncing = false; 
 
     function listenToCloudData() {
         onSnapshot(doc(db, "matches", "live_match"), (doc) => {
@@ -572,7 +627,6 @@
     window.triggerSync = async function() {
         if(isSyncing) return;
         
-        // Build Data Object
         const data = {
             sA:scoreA, sB:scoreB, setsA:setsA, setsB:setsB, hist:history, tos:timeouts, subs:subCounts, 
             serveStats:serveStats, mapCount: mapCount, errStats: errorStats, errHist: errorHistory,
@@ -592,7 +646,6 @@
         serveStats=d.serveStats||[]; mapCount=d.mapCount||1; 
         errorStats=d.errStats||{}; errorHistory=d.errHist||[];
         
-        // Meta
         if(d.meta) {
             safeSet('name-a', d.meta.nA); safeSet('name-b', d.meta.nB);
             safeSet('match-date', d.meta.date); safeSet('match-venue', d.meta.venue);
@@ -600,10 +653,8 @@
             updateNames();
         }
 
-        // Rosters (Only update if not focused to avoid typing interruption)
         restoreRoster('a', d.rosA); restoreRoster('b', d.rosB);
         
-        // Maps
         const c = document.getElementById('maps-container');
         if(c.children.length !== mapCount) {
             c.innerHTML = ''; 
@@ -614,7 +665,6 @@
             }
         }
 
-        // UI Updates
         refreshDropdowns('a'); refreshDropdowns('b'); 
         restoreLineup('a', d.linA); restoreLineup('b', d.linB);
         updateScoreBoard(); renderAllMarks(); renderErrorStats();
@@ -640,7 +690,7 @@
         if(!a)return; 
         a.forEach((l,i)=>{ 
             const m=document.getElementById(`l-${t}-${i+1}`), s=document.getElementById(`l-${t}-${i+1}-sub`); 
-            if(document.activeElement === m || document.activeElement === s) return; // skip if editing
+            if(document.activeElement === m || document.activeElement === s) return; 
             if(l.m && !m.querySelector(`option[value="${l.m}"]`)) m.innerHTML+=`<option value="${l.m}">${l.m}</option>`; 
             if(l.s && !s.querySelector(`option[value="${l.s}"]`)) s.innerHTML+=`<option value="${l.s}">${l.s}</option>`; 
             m.value=l.m; s.value=l.s; 
@@ -648,8 +698,7 @@
         refreshDropdowns(t); 
     }
 
-
-    // --- Expose App Functions to Window for HTML onClick ---
+    // --- Expose App Functions to Window ---
     window.switchTab = switchTab;
     window.updatePrintMode = updatePrintMode;
     window.adjScore = (t,v) => { if(t==='a')scoreA=Math.max(0,scoreA+v);else scoreB=Math.max(0,scoreB+v); updateScoreBoard(); triggerSync(); }
@@ -689,9 +738,7 @@
     }
     window.undoServeMark = (e) => { e.stopPropagation(); serveStats.pop(); renderAllMarks(); triggerSync(); }
     window.resetAnalysisOnly = () => {
-        if(confirm("Clear ALL Serve Analysis data?")) {
-            serveStats = []; mapCount = 1; renderAllMarks(); triggerSync();
-        }
+        if(confirm("Clear ALL Serve Analysis data?")) { serveStats = []; mapCount = 1; renderAllMarks(); triggerSync(); }
     }
 
     // Error Logic
@@ -714,7 +761,6 @@
     }
     window.resetErrorsOnly = () => { if(confirm("Clear all Error Tracking data?")) { errorStats={}; errorHistory=[]; renderErrorStats(); triggerSync(); } }
 
-    // Roster / Dropdown logic
     window.handleLineupChange = (t) => { triggerSync(); refreshDropdowns(t); }
     window.doSwap = (t,p) => {
         const m=document.getElementById(`l-${t}-${p}`), s=document.getElementById(`l-${t}-${p}-sub`);
@@ -727,7 +773,6 @@
         }
     }
 
-    // Display Logic
     window.generate = generate;
     
     function getRoster(t) { let a=[]; for(let i=1;i<=12;i++){let n=document.getElementById(`p-${t}-${i}-name`).value.trim(); if(n) a.push(n);} return a.sort(); }
