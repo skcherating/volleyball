@@ -23,15 +23,7 @@
         /* --- LOGIN OVERLAY --- */
         #login-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--dark); z-index: 9999; display: flex; align-items: center; justify-content: center; flex-direction: column; }
         .login-box { background: white; padding: 30px; border-radius: 12px; width: 90%; max-width: 350px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
-        
-        /* FIXED LOGO STYLING - STRICTER SIZE */
-        .login-logo { 
-            width: 60px; 
-            height: 60px; 
-            object-fit: contain; 
-            margin-bottom: 15px; 
-        }
-        
+        .login-logo { width: 60px; height: 60px; object-fit: contain; margin-bottom: 15px; }
         .login-input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; }
         .btn-login { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 6px; font-weight: bold; font-size: 1rem; cursor: pointer; }
         .btn-login:hover { background: #1d4ed8; }
@@ -79,14 +71,15 @@
         .score-controls { display: flex; gap: 5px; margin-top: 5px; }
         .btn-score { background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.2); width: 32px; height: 32px; border-radius: 50%; font-size: 1.1rem; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
         .btn-win-set { background: #10b981; color: white; border: none; padding: 5px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; cursor: pointer; text-transform: uppercase; margin-top: 5px; width: 100%; }
-        .btn-win-set.loss { background: #ef4444; }
+        
         .sets-col { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; height: 100%; padding-top: 5px; }
         .sets-label { font-size: 0.65rem; text-transform: uppercase; color: #94a3b8; letter-spacing: 1px; }
         .sets-val { font-size: 1.8rem; font-weight: bold; margin-bottom: 5px; }
-        .sets-controls-row { display: flex; gap: 3px; margin-bottom: 10px; justify-content: center; }
-        .btn-set { background: rgba(255,255,255,0.1); border: 1px solid #64748b; color: #cbd5e1; font-size: 0.65rem; padding: 4px 6px; border-radius: 4px; cursor: pointer; }
-        .btn-reset-pts { background: rgba(234, 179, 8, 0.2); border: 1px solid #eab308; color: #fde047; }
-        .btn-reset-match { background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444; color: #fca5a5; font-size: 0.65rem; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-weight: bold; margin-top: 5px; }
+        .sets-controls-row { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 5px; justify-content: center; width: 100%; }
+        .btn-set { background: rgba(255,255,255,0.1); border: 1px solid #64748b; color: #cbd5e1; font-size: 0.65rem; padding: 4px 6px; border-radius: 4px; cursor: pointer; flex: 1; }
+        .btn-reset-pts { background: rgba(234, 179, 8, 0.2); border: 1px solid #eab308; color: #fde047; font-weight: bold;}
+        .btn-reset-match { background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444; color: #fca5a5; font-size: 0.65rem; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-weight: bold; margin-top: 5px; width: 100%;}
+        
         .history-section { margin-top: 10px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; }
         .history-chips { display: flex; justify-content: center; gap: 5px; flex-wrap: wrap; margin-top: 5px; }
         .history-chip { background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 8px; font-size: 0.75rem; }
@@ -122,15 +115,16 @@
         .role-badge { font-size: 0.6rem; background: #333; color: white; padding: 1px 4px; border-radius: 3px; margin-bottom: 2px; }
         .role-badge.libero { background: #eab308; color: black; } 
         .sub-name { font-size: 0.7rem; color: #dc2626; font-style: italic; margin-top: 1px; }
-        .server-badge { position: absolute; top: 2px; right: 2px; background: #10b981; color: white; font-size: 0.55rem; padding: 1px 3px; border-radius: 3px; }
 
         /* --- TAB 2: ANALYSIS --- */
         .analysis-section { padding: 15px; background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0; }
         .analysis-header { font-weight: bold; text-align: center; margin-bottom: 10px; color: #475569; font-size: 0.9rem; text-transform: uppercase; }
         .analysis-wrapper { display: grid; grid-template-columns: 280px 1fr; gap: 20px; align-items: start; }
+        
         .map-col { display: flex; flex-direction: column; align-items: center; width: 100%; }
         .serve-input-row { display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 15px; }
         .serve-input { padding: 8px; border: 2px solid #3b82f6; border-radius: 6px; width: 160px; text-align: center; font-weight: bold; font-size: 1rem; }
+        
         .map-scroll-container { max-height: 600px; overflow-y: auto; padding: 10px; border: 1px solid #eee; border-radius: 8px; background: white; margin-bottom: 10px; width: 100%; display: flex; flex-direction: column; align-items: center; }
         .analysis-container { position: relative; width: 420px; height: 420px; background: var(--court-orange); border: 4px solid white; box-shadow: 0 0 0 10px var(--court-blue); cursor: crosshair; margin: 20px 10px 30px 10px; }
         .net-indicator { position: absolute; top: -25px; left: -10px; right: -10px; height: 10px; background: repeating-linear-gradient(90deg, #e5e5e5, #e5e5e5 2px, #333 2px, #333 4px); border: 1px solid #000; display: flex; align-items: center; justify-content: center; z-index: 5; }
@@ -160,13 +154,35 @@
 
         /* --- TAB 3: ERROR TRACKING --- */
         .error-layout { display: grid; grid-template-columns: 1fr 2fr; gap: 20px; align-items: start; }
-        .player-chips { display: flex; flex-wrap: wrap; gap: 8px; padding: 15px; background: white; border: 1px solid #e2e8f0; border-radius: 8px; }
+        .player-chips { display: flex; flex-wrap: wrap; gap: 10px; padding: 15px; background: white; border: 1px solid #e2e8f0; border-radius: 8px; }
+        
+        /* IMPROVED PLAYER CHIP DESIGN (GREEN, PROPER SHAPE) */
         .player-chip { 
-            padding: 8px 10px; min-width: 75px; text-align: center; display: inline-flex; justify-content: center;
-            background: #f1f5f9; border: 2px solid #cbd5e1; border-radius: 20px; font-size: 0.85rem; font-weight: bold; color: #475569; cursor: pointer; transition: 0.2s; 
+            padding: 10px 14px; 
+            min-width: 80px; 
+            max-width: 140px; 
+            text-align: center; 
+            background: #dcfce7; /* Soft Green */
+            border: 2px solid #22c55e; /* Bright Green outline */
+            border-radius: 25px; 
+            font-size: 0.95rem; 
+            font-weight: 800; 
+            color: #14532d; /* Dark Green Text */
+            cursor: pointer; 
+            transition: 0.2s; 
+            white-space: nowrap; 
+            overflow: hidden; 
+            text-overflow: ellipsis; 
+            display: inline-block; 
         }
-        .player-chip:hover { border-color: var(--primary); color: var(--primary); }
-        .player-chip.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 2px 6px rgba(37,99,235,0.4); }
+        .player-chip:hover { border-color: #16a34a; background: #bbf7d0; }
+        .player-chip.active { 
+            background: #16a34a; /* Solid Green Background */
+            color: white; 
+            border-color: #14532d; 
+            box-shadow: 0 4px 10px rgba(22, 163, 74, 0.4); 
+        }
+
         .error-action-area { display: flex; flex-direction: column; gap: 15px; }
         .error-buttons { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; background: white; padding: 15px; border: 1px solid #e2e8f0; border-radius: 8px; }
         .err-btn { padding: 15px 5px; font-size: 1rem; font-weight: bold; border-radius: 8px; border: none; cursor: pointer; color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: 0.1s; }
@@ -180,7 +196,7 @@
         .err-log-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 10px; font-weight: bold; color: #475569; }
         .btn-undo-err { background: #94a3b8; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; cursor: pointer; }
         .err-player-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px dashed #f1f5f9; }
-        .err-player-name { font-weight: bold; font-size: 0.9rem; color: #1e293b; width: 100px; }
+        .err-player-name { font-weight: bold; font-size: 0.9rem; color: #1e293b; width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
         .err-badges { display: flex; gap: 5px; flex-wrap: wrap; flex: 1; }
         .e-badge { padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; color: white; margin-left: 4px;}
 
@@ -198,8 +214,14 @@
         .watermark { text-align: center; font-size: 0.7rem; color: #ccc; margin-top: 20px; font-family: monospace; }
 
         @media screen and (max-width: 768px) {
-            .roster-wrapper, .setup-grid, .sb-grid, .analysis-wrapper, .error-layout { grid-template-columns: 1fr; }
-            .analysis-container { width: 300px; height: 300px; }
+            .roster-wrapper, .setup-grid, .sb-grid, .error-layout { grid-template-columns: 1fr; }
+            
+            /* Responsive Court vs List Order */
+            .analysis-wrapper { display: flex; flex-direction: column; }
+            .map-col { order: 1; margin-bottom: 20px; }
+            .stats-col { order: 2; width: 100%; min-height: auto; }
+            .analysis-container { width: 300px; height: 300px; margin: 10px auto; }
+            
             .btn-group { flex-wrap: wrap; } .print-select { width: 100%; }
         }
 
@@ -226,7 +248,7 @@
             .analysis-wrapper { display: grid; grid-template-columns: 250px 1fr; gap: 15px; }
             .analysis-container { width: 340px; height: 340px; border-color: #000; box-shadow: 0 0 0 5px #ccc; break-inside: avoid; margin: 10px auto; }
             .map-scroll-container { max-height: none; overflow: visible; border: none; padding: 0; }
-            .serve-mark { min-width: 24px; height: 24px; border-radius: 12px; font-size: 0.6rem; }
+            .serve-mark { font-size: 0.6rem; }
             
             .history-section { border-top: 1px solid #ccc; margin-top: 5px; padding-top: 5px; }
             .history-chip { background: #eee; color: #000; border: 1px solid #ccc; font-size: 0.7rem; padding: 1px 6px; }
@@ -302,10 +324,17 @@
             <div class="sets-col">
                 <div class="sets-label">SETS WON</div>
                 <div class="sets-val"><span id="sets-a-disp">0</span> - <span id="sets-b-disp">0</span></div>
+                
                 <div class="sets-controls-row no-print">
-                    <button class="btn-set" onclick="updateSet('a', 1)">A+</button><button class="btn-set btn-reset-pts" onclick="resetPointsOnly()">0-0</button><button class="btn-set" onclick="updateSet('b', 1)">B+</button>
+                    <button class="btn-set" onclick="updateSet('a', 1)">A +</button>
+                    <button class="btn-set" onclick="updateSet('a', -1)">A -</button>
+                    <button class="btn-set btn-reset-pts" onclick="resetPointsOnly()">Pts 0-0</button>
+                    <button class="btn-set" onclick="updateSet('b', -1)">B -</button>
+                    <button class="btn-set" onclick="updateSet('b', 1)">B +</button>
                 </div>
-                <button class="btn-reset-match no-print" onclick="resetMatch()">RESET MATCH</button>
+                <button class="btn-set no-print" style="width:100%; margin-bottom:5px;" onclick="undoSetHistory()">Undo Last Set Log</button>
+                
+                <button class="btn-reset-match no-print" onclick="resetMatch()">RESET FULL MATCH</button>
             </div>
             <div class="team-col">
                 <div class="team-name" id="sb-name-b">AWAY</div>
@@ -338,11 +367,11 @@
             </div>
             <div class="roster-wrapper">
                 <div class="roster-col">
-                    <div class="team-header"><input type="text" id="name-a" class="team-name-input" value="SK CHERATING" onblur="triggerSync(); handleRosterInput('${t}')"><div style="font-size:0.8rem;">Start: <select id="start-offset-a" onchange="triggerSync(); generate()"><option value="0">1</option><option value="1">2</option><option value="2">3</option><option value="3">4</option><option value="4">5</option><option value="5">6</option></select></div></div>
+                    <div class="team-header"><input type="text" id="name-a" class="team-name-input" value="SK CHERATING" onblur="triggerSync(); updateNames()"><div style="font-size:0.8rem;">Start: <select id="start-offset-a" onchange="triggerSync(); generate()"><option value="0">1</option><option value="1">2</option><option value="2">3</option><option value="3">4</option><option value="4">5</option><option value="5">6</option></select></div></div>
                     <div class="roster-list" id="roster-list-a"></div>
                 </div>
                 <div class="roster-col">
-                    <div class="team-header"><input type="text" id="name-b" class="team-name-input" value="OPPONENT" onblur="triggerSync(); handleRosterInput('${t}')"><div style="font-size:0.8rem;">Start: <select id="start-offset-b" onchange="triggerSync(); generate()"><option value="0">1</option><option value="1">2</option><option value="2">3</option><option value="3">4</option><option value="4">5</option><option value="5">6</option></select></div></div>
+                    <div class="team-header"><input type="text" id="name-b" class="team-name-input" value="OPPONENT" onblur="triggerSync(); updateNames()"><div style="font-size:0.8rem;">Start: <select id="start-offset-b" onchange="triggerSync(); generate()"><option value="0">1</option><option value="1">2</option><option value="2">3</option><option value="3">4</option><option value="4">5</option><option value="5">6</option></select></div></div>
                     <div class="roster-list" id="roster-list-b"></div>
                 </div>
             </div>
@@ -375,10 +404,10 @@
 
                     <div class="no-print" style="text-align:center; margin-top:10px; display:flex; gap:10px; justify-content:center;">
                         <button style="background:#2563eb; color:white; border:none; padding:6px 12px; border-radius:4px; font-weight:bold; font-size:0.8rem; cursor:pointer;" onclick="addMap()">+ Add Set Map</button>
-                        <button style="background:#64748b; color:white; border:none; padding:6px 12px; border-radius:4px; font-weight:bold; font-size:0.8rem; cursor:pointer;" onclick="undoServeMark(e)">Undo</button>
+                        <button style="background:#64748b; color:white; border:none; padding:6px 12px; border-radius:4px; font-weight:bold; font-size:0.8rem; cursor:pointer;" onclick="undoServeMark(event)">Undo Last Serve</button>
                     </div>
                     <div class="no-print" style="text-align:center; margin-top:10px;">
-                        <button style="background:transparent; border:1px solid #ef4444; color:#ef4444; padding:4px 8px; border-radius:4px; font-size:0.7rem; cursor:pointer;" onclick="resetAnalysisOnly()">Reset Analysis Only</button>
+                        <button style="background:transparent; border:1px solid #ef4444; color:#ef4444; padding:4px 8px; border-radius:4px; font-size:0.7rem; cursor:pointer;" onclick="resetAnalysisOnly()">Clear ALL Serve Data</button>
                     </div>
                 </div>
 
@@ -431,7 +460,13 @@
                 <option value="errors">Print: Errors Only</option>
             </select>
             <button style="background:var(--dark); color:white; padding:12px; border:none; border-radius:6px; font-weight:bold; cursor:pointer; flex:1;" onclick="generate()">Update View</button>
-            <button style="background:#10b981; color:white; padding:12px; border:none; border-radius:6px; font-weight:bold; cursor:pointer; flex:1;" onclick="window.print()">Print</button>
+            <button style="background:#10b981; color:white; padding:12px; border:none; border-radius:6px; font-weight:bold; cursor:pointer; flex:1;" onclick="window.print()">Print Report</button>
+        </div>
+        
+        <div class="data-tools">
+            <button class="btn-data btn-export" onclick="exportData()">Backup Data File</button>
+            <button class="btn-data btn-import" onclick="document.getElementById('import-file').click()">Load Data File</button>
+            <input type="file" id="import-file" style="display:none" onchange="importData(this)">
         </div>
     </div>
 
@@ -440,7 +475,7 @@
 
 <script>
     // ==============================================
-    // FIREBASE COMPAT SETUP (Allows direct file open)
+    // 1. FIREBASE SETUP & AUTHENTICATION
     // ==============================================
     const firebaseConfig = {
       apiKey: "AIzaSyCt9LXGreBiZrnAIdSaWUBvMv9CLr5V-a8",
@@ -454,31 +489,21 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    // Ensure Master Admin
-    db.collection("app_users").doc("admin").get().then((doc) => {
-        if(!doc.exists) {
-            db.collection("app_users").doc("admin").set({ password: "admin123", role: "admin", active_devices: [] });
-        }
+    // Ensure Admin Exists
+    db.collection("app_users").doc("admin").get().then(doc => {
+        if(!doc.exists) db.collection("app_users").doc("admin").set({ password: "admin123", role: "admin", active_devices: [] });
     });
 
-    // Device ID setup
     let myDeviceId = localStorage.getItem('vb_device_id');
-    if(!myDeviceId) {
-        myDeviceId = 'dev_' + Math.random().toString(36).substr(2, 9);
-        localStorage.setItem('vb_device_id', myDeviceId);
-    }
+    if(!myDeviceId) { myDeviceId = 'dev_' + Math.random().toString(36).substr(2, 9); localStorage.setItem('vb_device_id', myDeviceId); }
 
     let currentUser = sessionStorage.getItem('vb_current_user');
-    if(currentUser) { checkLoginState(currentUser); }
+    let isSyncing = false; 
 
-    function checkLoginState(u) {
-        db.collection("app_users").doc(u).get().then((doc) => {
-            if(doc.exists) {
-                const data = doc.data();
-                if(data.active_devices.includes(myDeviceId)) {
-                    startApp(u, data.role);
-                } else { logout(); }
-            } else { logout(); }
+    if(currentUser) {
+        db.collection("app_users").doc(currentUser).get().then(doc => {
+            if(doc.exists && (doc.data().active_devices||[]).includes(myDeviceId)) startApp(currentUser, doc.data().role);
+            else logout();
         });
     }
 
@@ -489,37 +514,22 @@
         errEl.style.display = 'none';
 
         if(!u || !p) return;
-
-        db.collection("app_users").doc(u).get().then((doc) => {
+        db.collection("app_users").doc(u).get().then(doc => {
             if(doc.exists && doc.data().password === p) {
                 let active = doc.data().active_devices || [];
-                
                 if(active.includes(myDeviceId)) {
-                    sessionStorage.setItem('vb_current_user', u);
-                    startApp(u, doc.data().role);
+                    sessionStorage.setItem('vb_current_user', u); startApp(u, doc.data().role);
                 } else if(active.length < 2) {
                     active.push(myDeviceId);
                     db.collection("app_users").doc(u).set({ active_devices: active }, { merge: true }).then(() => {
-                        sessionStorage.setItem('vb_current_user', u);
-                        startApp(u, doc.data().role);
+                        sessionStorage.setItem('vb_current_user', u); startApp(u, doc.data().role);
                     });
-                } else {
-                    errEl.innerText = "Device limit (2) reached. Ask Admin to reset.";
-                    errEl.style.display = 'block';
-                }
-            } else {
-                errEl.innerText = "Invalid Username or Password";
-                errEl.style.display = 'block';
-            }
-        }).catch(e => {
-            errEl.innerText = "Connection Error."; errEl.style.display = 'block';
-        });
+                } else { errEl.innerText = "Device limit (2) reached. Ask Admin to reset."; errEl.style.display = 'block'; }
+            } else { errEl.innerText = "Invalid Username or Password"; errEl.style.display = 'block'; }
+        }).catch(() => { errEl.innerText = "Connection Error."; errEl.style.display = 'block'; });
     }
 
-    function logout() {
-        sessionStorage.removeItem('vb_current_user');
-        location.reload();
-    }
+    function logout() { sessionStorage.removeItem('vb_current_user'); location.reload(); }
 
     function startApp(u, role) {
         document.getElementById('login-overlay').style.display = 'none';
@@ -531,67 +541,42 @@
         listenToCloudData(); 
     }
 
-    // --- ADMIN CONTROLS ---
-    function openAdmin() {
-        document.getElementById('admin-modal').style.display = 'flex';
-        refreshUserList();
-    }
+    // --- Admin Functions ---
+    function openAdmin() { document.getElementById('admin-modal').style.display = 'flex'; refreshUserList(); }
     function closeAdmin() { document.getElementById('admin-modal').style.display = 'none'; }
-    
     function refreshUserList() {
-        const list = document.getElementById('user-list');
-        list.innerHTML = 'Loading...';
-        db.collection("app_users").get().then((querySnapshot) => {
+        const list = document.getElementById('user-list'); list.innerHTML = 'Loading...';
+        db.collection("app_users").get().then(snap => {
             list.innerHTML = '';
-            querySnapshot.forEach((doc) => {
+            snap.forEach(doc => {
                 const u = doc.id; const d = doc.data();
                 const row = document.createElement('div'); row.className = 'user-row';
-                let btns = '';
-                if(u !== 'admin') {
-                    btns = `<button class="btn-reset-dev" onclick="resetUserDev('${u}')">Reset Devs (${(d.active_devices||[]).length}/2)</button>
-                            <button class="btn-del-user" onclick="deleteUser('${u}')">Del</button>`;
-                } else {
-                    btns = `<span style="font-size:0.7rem; color:#666;">(Master Admin)</span>`;
-                }
+                let btns = u !== 'admin' ? `<button class="btn-reset-dev" onclick="resetUserDev('${u}')">Reset Devs (${(d.active_devices||[]).length}/2)</button><button class="btn-del-user" onclick="deleteUser('${u}')">Del</button>` : `<span style="font-size:0.7rem; color:#666;">(Master Admin)</span>`;
                 row.innerHTML = `<span><b>${u}</b></span> <div>${btns}</div>`;
                 list.appendChild(row);
             });
         });
     }
-    
     function addUser() {
-        const u = document.getElementById('new-user').value.trim();
-        const p = document.getElementById('new-pass').value.trim();
+        const u = document.getElementById('new-user').value.trim(), p = document.getElementById('new-pass').value.trim();
         if(u && p) {
-            db.collection("app_users").doc(u).get().then((doc) => {
+            db.collection("app_users").doc(u).get().then(doc => {
                 if(doc.exists) alert("User already exists!");
                 else {
                     db.collection("app_users").doc(u).set({ password: p, role: "user", active_devices: [] }).then(() => {
-                        document.getElementById('new-user').value = '';
-                        document.getElementById('new-pass').value = '';
-                        refreshUserList();
+                        document.getElementById('new-user').value = ''; document.getElementById('new-pass').value = ''; refreshUserList();
                     });
                 }
             });
         }
     }
+    function deleteUser(u) { if(confirm(`Delete user ${u}?`)) db.collection("app_users").doc(u).delete().then(() => refreshUserList()); }
+    function resetUserDev(u) { if(confirm(`Reset device count for ${u}?`)) db.collection("app_users").doc(u).set({ active_devices: [] }, { merge: true }).then(() => refreshUserList()); }
 
-    function deleteUser(u) {
-        if(confirm(`Delete user ${u}?`)) {
-            db.collection("app_users").doc(u).delete().then(() => refreshUserList());
-        }
-    }
 
-    function resetUserDev(u) {
-        if(confirm(`Reset device count for ${u} back to 0?`)) {
-            db.collection("app_users").doc(u).set({ active_devices: [] }, { merge: true }).then(() => refreshUserList());
-        }
-    }
-
-    // ==========================================
-    // APP LOGIC & STATE 
-    // ==========================================
-    
+    // ==============================================
+    // 2. CORE APP STATE & SYNCING
+    // ==============================================
     let scoreA=0, scoreB=0, setsA=0, setsB=0;
     let history=[], serveStats=[], mapCount=1; 
     let timeouts={a:[false,false],b:[false,false]}, subCounts={a:0,b:0};
@@ -603,39 +588,27 @@
 
     function buildDOM() {
         ['a','b'].forEach(t => {
-            const r=document.getElementById(`roster-list-${t}`);
-            for(let i=1;i<=12;i++) r.innerHTML+=`<div class="roster-row"><span>${i}</span><input type="text" id="p-${t}-${i}-name" placeholder="Name" onblur="triggerSync(); handleRosterInput('${t}')"><select id="p-${t}-${i}-role" onchange="triggerSync()">${roles}</select></div>`;
-            const s=document.getElementById(`selectors-${t}`);
+            const r=document.getElementById(`roster-list-${t}`); r.innerHTML='';
+            for(let i=1;i<=12;i++) r.innerHTML+=`<div class="roster-row"><span>${i}</span><input type="text" id="p-${t}-${i}-name" placeholder="Name" onblur="triggerSync(); if('${t}'==='a')updateErrorPlayerChips()"><select id="p-${t}-${i}-role" onchange="triggerSync()">${roles}</select></div>`;
+            const s=document.getElementById(`selectors-${t}`); s.innerHTML='';
             for(let i=1;i<=6;i++) s.innerHTML+=`<div class="lineup-row"><label>Pos ${i}</label><select id="l-${t}-${i}" class="lineup-select" onchange="handleLineupChange('${t}')"></select><div class="icon-swap" onclick="doSwap('${t}',${i})">⇄</div><select id="l-${t}-${i}-sub" class="lineup-select" onchange="handleLineupChange('${t}')"></select></div>`;
         });
-        
         document.getElementById('maps-container').innerHTML = `<div class="analysis-container" id="serve-court-0" onclick="recordServe(event, 0)"><div class="net-indicator"><span class="net-text-badge">NET (SET 1)</span></div><div class="analysis-grid"><div class="analysis-cell">4</div><div class="analysis-cell">3</div><div class="analysis-cell">2</div><div class="analysis-cell">7</div><div class="analysis-cell">8</div><div class="analysis-cell">9</div><div class="analysis-cell">5</div><div class="analysis-cell">6</div><div class="analysis-cell">1</div></div></div>`;
     }
 
-    // REAL-TIME SYNC ENGINE
-    let isSyncing = false; 
-
     function listenToCloudData() {
-        db.collection("matches").doc("live_match").onSnapshot((doc) => {
-            if(doc.exists) {
-                isSyncing = true;
-                applyCloudData(doc.data());
-                isSyncing = false;
-            }
+        db.collection("matches").doc("live_match").onSnapshot(doc => {
+            if(doc.exists) { isSyncing = true; applyCloudData(doc.data()); isSyncing = false; }
         });
     }
 
     function triggerSync() {
-        if(isSyncing) return;
-        saveAll(); // Local save
+        saveLocal();
+        if(isSyncing || !currentUser) return;
         const data = {
             sA:scoreA, sB:scoreB, setsA:setsA, setsB:setsB, hist:history, tos:timeouts, subs:subCounts, 
             serveStats:serveStats, mapCount: mapCount, errStats: errorStats, errHist: errorHistory,
-            meta: { 
-                nA:document.getElementById('name-a').value, nB:document.getElementById('name-b').value, 
-                date:document.getElementById('match-date').value, venue:document.getElementById('match-venue').value, 
-                oA:document.getElementById('start-offset-a').value, oB:document.getElementById('start-offset-b').value 
-            },
+            meta: { nA:document.getElementById('name-a').value, nB:document.getElementById('name-b').value, date:document.getElementById('match-date').value, venue:document.getElementById('match-venue').value, oA:document.getElementById('start-offset-a').value, oB:document.getElementById('start-offset-b').value },
             rosA:getRosterObj('a'), rosB:getRosterObj('b'), linA:getLineupObj('a'), linB:getLineupObj('b')
         };
         db.collection("matches").doc("live_match").set(data);
@@ -644,16 +617,9 @@
     function applyCloudData(d) {
         scoreA=d.sA||0; scoreB=d.sB||0; setsA=d.setsA||0; setsB=d.setsB||0; history=d.hist||[]; 
         timeouts=d.tos||{a:[false,false],b:[false,false]}; subCounts=d.subs||{a:0,b:0}; 
-        serveStats=d.serveStats||[]; mapCount=d.mapCount||1; 
-        errorStats=d.errStats||{}; errorHistory=d.errHist||[];
+        serveStats=d.serveStats||[]; mapCount=d.mapCount||1; errorStats=d.errStats||{}; errorHistory=d.errHist||[];
         
-        if(d.meta) {
-            safeSet('name-a', d.meta.nA); safeSet('name-b', d.meta.nB);
-            safeSet('match-date', d.meta.date); safeSet('match-venue', d.meta.venue);
-            safeSet('start-offset-a', d.meta.oA); safeSet('start-offset-b', d.meta.oB);
-            updateNames();
-        }
-
+        if(d.meta) { safeSet('name-a', d.meta.nA); safeSet('name-b', d.meta.nB); safeSet('match-date', d.meta.date); safeSet('match-venue', d.meta.venue); safeSet('start-offset-a', d.meta.oA); safeSet('start-offset-b', d.meta.oB); updateNames(); }
         restoreRoster('a', d.rosA); restoreRoster('b', d.rosB);
         
         const c = document.getElementById('maps-container');
@@ -665,72 +631,61 @@
                 c.appendChild(div);
             }
         }
-
-        refreshDropdowns('a'); refreshDropdowns('b'); 
-        restoreLineup('a', d.linA); restoreLineup('b', d.linB);
-        updateScoreBoard(); renderAllMarks(); renderErrorStats();
-        updateErrorPlayerChips();
-        generate();
+        refreshDropdowns('a'); refreshDropdowns('b'); restoreLineup('a', d.linA); restoreLineup('b', d.linB);
+        updateScoreBoard(); renderAllMarks(); renderErrorStats(); updateErrorPlayerChips(); generate();
     }
 
-    function safeSet(id, val) {
-        const el = document.getElementById(id);
-        if(el && document.activeElement !== el) el.value = val || '';
-    }
 
-    function getRosterObj(t){ let a=[]; for(let i=1;i<=12;i++) a.push({n:document.getElementById(`p-${t}-${i}-name`).value, r:document.getElementById(`p-${t}-${i}-role`).value}); return a; }
-    function getLineupObj(t){ let a=[]; for(let i=1;i<=6;i++) a.push({m:document.getElementById(`l-${t}-${i}`).value, s:document.getElementById(`l-${t}-${i}-sub`).value}); return a; }
-
-    function restoreRoster(t,a){ 
-        if(!a)return; 
-        a.forEach((p,i)=>{ 
-            if(i<12){ safeSet(`p-${t}-${i+1}-name`, p.n); safeSet(`p-${t}-${i+1}-role`, p.r); } 
-        }); 
-    }
-    function restoreLineup(t,a){ 
-        if(!a)return; 
-        a.forEach((l,i)=>{ 
-            const m=document.getElementById(`l-${t}-${i+1}`), s=document.getElementById(`l-${t}-${i+1}-sub`); 
-            if(document.activeElement === m || document.activeElement === s) return; 
-            if(l.m && !m.querySelector(`option[value="${l.m}"]`)) m.innerHTML+=`<option value="${l.m}">${l.m}</option>`; 
-            if(l.s && !s.querySelector(`option[value="${l.s}"]`)) s.innerHTML+=`<option value="${l.s}">${l.s}</option>`; 
-            m.value=l.m; s.value=l.s; 
-        }); 
-        refreshDropdowns(t); 
-    }
-
-    // --- GENERIC FUNCTIONS ---
-    function switchTab(id) {
-        document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));
-        document.querySelectorAll('.tab-btn').forEach(e=>e.classList.remove('active'));
-        document.getElementById('tab-'+id).classList.add('active');
-        const bs=document.querySelectorAll('.tab-btn');
-        if(id==='rotations') bs[0].classList.add('active'); 
-        else if (id==='analysis') bs[1].classList.add('active');
-        else bs[2].classList.add('active');
-    }
-    function updatePrintMode() { document.body.className = 'print-' + document.getElementById('print-mode').value; }
-
-    function adjScore(t,v){ if(t==='a')scoreA=Math.max(0,scoreA+v);else scoreB=Math.max(0,scoreB+v); updateScoreBoard(); triggerSync(); }
-    function toggleTO(t,n){ timeouts[t][n-1]=!timeouts[t][n-1]; updateScoreBoard(); triggerSync(); }
-    function adjSubs(t){ const v=prompt("Subs (0-12):",subCounts[t]); if(v!==null) { subCounts[t]=Math.min(12,Math.max(0,parseInt(v)||0)); updateScoreBoard(); triggerSync(); } }
-    function finishSet(w){ 
-        if(!confirm("Confirm Set Win?"))return; 
+    // ==============================================
+    // 3. UI CONTROLS & LOGIC
+    // ==============================================
+    window.switchTab = switchTab;
+    window.updatePrintMode = updatePrintMode;
+    window.adjScore = (t,v) => { if(t==='a')scoreA=Math.max(0,scoreA+v);else scoreB=Math.max(0,scoreB+v); updateScoreBoard(); triggerSync(); }
+    window.toggleTO = (t,n) => { timeouts[t][n-1]=!timeouts[t][n-1]; updateScoreBoard(); triggerSync(); }
+    window.adjSubs = (t) => { const v=prompt("Subs (0-12):",subCounts[t]); if(v!==null) { subCounts[t]=Math.min(12,Math.max(0,parseInt(v)||0)); updateScoreBoard(); triggerSync(); } }
+    
+    window.finishSet = (w) => { 
+        if(!confirm(`Confirm ${w==='a'?'HOME':'AWAY'} won set? Resets points.`)) return; 
         const wStr = w==='a'?document.getElementById('name-a').value:document.getElementById('name-b').value;
         history.push(`Set ${history.length+1}: ${scoreA}-${scoreB} (${wStr})`); 
         if(w==='a')setsA++;else setsB++; 
         scoreA=0; scoreB=0; timeouts={a:[false,false],b:[false,false]}; subCounts={a:0,b:0}; 
         updateScoreBoard(); triggerSync(); 
     }
-    function resetPointsOnly(){ if(confirm("Reset Pts?")){scoreA=0;scoreB=0;updateScoreBoard();triggerSync();} }
-    function updateSet(t,v){ if(t==='a')setsA=Math.max(0,setsA+v);else setsB=Math.max(0,setsB+v); updateScoreBoard(); triggerSync(); }
-    function resetMatch(){
-        if(confirm("Reset FULL MATCH?")) {
+    
+    window.undoSetHistory = () => {
+        if(history.length === 0) return;
+        if(confirm("Remove the last recorded set from history? (Use A-/B- to adjust Set Counter)")) {
+            history.pop(); updateScoreBoard(); triggerSync();
+        }
+    }
+
+    window.resetPointsOnly = () => { if(confirm("Reset Pts to 0-0?")){scoreA=0;scoreB=0;updateScoreBoard();triggerSync();} }
+    window.updateSet = (t,v) => { if(t==='a')setsA=Math.max(0,setsA+v);else setsB=Math.max(0,setsB+v); updateScoreBoard(); triggerSync(); }
+    window.resetMatch = () => {
+        if(confirm("Reset FULL MATCH? (Clears points, sets, analysis, errors, history)")) {
             scoreA=0; scoreB=0; setsA=0; setsB=0; history=[]; serveStats=[]; errorStats={}; errorHistory=[]; mapCount=1;
             timeouts={a:[false,false],b:[false,false]}; subCounts={a:0,b:0};
+            
+            const c = document.getElementById('maps-container'); c.innerHTML = ''; 
+            const div = document.createElement('div'); div.className = 'analysis-container'; div.id = `serve-court-0`; div.onclick = (e) => recordServe(e, 0);
+            div.innerHTML = `<div class="net-indicator"><span class="net-text-badge">NET (SET 1)</span></div><div class="analysis-grid"><div class="analysis-cell">4</div><div class="analysis-cell">3</div><div class="analysis-cell">2</div><div class="analysis-cell">7</div><div class="analysis-cell">8</div><div class="analysis-cell">9</div><div class="analysis-cell">5</div><div class="analysis-cell">6</div><div class="analysis-cell">1</div></div>`;
+            c.appendChild(div);
+
             renderServeMarks(); renderErrorStats(); updateScoreBoard(); triggerSync();
         }
     }
+
+    function switchTab(id) {
+        document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(e=>e.classList.remove('active'));
+        document.getElementById('tab-'+id).classList.add('active');
+        const bs=document.querySelectorAll('.tab-btn');
+        if(id==='rotations') bs[0].classList.add('active'); else if (id==='analysis') bs[1].classList.add('active'); else bs[2].classList.add('active');
+    }
+    function updatePrintMode() { document.body.className = 'print-' + document.getElementById('print-mode').value; }
+
     function updateScoreBoard(){
         document.getElementById('score-a-disp').innerText=scoreA; document.getElementById('score-b-disp').innerText=scoreB;
         document.getElementById('sets-a-disp').innerText=setsA; document.getElementById('sets-b-disp').innerText=setsB;
@@ -743,31 +698,15 @@
         document.getElementById('sb-name-b').innerText=document.getElementById('name-b').value||'AWAY';
     }
 
-    function updateErrorPlayerChips() {
-        const roster = getRoster('a');
-        const container = document.getElementById('error-player-chips');
-        if(roster.length === 0) {
-            container.innerHTML = '<span style="color:#999; font-size:0.8rem;">Fill in Team A Roster on Tab 1.</span>';
-            selectedErrorPlayer = null; toggleErrorButtons(false); return;
-        }
-        container.innerHTML = '';
-        roster.forEach(n => {
-            const chip = document.createElement('div');
-            chip.className = `player-chip ${n === selectedErrorPlayer ? 'active' : ''}`;
-            chip.innerText = n; chip.onclick = () => selectErrorPlayer(n);
-            container.appendChild(chip);
-        });
-        if(!roster.includes(selectedErrorPlayer)) { selectedErrorPlayer = null; toggleErrorButtons(false); }
-    }
-    function selectErrorPlayer(name) { selectedErrorPlayer = name; updateErrorPlayerChips(); toggleErrorButtons(true); }
-    function toggleErrorButtons(enable) { document.querySelectorAll('.err-btn').forEach(b => b.disabled = !enable); }
-    function addError(type) {
+    // --- ERRORS ---
+    window.selectErrorPlayer = selectErrorPlayer;
+    window.addError = (type) => {
         if(!selectedErrorPlayer) return;
         if(!errorStats[selectedErrorPlayer]) errorStats[selectedErrorPlayer] = { SE:0, RE:0, AE:0, BE:0, BHE:0, FE:0 };
         errorStats[selectedErrorPlayer][type]++; errorHistory.push({ p: selectedErrorPlayer, e: type });
         renderErrorStats(); triggerSync();
     }
-    function undoLastError() {
+    window.undoLastError = () => {
         if(errorHistory.length === 0) return;
         const last = errorHistory.pop();
         if(errorStats[last.p] && errorStats[last.p][last.e] > 0) {
@@ -777,7 +716,19 @@
         }
         renderErrorStats(); triggerSync();
     }
-    function resetErrorsOnly() { if(confirm("Clear all Error Tracking data?")) { errorStats={}; errorHistory=[]; renderErrorStats(); triggerSync(); } }
+    window.resetErrorsOnly = () => { if(confirm("Clear all Error Tracking data?")) { errorStats={}; errorHistory=[]; renderErrorStats(); triggerSync(); } }
+
+    function updateErrorPlayerChips() {
+        const roster = getRoster('a'); const container = document.getElementById('error-player-chips');
+        if(roster.length === 0) { container.innerHTML = '<span style="color:#999; font-size:0.8rem;">Fill in Team A Roster on Tab 1.</span>'; selectedErrorPlayer = null; document.querySelectorAll('.err-btn').forEach(b => b.disabled = true); return; }
+        container.innerHTML = '';
+        roster.forEach(n => {
+            const chip = document.createElement('div'); chip.className = `player-chip ${n === selectedErrorPlayer ? 'active' : ''}`; chip.innerText = n; chip.onclick = () => selectErrorPlayer(n);
+            container.appendChild(chip);
+        });
+        if(!roster.includes(selectedErrorPlayer)) { selectedErrorPlayer = null; document.querySelectorAll('.err-btn').forEach(b => b.disabled = true); }
+    }
+    function selectErrorPlayer(name) { selectedErrorPlayer = name; updateErrorPlayerChips(); document.querySelectorAll('.err-btn').forEach(b => b.disabled = false); }
     
     const errColors = { SE:'#f59e0b', RE:'#3b82f6', AE:'#ef4444', BE:'#8b5cf6', BHE:'#06b6d4', FE:'#64748b' };
     function renderErrorStats() {
@@ -785,43 +736,42 @@
         if(Object.keys(errorStats).length === 0) { list.innerHTML = '<div style="text-align:center; color:#999; font-size:0.8rem; padding:10px;">No errors recorded</div>'; return; }
         for(const [player, stats] of Object.entries(errorStats)) {
             let badges = '';
-            for(const [type, count] of Object.entries(stats)) {
-                if(count > 0) badges += `<span class="e-badge" style="background-color:${errColors[type]}">${type}: ${count}</span>`;
-            }
-            if(badges) {
-                const row = document.createElement('div'); row.className = 'err-player-row';
-                row.innerHTML = `<span class="err-player-name">${player}</span><div class="err-badges">${badges}</div>`;
-                list.appendChild(row);
-            }
+            for(const [type, count] of Object.entries(stats)) if(count > 0) badges += `<span class="e-badge" style="background-color:${errColors[type]}">${type}: ${count}</span>`;
+            if(badges) { const row = document.createElement('div'); row.className = 'err-player-row'; row.innerHTML = `<span class="err-player-name">${player}</span><div class="err-badges">${badges}</div>`; list.appendChild(row); }
         }
     }
 
-    function addMap() {
+    // --- MAPS & SERVES ---
+    window.addMap = () => {
         mapCount++; const c = document.getElementById('maps-container'); const id = mapCount-1;
         const div = document.createElement('div'); div.className = 'analysis-container'; div.id = `serve-court-${id}`; div.onclick = (e) => recordServe(e, id);
         div.innerHTML = `<div class="net-indicator"><span class="net-text-badge">NET (SET ${mapCount})</span></div><div class="analysis-grid"><div class="analysis-cell">4</div><div class="analysis-cell">3</div><div class="analysis-cell">2</div><div class="analysis-cell">7</div><div class="analysis-cell">8</div><div class="analysis-cell">9</div><div class="analysis-cell">5</div><div class="analysis-cell">6</div><div class="analysis-cell">1</div></div>`;
         c.appendChild(div); triggerSync();
     }
-    function recordServe(e, mapId) {
+    window.recordServe = (e, mapId) => {
         const rect = e.currentTarget.getBoundingClientRect();
         const x = Math.min(98, Math.max(2, ((e.clientX - rect.left) / rect.width) * 100));
         const y = Math.min(98, Math.max(2, ((e.clientY - rect.top) / rect.height) * 100));
         const p = document.getElementById('serve-player-input').value.trim() || "Unk";
         serveStats.push({x, y, player: p, mapId: mapId}); renderAllMarks(); triggerSync();
     }
-    function undoServeMark(e) { e.stopPropagation(); serveStats.pop(); renderAllMarks(); triggerSync(); }
-    function resetAnalysisOnly() {
+    window.undoServeMark = (e) => { e.stopPropagation(); serveStats.pop(); renderAllMarks(); triggerSync(); }
+    window.resetAnalysisOnly = () => {
         if(confirm("Clear ALL Serve Analysis data?")) {
             serveStats = []; mapCount = 1;
             document.getElementById('maps-container').innerHTML = `<div class="analysis-container" id="serve-court-0" onclick="recordServe(event, 0)"><div class="net-indicator"><span class="net-text-badge">NET (SET 1)</span></div><div class="analysis-grid"><div class="analysis-cell">4</div><div class="analysis-cell">3</div><div class="analysis-cell">2</div><div class="analysis-cell">7</div><div class="analysis-cell">8</div><div class="analysis-cell">9</div><div class="analysis-cell">5</div><div class="analysis-cell">6</div><div class="analysis-cell">1</div></div></div>`;
             renderAllMarks(); triggerSync();
         }
     }
+
+    function getColor(name) { if(!playerColors[name]) { const idx = Object.keys(playerColors).length % colors.length; playerColors[name] = colors[idx]; } return playerColors[name]; }
+    function getZone(x, y) { let col = Math.floor(x/33.34), row = Math.floor(y/33.34); const zm = [[4,3,2],[7,8,9],[5,6,1]]; return zm[row]?zm[row][col]:'?'; }
+    
     function renderAllMarks() {
         document.querySelectorAll('.serve-mark').forEach(m => m.remove());
         let stats = {};
         serveStats.forEach(s => {
-            if(s.mapId >= mapCount) for(let i=mapCount; i<=s.mapId; i++) addMap();
+            if(s.mapId >= mapCount) for(let i=mapCount; i<=s.mapId; i++) window.addMap();
             const container = document.getElementById(`serve-court-${s.mapId}`);
             if(container) {
                 const mark = document.createElement('div'); mark.className = 'serve-mark';
@@ -838,11 +788,6 @@
         updateServerList(stats);
     }
 
-    function getZone(x, y) { let col = Math.floor(x/33.34), row = Math.floor(y/33.34); const zm = [[4,3,2],[7,8,9],[5,6,1]]; return zm[row]?zm[row][col]:'?'; }
-    function getColor(name) {
-        if(!playerColors[name]) { const idx = Object.keys(playerColors).length % colors.length; playerColors[name] = colors[idx]; }
-        return playerColors[name];
-    }
     function updateServerList(stats) {
         const l = document.getElementById('server-stats-list'); l.innerHTML='';
         if(Object.keys(stats).length===0) { l.innerHTML='<div style="text-align:center;color:#999;font-size:0.8rem;padding:10px;">No data</div>'; return; }
@@ -860,18 +805,23 @@
         }
     }
 
-    function handleLineupChange(t){ triggerSync(); refreshDropdowns(t); }
-    function handleRosterInput(t){ triggerSync(); refreshDropdowns(t); if(t==='a') updateErrorPlayerChips(); }
-    function doSwap(t,p) {
+    // --- ROSTER / LINEUP ---
+    window.handleLineupChange = (t) => { triggerSync(); refreshDropdowns(t); }
+    window.handleRosterInput = (t) => { triggerSync(); refreshDropdowns(t); if(t==='a') updateErrorPlayerChips(); }
+    window.doSwap = (t,p) => {
         const m=document.getElementById(`l-${t}-${p}`), s=document.getElementById(`l-${t}-${p}-sub`);
         const om=m.value, os=s.value;
         if(os) {
             if(subCounts[t]<12) { subCounts[t]++; updateScoreBoard(); } else alert("Max subs!");
             if(!m.querySelector(`option[value="${os}"]`)) m.innerHTML+=`<option value="${os}">${os}</option>`;
             if(om && !s.querySelector(`option[value="${om}"]`)) s.innerHTML+=`<option value="${om}">${om}</option>`;
-            m.value=os; s.value=om; triggerSync(); refreshDropdowns(t); generate();
+            m.value=os; s.value=om; triggerSync(); refreshDropdowns(t); window.generate();
         }
     }
+
+    function safeSet(id, val) { const el = document.getElementById(id); if(el && document.activeElement !== el) el.value = val || ''; }
+    function getRosterObj(t){ let a=[]; for(let i=1;i<=12;i++) a.push({n:document.getElementById(`p-${t}-${i}-name`).value, r:document.getElementById(`p-${t}-${i}-role`).value}); return a; }
+    function getLineupObj(t){ let a=[]; for(let i=1;i<=6;i++) a.push({m:document.getElementById(`l-${t}-${i}`).value, s:document.getElementById(`l-${t}-${i}-sub`).value}); return a; }
     function getRoster(t) { let a=[]; for(let i=1;i<=12;i++){let n=document.getElementById(`p-${t}-${i}-name`).value.trim(); if(n) a.push(n);} return a.sort(); }
     function getActiveStarters(t) { let s=new Set(); for(let i=1;i<=6;i++){let v=document.getElementById(`l-${t}-${i}`).value; if(v) s.add(v);} return s; }
     function refreshDropdowns(t) {
@@ -889,7 +839,7 @@
     }
 
     function getRole(n,t){ for(let i=1;i<=12;i++) if(document.getElementById(`p-${t}-${i}-name`).value===n) return document.getElementById(`p-${t}-${i}-role`).value; return ''; }
-    function generate() {
+    window.generate = () => {
         const out=document.getElementById('output'), m=document.getElementById('view-mode').value;
         out.innerHTML=''; if(m!=='all') out.classList.add('single-view'); else out.classList.remove('single-view');
         let s=0, e=6; if(m!=='all'){ s=parseInt(m)-1; e=s+1; }
@@ -904,9 +854,18 @@
     function rotate(a,s){ let r=[...a]; for(let k=0;k<s;k++) r=[r[1],r[2],r[3],r[4],r[5],r[0]]; return r; }
     function z(p,ip1){ const l=p.r==='L'; return `<div class="zone" ${ip1?'style="border:2px solid #000"':''}>${ip1?'<div class="server-badge">S</div>':''}<span class="pos-label">${ip1?'P1':''}</span><div class="player-content">${p.r?`<span class="role-badge ${l?'libero':''}">${p.r}</span>`:''}<span>${p.n}</span>${p.s?`<span class="sub-name">(${p.s})</span>`:''}</div></div>`; }
 
-    // local save fallbacks
-    function saveAll() { localStorage.setItem('vb_pro_v22', JSON.stringify({ sA:scoreA, sB:scoreB, setsA:setsA, setsB:setsB, hist:history, tos:timeouts, subs:subCounts, serveStats:serveStats, mapCount: mapCount, errStats: errorStats, errHist: errorHistory, meta:{ nA:document.getElementById('name-a').value, nB:document.getElementById('name-b').value, date:document.getElementById('match-date').value, venue:document.getElementById('match-venue').value, oA:document.getElementById('start-offset-a').value, oB:document.getElementById('start-offset-b').value }, rosA:getRosterObj('a'), rosB:getRosterObj('b'), linA:getLineupObj('a'), linB:getLineupObj('b') })); }
-    
+    // --- LOCAL FALLBACK SAVE/LOAD ---
+    function saveLocal() {
+        localStorage.setItem('vb_pro_v24', JSON.stringify({
+            sA:scoreA, sB:scoreB, setsA:setsA, setsB:setsB, hist:history, tos:timeouts, subs:subCounts, serveStats:serveStats, mapCount: mapCount, errStats: errorStats, errHist: errorHistory,
+            meta:{ nA:document.getElementById('name-a').value, nB:document.getElementById('name-b').value, date:document.getElementById('match-date').value, venue:document.getElementById('match-venue').value, oA:document.getElementById('start-offset-a').value, oB:document.getElementById('start-offset-b').value },
+            rosA:getRosterObj('a'), rosB:getRosterObj('b'), linA:getLineupObj('a'), linB:getLineupObj('b')
+        }));
+    }
+    window.exportData = () => { saveLocal(); const b=new Blob([localStorage.getItem('vb_pro_v24')],{type:"application/json"}); const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download=`vb_data.json`; a.click(); }
+    window.importData = (inp) => { const f=inp.files[0]; if(!f)return; const r=new FileReader(); r.onload=e=>{ try{const d=JSON.parse(e.target.result); if(!d.meta)throw 1; localStorage.setItem('vb_pro_v24',JSON.stringify(d)); location.reload();}catch(x){alert('Invalid File');} }; r.readAsText(f); }
+    window.factoryReset = () => { if(confirm("DELETE EVERYTHING?")) { localStorage.removeItem('vb_pro_v24'); location.reload(); } }
+
 </script>
 </body>
 </html>
