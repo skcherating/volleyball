@@ -217,7 +217,8 @@
             .btn-group { flex-wrap: wrap; } .print-select { width: 100%; }
         }
 
-        /* --- PDF EXPORT STYLES (Overrides UI for clean PDF generation) --- */
+        /* --- PDF EXPORT & PRINT OUTLINE MODE --- */
+        /* This removes heavy colors so PDF processing is fast and prints use no ink */
         body.pdf-export-mode .no-print,
         body.pdf-export-mode .btn-win-set,
         body.pdf-export-mode .score-controls,
@@ -236,31 +237,53 @@
 
         body.pdf-export-mode .meta-input { border: none; font-weight: bold; padding: 0; background: transparent; }
         
-        /* Show the relevant content for PDF based on selection */
         body.pdf-export-mode .tab-content { display: none !important; }
         body.pdf-export-mode:not(.pdf-mode-rotations):not(.pdf-mode-analysis):not(.pdf-mode-errors) .tab-content { display: block !important; margin-bottom: 20px; }
         body.pdf-export-mode.pdf-mode-rotations #tab-rotations { display: block !important; }
         body.pdf-export-mode.pdf-mode-analysis #tab-analysis { display: block !important; }
         body.pdf-export-mode.pdf-mode-errors #tab-errors { display: block !important; }
 
+        /* OUTLINE OVERRIDES FOR PDF & PRINT */
+        @media print, (max-width: 1px) { /* Grouping trick */ }
+        
+        /* Apply to both print view and PDF generation */
+        @media print {
+            .court, .court.team-b-bg { background: white !important; border: 2px solid #000 !important; }
+            .zone { background: white !important; border: 1px dashed #ccc !important; box-shadow: none !important; }
+            .zone.is-server { background: #f8fafc !important; border: 2px solid #000 !important; box-shadow: none !important; }
+            .server-badge { background: #000 !important; color: white !important; border: none !important; }
+            .role-badge { background: white !important; color: black !important; border: 1px solid #ccc !important; }
+            .analysis-container { background: white !important; border: 2px solid #000 !important; box-shadow: none !important; }
+            .analysis-cell { border: 1px dashed #ccc !important; color: #999 !important; }
+            .analysis-cell:nth-child(1), .analysis-cell:nth-child(2), .analysis-cell:nth-child(3) { border-bottom: 3px solid #000 !important; }
+            .net-indicator { background: white !important; border: 1px solid #000 !important; color: #000 !important; }
+            .serve-mark { box-shadow: none !important; border: 1px solid #000 !important; }
+        }
+
+        body.pdf-export-mode .court, body.pdf-export-mode .court.team-b-bg { background: white !important; border: 2px solid #000 !important; }
+        body.pdf-export-mode .zone { background: white !important; border: 1px dashed #ccc !important; box-shadow: none !important; }
+        body.pdf-export-mode .zone.is-server { background: #f8fafc !important; border: 2px solid #000 !important; box-shadow: none !important; }
+        body.pdf-export-mode .server-badge { background: #000 !important; color: white !important; border: none !important; }
+        body.pdf-export-mode .role-badge { background: white !important; color: black !important; border: 1px solid #ccc !important; }
+        body.pdf-export-mode .analysis-container { background: white !important; border: 2px solid #000 !important; box-shadow: none !important; }
+        body.pdf-export-mode .analysis-cell { border: 1px dashed #ccc !important; color: #999 !important; }
+        body.pdf-export-mode .analysis-cell:nth-child(1), body.pdf-export-mode .analysis-cell:nth-child(2), body.pdf-export-mode .analysis-cell:nth-child(3) { border-bottom: 3px solid #000 !important; }
+        body.pdf-export-mode .net-indicator { background: white !important; border: 1px solid #000 !important; color: #000 !important; }
+        body.pdf-export-mode .serve-mark { box-shadow: none !important; border: 1px solid #000 !important; }
+        
         body.pdf-export-mode .scoreboard-panel { background: white; border: 1px solid #000; color: black; padding: 5px; margin-bottom: 10px; }
         body.pdf-export-mode .big-score { font-size: 2rem; color: black; }
         body.pdf-export-mode .game-stats { color: black; background: transparent; border: 1px solid #ccc; }
         body.pdf-export-mode .to-dot { background: #eee; border-color: #000; } 
         body.pdf-export-mode .to-dot.active { background: #000; }
-        
         body.pdf-export-mode .analysis-section, body.pdf-export-mode .error-log-panel { border: 1px solid #000; background: white; page-break-inside: avoid; }
         body.pdf-export-mode .analysis-wrapper { display: grid; grid-template-columns: 250px 1fr; gap: 15px; }
-        body.pdf-export-mode .analysis-container { width: 340px; height: 340px; border-color: #000; box-shadow: 0 0 0 5px #ccc; break-inside: avoid; margin: 10px auto; }
         body.pdf-export-mode .map-scroll-container { max-height: none; overflow: visible; border: none; padding: 0; }
-        body.pdf-export-mode .serve-mark { min-width: 24px; height: 24px; border-radius: 12px; font-size: 0.6rem; }
-        
         body.pdf-export-mode .history-section { border-top: 1px solid #ccc; margin-top: 5px; padding-top: 5px; }
         body.pdf-export-mode .history-chip { background: #eee; color: #000; border: 1px solid #ccc; font-size: 0.7rem; padding: 1px 6px; }
         body.pdf-export-mode .output-grid { display: grid; grid-template-columns: 49% 49%; column-gap: 2%; row-gap: 8px; }
         body.pdf-export-mode .rotation-card { border: 1px solid #000; padding: 4px; break-inside: avoid; color: black; }
-        body.pdf-export-mode .court { border-width: 1px; }
-        body.pdf-export-mode .zone.is-server { background-color: #e5e5e5 !important; border: 3px solid #000 !important; } 
+        
     </style>
 </head>
 <body>
@@ -414,7 +437,8 @@
                         <input type="text" id="serve-player-input" class="serve-input" placeholder="Name or #" title="Enter name then click court">
                     </div>
                     
-                    <div class="map-scroll-container" id="maps-container"></div>
+                    <div class="map-scroll-container" id="maps-container">
+                        </div>
 
                     <div class="no-print" style="text-align:center; margin-top:10px; display:flex; gap:10px; justify-content:center;">
                         <button style="background:#2563eb; color:white; border:none; padding:6px 12px; border-radius:4px; font-weight:bold; font-size:0.8rem; cursor:pointer;" onclick="addMap()">+ Add Set Map</button>
@@ -682,12 +706,11 @@
     }
     window.updatePrintMode = function() { 
         const m = document.getElementById('print-mode').value;
-        // Clean up previous modes
         document.body.classList.remove('print-all', 'print-rotations', 'print-analysis', 'print-errors', 'pdf-mode-rotations', 'pdf-mode-analysis', 'pdf-mode-errors');
         document.body.classList.add('print-' + m); 
     }
 
-    // --- PDF GENERATION LOGIC ---
+    // --- HTML2PDF EXPORT ENGINE ---
     window.saveAsPDF = function() {
         const btn = document.getElementById('btn-save-pdf');
         const originalText = btn.innerText;
@@ -696,8 +719,6 @@
         btn.disabled = true;
 
         const container = document.getElementById('app-container');
-        
-        // Add PDF rendering class
         document.body.classList.add('pdf-export-mode');
         
         const mode = document.getElementById('print-mode').value;
@@ -712,7 +733,6 @@
         };
 
         html2pdf().set(opt).from(container).save().then(() => {
-            // Revert UI changes
             document.body.classList.remove('pdf-export-mode', 'pdf-mode-rotations', 'pdf-mode-analysis', 'pdf-mode-errors');
             btn.innerText = originalText;
             btn.style.background = "#10b981";
