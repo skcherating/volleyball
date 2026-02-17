@@ -7,8 +7,6 @@
     
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
     <style>
         :root { 
@@ -217,76 +215,63 @@
             .btn-group { flex-wrap: wrap; } .print-select { width: 100%; }
         }
 
-        /* --- PDF EXPORT & PRINT OUTLINE MODE --- */
-        /* This removes heavy colors so PDF processing is fast and prints use no ink */
-        body.pdf-export-mode .no-print,
-        body.pdf-export-mode .btn-win-set,
-        body.pdf-export-mode .score-controls,
-        body.pdf-export-mode .btn-reset-match,
-        body.pdf-export-mode .btn-reset-all,
-        body.pdf-export-mode .data-tools,
-        body.pdf-export-mode .sets-controls-row,
-        body.pdf-export-mode .btn-undo,
-        body.pdf-export-mode .serve-input-row,
-        body.pdf-export-mode .tabs-nav,
-        body.pdf-export-mode .user-bar,
-        body.pdf-export-mode .error-buttons,
-        body.pdf-export-mode .player-chips,
-        body.pdf-export-mode .btn-undo-err,
-        body.pdf-export-mode .btn-clear-roster { display: none !important; }
-
-        body.pdf-export-mode .meta-input { border: none; font-weight: bold; padding: 0; background: transparent; }
-        
-        body.pdf-export-mode .tab-content { display: none !important; }
-        body.pdf-export-mode:not(.pdf-mode-rotations):not(.pdf-mode-analysis):not(.pdf-mode-errors) .tab-content { display: block !important; margin-bottom: 20px; }
-        body.pdf-export-mode.pdf-mode-rotations #tab-rotations { display: block !important; }
-        body.pdf-export-mode.pdf-mode-analysis #tab-analysis { display: block !important; }
-        body.pdf-export-mode.pdf-mode-errors #tab-errors { display: block !important; }
-
-        /* OUTLINE OVERRIDES FOR PDF & PRINT */
-        @media print, (max-width: 1px) { /* Grouping trick */ }
-        
-        /* Apply to both print view and PDF generation */
+        /* --- PERFECT A4 PRINT LAYOUT --- */
         @media print {
+            @page { size: A4 portrait; margin: 10mm; }
+            
+            body { 
+                background: white; padding: 0; margin: 0; 
+                -webkit-print-color-adjust: exact !important; 
+                print-color-adjust: exact !important;
+            }
+
+            .container { box-shadow: none; border: none; padding: 0; margin: 0; width: 100%; max-width: 100%; }
+            .no-print, .btn-win-set, .score-controls, .btn-reset-match, .btn-reset-all, .data-tools, .sets-controls-row, .btn-undo, .serve-input-row, .tabs-nav, .user-bar, .error-buttons, .player-chips, .btn-undo-err, .btn-clear-roster { display: none !important; }
+            .meta-input { border: none; font-weight: bold; padding: 0; }
+            
+            /* HIDE TABS BY DEFAULT IN PRINT */
+            .tab-content { display: none !important; margin-bottom: 20px; }
+            
+            /* "PRINT ALL" LOGIC: FORCE EACH TAB TO A NEW A4 PAGE */
+            body.print-all .tab-content { display: block !important; }
+            body.print-all #tab-analysis { page-break-before: always; break-before: page; padding-top: 20px; }
+            body.print-all #tab-errors { page-break-before: always; break-before: page; padding-top: 20px; }
+
+            /* SINGLE PRINT MODES */
+            body.print-rotations #tab-rotations { display: block !important; }
+            body.print-analysis #tab-analysis { display: block !important; }
+            body.print-errors #tab-errors { display: block !important; }
+
+            .scoreboard-panel { background: white; border: 1px solid #000; color: black; padding: 5px; margin-bottom: 20px; }
+            .big-score { font-size: 2rem; }
+            .game-stats { color: black; background: transparent; border: 1px solid #ccc; }
+            .to-dot { background: #eee; border-color: #000; } .to-dot.active { background: #000; }
+            
+            /* FAST PRINTING (NO HEAVY BACKGROUNDS) */
             .court, .court.team-b-bg { background: white !important; border: 2px solid #000 !important; }
             .zone { background: white !important; border: 1px dashed #ccc !important; box-shadow: none !important; }
             .zone.is-server { background: #f8fafc !important; border: 2px solid #000 !important; box-shadow: none !important; }
             .server-badge { background: #000 !important; color: white !important; border: none !important; }
             .role-badge { background: white !important; color: black !important; border: 1px solid #ccc !important; }
-            .analysis-container { background: white !important; border: 2px solid #000 !important; box-shadow: none !important; }
+            
+            .analysis-section, .error-log-panel { border: 1px solid #000; background: white; page-break-inside: avoid; }
+            .analysis-wrapper { display: grid; grid-template-columns: 250px 1fr; gap: 15px; }
+            .analysis-container { width: 340px; height: 340px; background: white !important; border: 2px solid #000 !important; box-shadow: none !important; break-inside: avoid; margin: 10px auto; }
             .analysis-cell { border: 1px dashed #ccc !important; color: #999 !important; }
             .analysis-cell:nth-child(1), .analysis-cell:nth-child(2), .analysis-cell:nth-child(3) { border-bottom: 3px solid #000 !important; }
             .net-indicator { background: white !important; border: 1px solid #000 !important; color: #000 !important; }
-            .serve-mark { box-shadow: none !important; border: 1px solid #000 !important; }
+            .map-scroll-container { max-height: none; overflow: visible; border: none; padding: 0; }
+            .serve-mark { min-width: 24px; height: 24px; border-radius: 12px; font-size: 0.6rem; box-shadow: none !important; border: 1px solid #000 !important; }
+            
+            .history-section { border-top: 1px solid #ccc; margin-top: 5px; padding-top: 5px; }
+            .history-chip { background: #eee; color: #000; border: 1px solid #ccc; font-size: 0.7rem; padding: 1px 6px; }
+            .output-grid { display: grid; grid-template-columns: 49% 49%; column-gap: 2%; row-gap: 8px; }
+            .rotation-card { border: 1px solid #000; padding: 4px; break-inside: avoid; }
+            .watermark { position: fixed; bottom: 5px; right: 5px; }
         }
-
-        body.pdf-export-mode .court, body.pdf-export-mode .court.team-b-bg { background: white !important; border: 2px solid #000 !important; }
-        body.pdf-export-mode .zone { background: white !important; border: 1px dashed #ccc !important; box-shadow: none !important; }
-        body.pdf-export-mode .zone.is-server { background: #f8fafc !important; border: 2px solid #000 !important; box-shadow: none !important; }
-        body.pdf-export-mode .server-badge { background: #000 !important; color: white !important; border: none !important; }
-        body.pdf-export-mode .role-badge { background: white !important; color: black !important; border: 1px solid #ccc !important; }
-        body.pdf-export-mode .analysis-container { background: white !important; border: 2px solid #000 !important; box-shadow: none !important; }
-        body.pdf-export-mode .analysis-cell { border: 1px dashed #ccc !important; color: #999 !important; }
-        body.pdf-export-mode .analysis-cell:nth-child(1), body.pdf-export-mode .analysis-cell:nth-child(2), body.pdf-export-mode .analysis-cell:nth-child(3) { border-bottom: 3px solid #000 !important; }
-        body.pdf-export-mode .net-indicator { background: white !important; border: 1px solid #000 !important; color: #000 !important; }
-        body.pdf-export-mode .serve-mark { box-shadow: none !important; border: 1px solid #000 !important; }
-        
-        body.pdf-export-mode .scoreboard-panel { background: white; border: 1px solid #000; color: black; padding: 5px; margin-bottom: 10px; }
-        body.pdf-export-mode .big-score { font-size: 2rem; color: black; }
-        body.pdf-export-mode .game-stats { color: black; background: transparent; border: 1px solid #ccc; }
-        body.pdf-export-mode .to-dot { background: #eee; border-color: #000; } 
-        body.pdf-export-mode .to-dot.active { background: #000; }
-        body.pdf-export-mode .analysis-section, body.pdf-export-mode .error-log-panel { border: 1px solid #000; background: white; page-break-inside: avoid; }
-        body.pdf-export-mode .analysis-wrapper { display: grid; grid-template-columns: 250px 1fr; gap: 15px; }
-        body.pdf-export-mode .map-scroll-container { max-height: none; overflow: visible; border: none; padding: 0; }
-        body.pdf-export-mode .history-section { border-top: 1px solid #ccc; margin-top: 5px; padding-top: 5px; }
-        body.pdf-export-mode .history-chip { background: #eee; color: #000; border: 1px solid #ccc; font-size: 0.7rem; padding: 1px 6px; }
-        body.pdf-export-mode .output-grid { display: grid; grid-template-columns: 49% 49%; column-gap: 2%; row-gap: 8px; }
-        body.pdf-export-mode .rotation-card { border: 1px solid #000; padding: 4px; break-inside: avoid; color: black; }
-        
     </style>
 </head>
-<body>
+<body class="print-all">
 
 <div id="login-overlay">
     <div class="login-box">
@@ -497,7 +482,8 @@
                 <option value="analysis">Export: Analysis Only</option>
                 <option value="errors">Export: Errors Only</option>
             </select>
-            <button id="btn-save-pdf" style="background:#10b981; color:white; padding:12px; border:none; border-radius:6px; font-weight:bold; cursor:pointer; flex:1;" onclick="saveAsPDF()">Save as PDF</button>
+            
+            <button style="background:#10b981; color:white; padding:12px; border:none; border-radius:6px; font-weight:bold; cursor:pointer; flex:1;" onclick="window.print()">Print / Save PDF (Preview)</button>
         </div>
         <div class="data-tools">
             <button class="btn-data btn-export" onclick="exportData()">Backup Data File</button>
@@ -704,48 +690,7 @@
         const bs=document.querySelectorAll('.tab-btn');
         if(id==='rotations') bs[0].classList.add('active'); else if (id==='analysis') bs[1].classList.add('active'); else bs[2].classList.add('active');
     }
-    window.updatePrintMode = function() { 
-        const m = document.getElementById('print-mode').value;
-        document.body.classList.remove('print-all', 'print-rotations', 'print-analysis', 'print-errors', 'pdf-mode-rotations', 'pdf-mode-analysis', 'pdf-mode-errors');
-        document.body.classList.add('print-' + m); 
-    }
-
-    // --- HTML2PDF EXPORT ENGINE ---
-    window.saveAsPDF = function() {
-        const btn = document.getElementById('btn-save-pdf');
-        const originalText = btn.innerText;
-        btn.innerText = "Generating PDF... Please wait";
-        btn.style.background = "#64748b";
-        btn.disabled = true;
-
-        const container = document.getElementById('app-container');
-        document.body.classList.add('pdf-export-mode');
-        
-        const mode = document.getElementById('print-mode').value;
-        if(mode !== 'all') { document.body.classList.add('pdf-mode-' + mode); }
-
-        const opt = {
-            margin:       0.2,
-            filename:     'Volleyball_Match_Report.pdf',
-            image:        { type: 'jpeg', quality: 0.98 },
-            html2canvas:  { scale: 2, useCORS: true, logging: false },
-            jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
-        };
-
-        html2pdf().set(opt).from(container).save().then(() => {
-            document.body.classList.remove('pdf-export-mode', 'pdf-mode-rotations', 'pdf-mode-analysis', 'pdf-mode-errors');
-            btn.innerText = originalText;
-            btn.style.background = "#10b981";
-            btn.disabled = false;
-        }).catch(err => {
-            console.error("PDF Error", err);
-            document.body.classList.remove('pdf-export-mode', 'pdf-mode-rotations', 'pdf-mode-analysis', 'pdf-mode-errors');
-            btn.innerText = originalText;
-            btn.style.background = "#10b981";
-            btn.disabled = false;
-            alert("Failed to generate PDF. Check console.");
-        });
-    }
+    window.updatePrintMode = function() { document.body.className = 'print-' + document.getElementById('print-mode').value; }
 
     // --- SCOREBOARD ---
     window.adjScore = function(t,v){ if(t==='a')scoreA=Math.max(0,scoreA+v);else scoreB=Math.max(0,scoreB+v); updateScoreBoard(); triggerSync(); }
