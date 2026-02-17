@@ -23,6 +23,7 @@
         /* --- LOGIN OVERLAY --- */
         #login-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--dark); z-index: 9999; display: flex; align-items: center; justify-content: center; flex-direction: column; }
         .login-box { background: white; padding: 30px; border-radius: 12px; width: 90%; max-width: 350px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        /* UPDATED LOGO SIZE */
         .login-logo { width: 90px; height: 90px; object-fit: contain; margin-bottom: 15px; }
         .login-input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; }
         .btn-login { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 6px; font-weight: bold; font-size: 1rem; cursor: pointer; }
@@ -47,6 +48,7 @@
         .btn-reset-dev { background: #eab308; color: black; border: none; padding: 3px 6px; border-radius: 3px; cursor: pointer; font-size: 0.7rem; margin-right: 5px;}
 
         .header-section { text-align: center; margin-bottom: 15px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        /* UPDATED LOGO SIZE */
         .school-logo { width: 90px; height: auto; margin-bottom: 5px; }
         h1 { margin: 0; font-size: 1.2rem; color: var(--dark); }
         .match-meta { display: flex; justify-content: center; gap: 10px; margin-top: 5px; flex-wrap: wrap; }
@@ -119,7 +121,7 @@
         .court.team-b-bg { background: #f87171; border-color: #991b1b; }
         .zone { background: rgba(255,255,255,0.95); height: 50px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: bold; border-radius: 2px; position: relative; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
         
-        /* NEW: SERVER BOX HIGHLIGHT STYLING */
+        /* SERVER BOX HIGHLIGHT STYLING */
         .zone.is-server {
             background-color: #dcfce7 !important; /* Light green fill */
             border: 3px solid #16a34a !important; /* Thick bright green border */
@@ -218,10 +220,17 @@
             .btn-group { flex-wrap: wrap; } .print-select { width: 100%; }
         }
 
-        /* --- PRINT STYLES --- */
+        /* --- PRINT STYLES (CRITICAL FIX FOR COLORS) --- */
         @media print {
             @page { size: A4 portrait; margin: 5mm; }
-            body { background: white; padding: 0; margin: 0; }
+            
+            body { 
+                background: white; padding: 0; margin: 0; 
+                /* This is the magic line that forces the browser to print background colors! */
+                -webkit-print-color-adjust: exact !important; 
+                print-color-adjust: exact !important;
+            }
+
             .container { box-shadow: none; border: none; padding: 0; margin: 0; width: 100%; max-width: 100%; }
             .no-print, .btn-win-set, .score-controls, .btn-reset-match, .btn-reset-all, .data-tools, .sets-controls-row, .btn-undo, .serve-input-row, .tabs-nav, .user-bar, .error-buttons, .player-chips, .btn-undo-err, .btn-clear-roster { display: none !important; }
             .meta-input { border: none; font-weight: bold; padding: 0; }
@@ -248,7 +257,7 @@
             .output-grid { display: grid; grid-template-columns: 49% 49%; column-gap: 2%; row-gap: 8px; }
             .rotation-card { border: 1px solid #000; padding: 4px; break-inside: avoid; }
             .court { border-width: 1px; }
-            .zone.is-server { background-color: #e5e5e5 !important; border: 3px solid #000 !important; } /* High contrast for B&W print */
+            .zone.is-server { background-color: #e5e5e5 !important; border: 3px solid #000 !important; } 
             .watermark { position: fixed; bottom: 5px; right: 5px; }
         }
     </style>
@@ -294,7 +303,7 @@
 
     <div class="header-section">
         <img src="logo_nexus.png" alt="Logo" class="school-logo" onerror="this.style.display='none'">
-        <h1 style="margin: 0;">Volleyball Manager Pro (Nexus)</h1>
+        <h1 style="margin: 0;">Volleyball Manager Pro (Cloud)</h1>
         <div class="match-meta">
             <div class="meta-group"><span class="meta-label">Date:</span><input type="date" id="match-date" class="meta-input" onchange="triggerSync()"></div>
             <div class="meta-group"><span class="meta-label">Venue:</span><input type="text" id="match-venue" class="meta-input" placeholder="Gym / Court" onblur="triggerSync()"></div>
@@ -464,7 +473,7 @@
                 <option value="analysis">Print: Analysis Only</option>
                 <option value="errors">Print: Errors Only</option>
             </select>
-            <button style="background:#10b981; color:white; padding:12px; border:none; border-radius:6px; font-weight:bold; cursor:pointer; flex:1;" onclick="window.print()">Print Report</button>
+            <button style="background:#10b981; color:white; padding:12px; border:none; border-radius:6px; font-weight:bold; cursor:pointer; flex:1;" onclick="triggerPrint()">Print Report</button>
         </div>
         <div class="data-tools">
             <button class="btn-data btn-export" onclick="exportData()">Backup Data File</button>
@@ -672,6 +681,15 @@
         if(id==='rotations') bs[0].classList.add('active'); else if (id==='analysis') bs[1].classList.add('active'); else bs[2].classList.add('active');
     }
     window.updatePrintMode = function() { document.body.className = 'print-' + document.getElementById('print-mode').value; }
+    
+    // NEW SAFTEY PRINT FUNCTION
+    window.triggerPrint = function() {
+        try {
+            window.print();
+        } catch(e) {
+            alert("Printing is blocked by this browser. Please open the app in Safari or Chrome.");
+        }
+    };
 
     // --- SCOREBOARD ---
     window.adjScore = function(t,v){ if(t==='a')scoreA=Math.max(0,scoreA+v);else scoreB=Math.max(0,scoreB+v); updateScoreBoard(); triggerSync(); }
@@ -688,7 +706,7 @@
     }
     window.undoSetHistory = function() {
         if(history.length === 0) return;
-        if(confirm("Remove the last recorded set from history?")) { history.pop(); updateScoreBoard(); triggerSync(); }
+        if(confirm("Remove the last recorded set from history? (Use A-/B- to adjust Set Counter)")) { history.pop(); updateScoreBoard(); triggerSync(); }
     }
     window.resetPointsOnly = function(){ if(confirm("Reset Pts to 0-0?")){scoreA=0;scoreB=0;updateScoreBoard();triggerSync();} }
     window.updateSet = function(t,v){ if(t==='a')setsA=Math.max(0,setsA+v);else setsB=Math.max(0,setsB+v); updateScoreBoard(); triggerSync(); }
