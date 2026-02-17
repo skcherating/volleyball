@@ -7,6 +7,8 @@
     
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
     <style>
         :root { 
@@ -23,7 +25,6 @@
         /* --- LOGIN OVERLAY --- */
         #login-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--dark); z-index: 9999; display: flex; align-items: center; justify-content: center; flex-direction: column; }
         .login-box { background: white; padding: 30px; border-radius: 12px; width: 90%; max-width: 350px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
-        /* UPDATED LOGO SIZE */
         .login-logo { width: 90px; height: 90px; object-fit: contain; margin-bottom: 15px; }
         .login-input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; }
         .btn-login { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 6px; font-weight: bold; font-size: 1rem; cursor: pointer; }
@@ -48,7 +49,6 @@
         .btn-reset-dev { background: #eab308; color: black; border: none; padding: 3px 6px; border-radius: 3px; cursor: pointer; font-size: 0.7rem; margin-right: 5px;}
 
         .header-section { text-align: center; margin-bottom: 15px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
-        /* UPDATED LOGO SIZE */
         .school-logo { width: 90px; height: auto; margin-bottom: 5px; }
         h1 { margin: 0; font-size: 1.2rem; color: var(--dark); }
         .match-meta { display: flex; justify-content: center; gap: 10px; margin-top: 5px; flex-wrap: wrap; }
@@ -121,11 +121,10 @@
         .court.team-b-bg { background: #f87171; border-color: #991b1b; }
         .zone { background: rgba(255,255,255,0.95); height: 50px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: bold; border-radius: 2px; position: relative; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
         
-        /* SERVER BOX HIGHLIGHT STYLING */
         .zone.is-server {
-            background-color: #dcfce7 !important; /* Light green fill */
-            border: 3px solid #16a34a !important; /* Thick bright green border */
-            box-shadow: 0 0 8px rgba(34, 197, 94, 0.6); /* Green glow */
+            background-color: #dcfce7 !important;
+            border: 3px solid #16a34a !important;
+            box-shadow: 0 0 8px rgba(34, 197, 94, 0.6); 
         }
         
         .pos-label { font-size: 0.55rem; color: #64748b; position: absolute; top: 2px; left: 2px; }
@@ -181,7 +180,6 @@
         }
         .player-chip:hover { border-color: #16a34a; background: #bbf7d0; }
         .player-chip.active { background: #16a34a; color: white; border-color: #14532d; box-shadow: 0 4px 10px rgba(22, 163, 74, 0.4); }
-
         .error-action-area { display: flex; flex-direction: column; gap: 15px; }
         .error-buttons { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; background: white; padding: 15px; border: 1px solid #e2e8f0; border-radius: 8px; }
         .err-btn { padding: 15px 5px; font-size: 1rem; font-weight: bold; border-radius: 8px; border: none; cursor: pointer; color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: 0.1s; }
@@ -203,7 +201,6 @@
         .filter-bar { background: #eee; padding: 8px; border-radius: 6px; margin-bottom: 15px; text-align: center; }
         .view-select { padding: 6px; border-radius: 4px; font-weight: bold; }
         .btn-group { display: flex; gap: 10px; margin-top: 10px; align-items: center; }
-        .btn-main { padding: 12px; border: none; border-radius: 6px; color: white; font-weight: bold; cursor: pointer; font-size: 1rem; flex: 1;}
         .print-select { padding: 12px; border-radius: 6px; border: 1px solid #ccc; font-weight: bold; color: #333; }
         .data-tools { margin-top: 20px; padding: 15px; background: #e2e8f0; border-radius: 8px; display: flex; gap: 10px; align-items: center; justify-content: center; }
         .btn-data { padding: 10px 16px; border-radius: 6px; border: none; cursor: pointer; font-weight: bold; font-size: 0.85rem; }
@@ -220,49 +217,53 @@
             .btn-group { flex-wrap: wrap; } .print-select { width: 100%; }
         }
 
-        /* --- PRINT STYLES (CRITICAL FIX FOR COLORS) --- */
-        @media print {
-            @page { size: A4 portrait; margin: 5mm; }
-            
-            body { 
-                background: white; padding: 0; margin: 0; 
-                /* This is the magic line that forces the browser to print background colors! */
-                -webkit-print-color-adjust: exact !important; 
-                print-color-adjust: exact !important;
-            }
+        /* --- PDF EXPORT STYLES (Overrides UI for clean PDF generation) --- */
+        body.pdf-export-mode .no-print,
+        body.pdf-export-mode .btn-win-set,
+        body.pdf-export-mode .score-controls,
+        body.pdf-export-mode .btn-reset-match,
+        body.pdf-export-mode .btn-reset-all,
+        body.pdf-export-mode .data-tools,
+        body.pdf-export-mode .sets-controls-row,
+        body.pdf-export-mode .btn-undo,
+        body.pdf-export-mode .serve-input-row,
+        body.pdf-export-mode .tabs-nav,
+        body.pdf-export-mode .user-bar,
+        body.pdf-export-mode .error-buttons,
+        body.pdf-export-mode .player-chips,
+        body.pdf-export-mode .btn-undo-err,
+        body.pdf-export-mode .btn-clear-roster { display: none !important; }
 
-            .container { box-shadow: none; border: none; padding: 0; margin: 0; width: 100%; max-width: 100%; }
-            .no-print, .btn-win-set, .score-controls, .btn-reset-match, .btn-reset-all, .data-tools, .sets-controls-row, .btn-undo, .serve-input-row, .tabs-nav, .user-bar, .error-buttons, .player-chips, .btn-undo-err, .btn-clear-roster { display: none !important; }
-            .meta-input { border: none; font-weight: bold; padding: 0; }
-            
-            .tab-content { display: none !important; }
-            body.print-all .tab-content { display: block !important; margin-bottom: 20px; }
-            body.print-rotations #tab-rotations { display: block !important; }
-            body.print-analysis #tab-analysis { display: block !important; }
-            body.print-errors #tab-errors { display: block !important; }
+        body.pdf-export-mode .meta-input { border: none; font-weight: bold; padding: 0; background: transparent; }
+        
+        /* Show the relevant content for PDF based on selection */
+        body.pdf-export-mode .tab-content { display: none !important; }
+        body.pdf-export-mode:not(.pdf-mode-rotations):not(.pdf-mode-analysis):not(.pdf-mode-errors) .tab-content { display: block !important; margin-bottom: 20px; }
+        body.pdf-export-mode.pdf-mode-rotations #tab-rotations { display: block !important; }
+        body.pdf-export-mode.pdf-mode-analysis #tab-analysis { display: block !important; }
+        body.pdf-export-mode.pdf-mode-errors #tab-errors { display: block !important; }
 
-            .scoreboard-panel { background: white; border: 1px solid #000; color: black; padding: 5px; margin-bottom: 10px; }
-            .big-score { font-size: 2rem; }
-            .game-stats { color: black; background: transparent; border: 1px solid #ccc; }
-            .to-dot { background: #eee; border-color: #000; } .to-dot.active { background: #000; }
-            
-            .analysis-section, .error-log-panel { border: 1px solid #000; background: white; page-break-inside: avoid; }
-            .analysis-wrapper { display: grid; grid-template-columns: 250px 1fr; gap: 15px; }
-            .analysis-container { width: 340px; height: 340px; border-color: #000; box-shadow: 0 0 0 5px #ccc; break-inside: avoid; margin: 10px auto; }
-            .map-scroll-container { max-height: none; overflow: visible; border: none; padding: 0; }
-            .serve-mark { min-width: 24px; height: 24px; border-radius: 12px; font-size: 0.6rem; }
-            
-            .history-section { border-top: 1px solid #ccc; margin-top: 5px; padding-top: 5px; }
-            .history-chip { background: #eee; color: #000; border: 1px solid #ccc; font-size: 0.7rem; padding: 1px 6px; }
-            .output-grid { display: grid; grid-template-columns: 49% 49%; column-gap: 2%; row-gap: 8px; }
-            .rotation-card { border: 1px solid #000; padding: 4px; break-inside: avoid; }
-            .court { border-width: 1px; }
-            .zone.is-server { background-color: #e5e5e5 !important; border: 3px solid #000 !important; } 
-            .watermark { position: fixed; bottom: 5px; right: 5px; }
-        }
+        body.pdf-export-mode .scoreboard-panel { background: white; border: 1px solid #000; color: black; padding: 5px; margin-bottom: 10px; }
+        body.pdf-export-mode .big-score { font-size: 2rem; color: black; }
+        body.pdf-export-mode .game-stats { color: black; background: transparent; border: 1px solid #ccc; }
+        body.pdf-export-mode .to-dot { background: #eee; border-color: #000; } 
+        body.pdf-export-mode .to-dot.active { background: #000; }
+        
+        body.pdf-export-mode .analysis-section, body.pdf-export-mode .error-log-panel { border: 1px solid #000; background: white; page-break-inside: avoid; }
+        body.pdf-export-mode .analysis-wrapper { display: grid; grid-template-columns: 250px 1fr; gap: 15px; }
+        body.pdf-export-mode .analysis-container { width: 340px; height: 340px; border-color: #000; box-shadow: 0 0 0 5px #ccc; break-inside: avoid; margin: 10px auto; }
+        body.pdf-export-mode .map-scroll-container { max-height: none; overflow: visible; border: none; padding: 0; }
+        body.pdf-export-mode .serve-mark { min-width: 24px; height: 24px; border-radius: 12px; font-size: 0.6rem; }
+        
+        body.pdf-export-mode .history-section { border-top: 1px solid #ccc; margin-top: 5px; padding-top: 5px; }
+        body.pdf-export-mode .history-chip { background: #eee; color: #000; border: 1px solid #ccc; font-size: 0.7rem; padding: 1px 6px; }
+        body.pdf-export-mode .output-grid { display: grid; grid-template-columns: 49% 49%; column-gap: 2%; row-gap: 8px; }
+        body.pdf-export-mode .rotation-card { border: 1px solid #000; padding: 4px; break-inside: avoid; color: black; }
+        body.pdf-export-mode .court { border-width: 1px; }
+        body.pdf-export-mode .zone.is-server { background-color: #e5e5e5 !important; border: 3px solid #000 !important; } 
     </style>
 </head>
-<body class="print-all">
+<body>
 
 <div id="login-overlay">
     <div class="login-box">
@@ -413,8 +414,7 @@
                         <input type="text" id="serve-player-input" class="serve-input" placeholder="Name or #" title="Enter name then click court">
                     </div>
                     
-                    <div class="map-scroll-container" id="maps-container">
-                        </div>
+                    <div class="map-scroll-container" id="maps-container"></div>
 
                     <div class="no-print" style="text-align:center; margin-top:10px; display:flex; gap:10px; justify-content:center;">
                         <button style="background:#2563eb; color:white; border:none; padding:6px 12px; border-radius:4px; font-weight:bold; font-size:0.8rem; cursor:pointer;" onclick="addMap()">+ Add Set Map</button>
@@ -468,12 +468,12 @@
     <div class="no-print" style="margin-top:20px;">
         <div class="btn-group">
             <select id="print-mode" class="print-select" onchange="updatePrintMode()">
-                <option value="all">Print: All Tabs</option>
-                <option value="rotations">Print: Rotations Only</option>
-                <option value="analysis">Print: Analysis Only</option>
-                <option value="errors">Print: Errors Only</option>
+                <option value="all">Export: All Tabs</option>
+                <option value="rotations">Export: Rotations Only</option>
+                <option value="analysis">Export: Analysis Only</option>
+                <option value="errors">Export: Errors Only</option>
             </select>
-            <button style="background:#10b981; color:white; padding:12px; border:none; border-radius:6px; font-weight:bold; cursor:pointer; flex:1;" onclick="triggerPrint()">Print Report</button>
+            <button id="btn-save-pdf" style="background:#10b981; color:white; padding:12px; border:none; border-radius:6px; font-weight:bold; cursor:pointer; flex:1;" onclick="saveAsPDF()">Save as PDF</button>
         </div>
         <div class="data-tools">
             <button class="btn-data btn-export" onclick="exportData()">Backup Data File</button>
@@ -680,16 +680,52 @@
         const bs=document.querySelectorAll('.tab-btn');
         if(id==='rotations') bs[0].classList.add('active'); else if (id==='analysis') bs[1].classList.add('active'); else bs[2].classList.add('active');
     }
-    window.updatePrintMode = function() { document.body.className = 'print-' + document.getElementById('print-mode').value; }
-    
-    // NEW SAFTEY PRINT FUNCTION
-    window.triggerPrint = function() {
-        try {
-            window.print();
-        } catch(e) {
-            alert("Printing is blocked by this browser. Please open the app in Safari or Chrome.");
-        }
-    };
+    window.updatePrintMode = function() { 
+        const m = document.getElementById('print-mode').value;
+        // Clean up previous modes
+        document.body.classList.remove('print-all', 'print-rotations', 'print-analysis', 'print-errors', 'pdf-mode-rotations', 'pdf-mode-analysis', 'pdf-mode-errors');
+        document.body.classList.add('print-' + m); 
+    }
+
+    // --- PDF GENERATION LOGIC ---
+    window.saveAsPDF = function() {
+        const btn = document.getElementById('btn-save-pdf');
+        const originalText = btn.innerText;
+        btn.innerText = "Generating PDF... Please wait";
+        btn.style.background = "#64748b";
+        btn.disabled = true;
+
+        const container = document.getElementById('app-container');
+        
+        // Add PDF rendering class
+        document.body.classList.add('pdf-export-mode');
+        
+        const mode = document.getElementById('print-mode').value;
+        if(mode !== 'all') { document.body.classList.add('pdf-mode-' + mode); }
+
+        const opt = {
+            margin:       0.2,
+            filename:     'Volleyball_Match_Report.pdf',
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2, useCORS: true, logging: false },
+            jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+        };
+
+        html2pdf().set(opt).from(container).save().then(() => {
+            // Revert UI changes
+            document.body.classList.remove('pdf-export-mode', 'pdf-mode-rotations', 'pdf-mode-analysis', 'pdf-mode-errors');
+            btn.innerText = originalText;
+            btn.style.background = "#10b981";
+            btn.disabled = false;
+        }).catch(err => {
+            console.error("PDF Error", err);
+            document.body.classList.remove('pdf-export-mode', 'pdf-mode-rotations', 'pdf-mode-analysis', 'pdf-mode-errors');
+            btn.innerText = originalText;
+            btn.style.background = "#10b981";
+            btn.disabled = false;
+            alert("Failed to generate PDF. Check console.");
+        });
+    }
 
     // --- SCOREBOARD ---
     window.adjScore = function(t,v){ if(t==='a')scoreA=Math.max(0,scoreA+v);else scoreB=Math.max(0,scoreB+v); updateScoreBoard(); triggerSync(); }
@@ -899,7 +935,6 @@
 
     function getRole(n,t){ for(let i=1;i<=12;i++) if(document.getElementById(`p-${t}-${i}-name`).value===n) return document.getElementById(`p-${t}-${i}-role`).value; return ''; }
     
-    // --- HIGHLIGHT SERVER LOGIC UPDATED HERE ---
     window.generate = function() {
         const out=document.getElementById('output'), m=document.getElementById('view-mode').value;
         out.innerHTML=''; if(m!=='all') out.classList.add('single-view'); else out.classList.remove('single-view');
@@ -914,20 +949,19 @@
     function buildArr(t){ let a=[]; for(let i=1;i<=6;i++){ let m=document.getElementById(`l-${t}-${i}`).value||`P${i}`, s=document.getElementById(`l-${t}-${i}-sub`).value; a.push({n:m,s:s,r:getRole(m,t)}); } return a; }
     function rotate(a,s){ let r=[...a]; for(let k=0;k<s;k++) r=[r[1],r[2],r[3],r[4],r[5],r[0]]; return r; }
     
-    // Server Highlighting Logic updated here: 
     function z(p,ip1){ const l=p.r==='L'; return `<div class="zone ${ip1?'is-server':''}">${ip1?'<div class="server-badge">S</div>':''}<span class="pos-label">${ip1?'P1':''}</span><div class="player-content">${p.r?`<span class="role-badge ${l?'libero':''}">${p.r}</span>`:''}<span>${p.n}</span>${p.s?`<span class="sub-name">(${p.s})</span>`:''}</div></div>`; }
 
     // --- LOCAL FALLBACK SAVE/LOAD ---
     function saveLocal() {
-        localStorage.setItem('vb_pro_v26', JSON.stringify({
+        localStorage.setItem('vb_pro_v27', JSON.stringify({
             sA:scoreA, sB:scoreB, setsA:setsA, setsB:setsB, hist:history, tos:timeouts, subs:subCounts, serveStats:serveStats, mapCount: mapCount, errStats: errorStats, errHist: errorHistory,
             meta:{ nA:document.getElementById('name-a').value, nB:document.getElementById('name-b').value, date:document.getElementById('match-date').value, venue:document.getElementById('match-venue').value, oA:document.getElementById('start-offset-a').value, oB:document.getElementById('start-offset-b').value },
             rosA:getRosterObj('a'), rosB:getRosterObj('b'), linA:getLineupObj('a'), linB:getLineupObj('b')
         }));
     }
-    window.exportData = function() { saveLocal(); const b=new Blob([localStorage.getItem('vb_pro_v26')],{type:"application/json"}); const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download=`vb_data.json`; a.click(); }
-    window.importData = function(inp) { const f=inp.files[0]; if(!f)return; const r=new FileReader(); r.onload=e=>{ try{const d=JSON.parse(e.target.result); if(!d.meta)throw 1; localStorage.setItem('vb_pro_v26',JSON.stringify(d)); location.reload();}catch(x){alert('Invalid File');} }; r.readAsText(f); }
-    window.factoryReset = function() { if(confirm("DELETE EVERYTHING?")) { localStorage.removeItem('vb_pro_v26'); location.reload(); } }
+    window.exportData = function() { saveLocal(); const b=new Blob([localStorage.getItem('vb_pro_v27')],{type:"application/json"}); const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download=`vb_data.json`; a.click(); }
+    window.importData = function(inp) { const f=inp.files[0]; if(!f)return; const r=new FileReader(); r.onload=e=>{ try{const d=JSON.parse(e.target.result); if(!d.meta)throw 1; localStorage.setItem('vb_pro_v27',JSON.stringify(d)); location.reload();}catch(x){alert('Invalid File');} }; r.readAsText(f); }
+    window.factoryReset = function() { if(confirm("DELETE EVERYTHING?")) { localStorage.removeItem('vb_pro_v27'); location.reload(); } }
 
 </script>
 </body>
