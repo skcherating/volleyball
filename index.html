@@ -24,8 +24,11 @@
         
         /* --- LOGIN OVERLAY --- */
         #login-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--dark); z-index: 9999; display: flex; align-items: center; justify-content: center; flex-direction: column; }
-        .login-box { background: white; padding: 30px; border-radius: 12px; width: 90%; max-width: 350px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
-        .login-logo { width: 90px; height: 90px; object-fit: contain; margin-bottom: 15px; }
+        .login-box { background: white; padding: 35px; border-radius: 12px; width: 90%; max-width: 380px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        
+        /* ENLARGED LOGIN LOGO */
+        .login-logo { width: 160px; height: 160px; object-fit: contain; margin-bottom: 20px; }
+        
         .login-input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; }
         .btn-login { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 6px; font-weight: bold; font-size: 1rem; cursor: pointer; }
         .btn-login:hover { background: #1d4ed8; }
@@ -201,7 +204,6 @@
         .filter-bar { background: #eee; padding: 8px; border-radius: 6px; margin-bottom: 15px; text-align: center; }
         .view-select { padding: 6px; border-radius: 4px; font-weight: bold; }
         .btn-group { display: flex; gap: 10px; margin-top: 10px; align-items: center; }
-        .btn-main { padding: 12px; border: none; border-radius: 6px; color: white; font-weight: bold; cursor: pointer; font-size: 1rem; flex: 1;}
         .print-select { padding: 12px; border-radius: 6px; border: 1px solid #ccc; font-weight: bold; color: #333; }
         .data-tools { margin-top: 20px; padding: 15px; background: #e2e8f0; border-radius: 8px; display: flex; gap: 10px; align-items: center; justify-content: center; }
         .btn-data { padding: 10px 16px; border-radius: 6px; border: none; cursor: pointer; font-weight: bold; font-size: 0.85rem; }
@@ -257,9 +259,11 @@
         /* Show active tabs based on mode */
         body.pdf-export-mode .tab-content { display: none !important; margin-bottom: 0; }
         body.pdf-export-mode.print-all .tab-content { display: block !important; }
+        
+        /* Removed CSS Page Breaks, they break the PDF generator. Handled in JS instead. */
         body.pdf-export-mode.print-all #tab-rotations { margin-bottom: 20px; }
-        body.pdf-export-mode.print-all #tab-analysis { page-break-before: always; padding-top: 15px; }
-        body.pdf-export-mode.print-all #tab-errors { page-break-before: always; padding-top: 15px; }
+        body.pdf-export-mode.print-all #tab-analysis { padding-top: 15px; }
+        body.pdf-export-mode.print-all #tab-errors { padding-top: 15px; }
 
         body.pdf-export-mode.print-rotations #tab-rotations { display: block !important; }
         body.pdf-export-mode.print-analysis #tab-analysis { display: block !important; }
@@ -741,13 +745,20 @@
         const container = document.getElementById('app-container');
         document.body.classList.add('pdf-export-mode');
 
+        // Force html2pdf to create exact page breaks based on our CSS classes
+        let pb = { mode: ['css', 'legacy'] };
+        const mode = document.getElementById('print-mode').value;
+        if (mode === 'all') {
+            pb.before = ['#tab-analysis', '#tab-errors']; // Hardcut pages before Tab 2 and Tab 3
+        }
+
         const opt = {
-            margin:       0.2,
+            margin:       0.3,
             filename:     'Nexus_Volley_Hub_Report.pdf',
             image:        { type: 'jpeg', quality: 0.98 },
             html2canvas:  { scale: 2, useCORS: true, logging: false },
             jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' },
-            pagebreak:    { mode: ['css', 'legacy'] }
+            pagebreak:    pb
         };
 
         html2pdf().set(opt).from(container).save().then(() => {
