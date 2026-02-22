@@ -26,8 +26,9 @@
         #login-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--dark); z-index: 9999; display: flex; align-items: center; justify-content: center; flex-direction: column; }
         .login-box { background: white; padding: 35px; border-radius: 12px; width: 90%; max-width: 380px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
         
-        /* ENLARGED LOGIN LOGO */
-        .login-logo { width: 160px; height: 160px; object-fit: contain; margin-bottom: 20px; }
+        /* ENLARGED LOGO & REFINED SPACING */
+        .login-logo { width: 160px; height: 160px; object-fit: contain; margin-bottom: 5px; }
+        .login-box h2 { margin-top: 5px; margin-bottom: 20px; color: #0f172a; font-size: 1.5rem; }
         
         .login-input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; }
         .btn-login { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 6px; font-weight: bold; font-size: 1rem; cursor: pointer; }
@@ -221,12 +222,23 @@
         }
 
         /* ==================================================================== */
-        /* --- PDF EXPORT ENGINE (REPLACES NATIVE PRINT TO PREVENT BROWSER LAG) */
+        /* --- PDF EXPORT ENGINE (COMPLETELY REMOVES BROWSER FREEZE BUGS) --- */
         /* ==================================================================== */
         body.pdf-export-mode { background: white; color: black; }
+        
+        /* Strip heavy processing effects */
         body.pdf-export-mode * { box-shadow: none !important; transition: none !important; }
 
-        body.pdf-export-mode .container { box-shadow: none; border: none; padding: 0; margin: 0; max-width: 100%; }
+        /* Force A4 Wrapper size to prevent mobile-stretching */
+        body.pdf-export-mode #app-container { 
+            width: 800px !important; 
+            max-width: 800px !important; 
+            margin: 0 auto !important; 
+            padding: 10px !important; 
+            box-sizing: border-box !important; 
+        }
+
+        /* Hide UI elements */
         body.pdf-export-mode .no-print, 
         body.pdf-export-mode .btn-win-set, 
         body.pdf-export-mode .score-controls, 
@@ -246,7 +258,7 @@
         
         body.pdf-export-mode .meta-input { border: none; font-weight: bold; padding: 0; background: transparent; }
 
-        /* BYPASS CSS GRIDS TO PREVENT RENDER LOOP LAG */
+        /* BYPASS CSS GRIDS (This is what caused the lag!) */
         body.pdf-export-mode .sb-grid, 
         body.pdf-export-mode .game-stats, 
         body.pdf-export-mode .output-grid, 
@@ -256,20 +268,24 @@
         body.pdf-export-mode .error-layout, 
         body.pdf-export-mode .history-chips { display: block !important; }
 
-        /* Show active tabs based on mode */
+        /* Show the relevant content for PDF based on selection */
         body.pdf-export-mode .tab-content { display: none !important; margin-bottom: 0; }
+        
         body.pdf-export-mode.print-all .tab-content { display: block !important; }
         
-        /* Removed CSS Page Breaks, they break the PDF generator. Handled in JS instead. */
-        body.pdf-export-mode.print-all #tab-rotations { margin-bottom: 20px; }
-        body.pdf-export-mode.print-all #tab-analysis { padding-top: 15px; }
-        body.pdf-export-mode.print-all #tab-errors { padding-top: 15px; }
+        /* HARD PAGE BREAKS FOR THE PDF ENGINE (REMOVED 'page-break-after' TO FIX BLANK PAGES) */
+        body.pdf-export-mode.print-all #tab-analysis,
+        body.pdf-export-mode.print-all #tab-errors { 
+            page-break-before: always !important; 
+            break-before: page !important; 
+            padding-top: 10px; 
+        }
 
         body.pdf-export-mode.print-rotations #tab-rotations { display: block !important; }
         body.pdf-export-mode.print-analysis #tab-analysis { display: block !important; }
         body.pdf-export-mode.print-errors #tab-errors { display: block !important; }
 
-        /* SCOREBOARD */
+        /* PAGE 1: SCOREBOARD */
         body.pdf-export-mode .scoreboard-panel { border: 1px solid #000; padding: 5px; margin-bottom: 10px; text-align: center; }
         body.pdf-export-mode .team-col { display: inline-block !important; width: 30%; vertical-align: top; }
         body.pdf-export-mode .sets-col { display: inline-block !important; width: 38%; vertical-align: top; margin: 0; }
@@ -277,7 +293,7 @@
         body.pdf-export-mode .stat-box { display: inline-block; margin: 0 5px; }
         body.pdf-export-mode .team-name { font-size: 0.7rem; }
 
-        /* ROTATIONS */
+        /* PAGE 1: ROTATIONS */
         body.pdf-export-mode .output-grid { font-size: 0; }
         body.pdf-export-mode .rotation-card { 
             display: inline-block !important; width: 32%; vertical-align: top; margin: 0 1% 10px 0; border: 1px solid #000; padding: 4px; box-sizing: border-box; page-break-inside: avoid; 
@@ -288,7 +304,7 @@
         body.pdf-export-mode .zone.is-server { background: #e5e5e5 !important; border: 2px solid #000 !important; }
         body.pdf-export-mode .role-badge { font-size: 0.45rem; padding: 0 2px; border: 1px solid #ccc !important; color: black !important; background: white !important; }
 
-        /* ANALYSIS */
+        /* PAGE 2: ANALYSIS */
         body.pdf-export-mode .analysis-wrapper { font-size: 0; }
         body.pdf-export-mode .stats-col { display: inline-block !important; width: 35%; vertical-align: top; border: 1px solid #ccc; max-height: none; overflow: visible; font-size: 0.8rem; }
         body.pdf-export-mode .map-col { display: inline-block !important; width: 60%; vertical-align: top; margin-left: 2%; font-size: 1rem;}
@@ -300,13 +316,12 @@
         body.pdf-export-mode .net-indicator { background: #fff !important; border: 1px solid #000 !important; color: #000; text-align: center; }
         body.pdf-export-mode .serve-mark { border: 1px solid #000 !important; font-size: 0.6rem; min-width: 20px; height: 20px; border-radius: 10px; }
 
-        /* ERRORS */
+        /* PAGE 3: ERRORS */
         body.pdf-export-mode .error-log-panel { border: 1px solid #000; padding: 10px; display: block !important; }
         body.pdf-export-mode .err-player-row { border-bottom: 1px dotted #ccc; display: block !important; padding: 5px 0; }
         body.pdf-export-mode .err-player-name { display: inline-block; width: 150px; vertical-align: middle; }
         body.pdf-export-mode .err-badges { display: inline-block; vertical-align: middle; }
         body.pdf-export-mode .e-badge { display: inline-block; margin: 2px; }
-
         body.pdf-export-mode .history-chip { display: inline-block !important; margin: 2px;}
     </style>
 </head>
@@ -315,7 +330,7 @@
 <div id="login-overlay">
     <div class="login-box">
         <img src="logo_nexus.png" alt="Logo" class="login-logo" onerror="this.style.display='none'">
-        <h2 style="margin-top:0; color:#0f172a;">Nexus Volley Hub</h2>
+        <h2 style="margin-top: 8px; margin-bottom: 20px; color:#0f172a;">Nexus Volley Hub</h2>
         <input type="text" id="username" class="login-input" placeholder="Username">
         <input type="password" id="password" class="login-input" placeholder="Password">
         <button class="btn-login" onclick="login()">Login</button>
@@ -729,12 +744,12 @@
         if(id==='rotations') bs[0].classList.add('active'); else if (id==='analysis') bs[1].classList.add('active'); else bs[2].classList.add('active');
     }
     
-    // --- PDF DIRECT EXPORT ENGINE ---
     window.updatePrintMode = function() { 
         const m = document.getElementById('print-mode').value;
         document.body.className = 'print-' + m; 
     }
     
+    // --- PDF DIRECT EXPORT ENGINE (FIXED BLANK PAGES) ---
     window.saveAsPDF = function() {
         const btn = document.getElementById('btn-save-pdf');
         const originalText = btn.innerText;
@@ -745,20 +760,13 @@
         const container = document.getElementById('app-container');
         document.body.classList.add('pdf-export-mode');
 
-        // Force html2pdf to create exact page breaks based on our CSS classes
-        let pb = { mode: ['css', 'legacy'] };
-        const mode = document.getElementById('print-mode').value;
-        if (mode === 'all') {
-            pb.before = ['#tab-analysis', '#tab-errors']; // Hardcut pages before Tab 2 and Tab 3
-        }
-
         const opt = {
-            margin:       0.3,
+            margin:       [0.2, 0.2, 0.2, 0.2],
             filename:     'Nexus_Volley_Hub_Report.pdf',
-            image:        { type: 'jpeg', quality: 0.98 },
-            html2canvas:  { scale: 2, useCORS: true, logging: false },
-            jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' },
-            pagebreak:    pb
+            image:        { type: 'jpeg', quality: 1.0 },
+            // Lock window width so mobile screens don't stretch the PDF
+            html2canvas:  { scale: 2, useCORS: true, logging: false, windowWidth: 850 }, 
+            jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
         };
 
         html2pdf().set(opt).from(container).save().then(() => {
